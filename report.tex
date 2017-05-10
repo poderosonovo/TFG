@@ -17,6 +17,7 @@
 % This allows setting a background colour for a page.
 \usepackage{afterpage}
 \usepackage{xcolor}
+\usepackage{multirow}
 
 \newcommand{\BlankPage}{\newpage\null\thispagestyle{empty}\newpage}%Si ponemos \BlankPage añade una página en blanco
 \addto\captionsspanish{\renewcommand{\contentsname}{Índice}} %Para que la tableofcontents se llama Índice en lugar de Contents
@@ -63,4 +64,8 @@
 \setcounter{page}{1}
 
 %Capítulo 1. Introducción
+
+%Capítulo 2. Análisis
+\input{analisis}
+
 \end{document}

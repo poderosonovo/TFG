@@ -1,0 +1,77 @@
+\chapter{Análisis}
+En este apartado se tratará la evolución del sistema operativo Android a lo largo de su historia, tanto en la implantación en el mercado como en el desarrollo de nuevas funcionalidades. Se busca ofrecer una visión general de las posibilidades que permite desarrollar sobre este sistema operativo. Por otra parte, se pretenden observar los cambios que ha habido con respecto al tratamiento del audio en el sistema con el paso de las diferentes versiones y dar una visión más específica de la situación sobre la versión actual, Android 7.1 Nougat, que será sobre la que se desarrollé gran parte de este proyecto.
+
+
+\section{Evolución del sistema operativo Android}
+El sistema operativo Android, pese a lo que muchos puedan creer, no es un desarrollo original de Google, sino que esta adquirió en julio de 2005 una pequeña empresa llamada Android Inc. que se encargaba de desarrollar software para teléfonos móviles. Fue esta empresa, al amparo de Google, la que comenzó a trabajar en un sistema operativo para móviles basado en el kernel de Linux.
+
+El 5 de noviembre de 2007 la Open Handset Alliance, una asociación de compañías de la que Google forma parte y que se dedica a desarrollar estándares abiertos para dispositivos móviles, presentó Android, una plataforma para dispositivos móviles desarrollada sobre la versión 2.6 del kernel de Linux.
+
+La versión 1.0 o también conocida como Apple Pie, las versiones de este sistema van por orden alfabético y tienen siempre el nombre de un postre, fue lanzada el 23 de septiembre de 2008. El 9 de febrero de 2009 fue presentada la versión 1.1 Banana Bread. Ninguna de estas dos versiones llegó a ser comercial.
+
+La primera versión comercial fue la 1.5 Cupcake lanzada en ese mismo año el 30 de abril. Fue en esta versión en la que se incorporaron mejoras como: soporte para Bluetooth, teclado predictivo, y la posibilidad de grabar y reproducir video. Con la versión 1.6 Donut lanzado también en 2009 se incorporan: soporte para resoluciones WVGA, mejoras en el mercado de aplicaciones de Android, y múltiples mejoras a nivel de interfaz.
+
+Por aquel entonces Android era un sistema muy inestable, al que le faltaba optimización a nivel de hardware, así como soporte para diferentes estándares de conectividad, de ahí que cada pocos meses se presentará una versión nueva. Para tratar de solventar estas carencias se presentaron las versiones 2.0/2.1 Éclair y 2.2 Froyo que añaden soporte para: Bluetooth 2.1, mayores tamaños de pantalla y resoluciones, HTML5 y JavaScript V8, añaden las actualizaciones automáticas para el mercado de aplicaciones, y muchas otras mejoras con el objetivo de optimizar tanto la interfaz de usuario como el sistema operativo a más bajo nivel.
+
+La versión 2.3 Gingerbread fue presentada en diciembre de 2010 y supuso un gran paso adelante en cuanto a estabilidad del sistema se refiere, incorporando: soporte para NFC y para llamadas VoIP, administrador de energía, de descargas y de tareas, soporte nativo para múltiples cámaras, y nuevos efectos de audio. Cabe destacar que con esta versión Android superó a IOS en cuota de mercado con un 27% y se encontraba sólo por detrás de BlackBerry OS.
+
+Las versiones 3.0/3.1/3.2 Honeycomb fueron lanzadas inicialmente en febrero de 2011 y se centraban únicamente en mejorar la compatibilidad del sistema operativo Android en el formato tablet.
+
+No fue hasta la versión 4.0 Ice Cream Sandwich cuando se unificó el sistema para todos los dispositivos móviles. Entre las mejoras incorporadas tenemos: soporte para la multitarea, la implantación de un único framework para facilitar el desarrollo, soporte para que la interfaz pueda ser manejada por la GPU, botones virtuales, y un gestor de tráfico de datos de internet. Con esta versión, Android se convierte en el sistema operativo para dispositivos móviles con mayor cuota de mercado.
+
+Durante las siguientes versiones 4.1/4.2/4.3 Jelly Bean destaca la incorporación del asistente Google Now. Ya en octubre de 2013 se presenta Android 4.4 KitKat, que no supone una gran revolución, pero sí que trae la mayor estabilidad al sistema hasta la fecha.
+
+Dicha revolución sí que llegó con la siguiente versión, 5.0/5.1 Lollipop, en noviembre de 2014. A día de hoy se trata de la versión que más cambios ha introducido en el sistema: una completa renovación visual con la incorporación de Material Design que pretende unificar la estética de Android mediante una guía de diseño, modos de prioridad en las notificaciones, funciones de ahorro de energía, incorporación de Bluetooth Low Energy, compatibilidad con dispositivos de 64 bits, reducción de la latencia de audio, y un largo etcétera. Pero esto también trajo de vuelta la inestabilidad al sistema que no se solventó hasta la versión 6.0 Marshmallow en octubre de 2015. Además, incorporó: Google Now On Tap, que utiliza al asistente Google Now para proporcionar información de lo que está en ese momento en pantalla, soporte para sensores de huellas, un gestor de permisos mucho más amplio y un gestor energético inteligente llamado Doze. Con estas versiones, Android empieza a estabilizarse en una cuota de mercado en torno al 87% muy lejos del segundo, 12% de IOS.
+
+Tras esto se llega a las versiones actuales 7.0/7.1 Nougat lanzadas en agosto de 2016 que como principales mejoras incorporan soporte para multiventana y para realidad virtual con Daydream. Se trata de una versión, que como hizo Android 4.4, viene a estabilizar el sistema operativo de manera definitiva tras los cambios introducidos en las versiones anteriores.
+
+En marzo de este mismo año Google ha presentado la versión de Android 8.0, aún sin nombre, para desarrolladores. Aún no están confirmadas las mejoras definitivas que incorporará esta versión, pero sí que se ha asegurado que seguirá la línea de las últimas versiones.
+
+Finalmente, destacar el que ha sido desde sus inicios uno de los grandes problemas de Android como es la distribución de las distintas versiones en el mercado actual. En la siguiente tabla se puede observar cómo se encuentra la situación actual:
+
+\begin{table}[htb]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\textbf{Versión} & \textbf{Nombre} & \textbf{API} & \textbf{Distribución} \\
+		\hline \hline
+		2.3.3-2.3.7 & Gingerbread & 10 & 1\% \\ \hline
+		4.0.3-4.0.4 & Ice Cream Sandwich & 15 & 0.8\% \\ \hline
+		4.1.x & \multirow{3}{1cm}{JellyBean} & 16 & 3.2\% \\ \cline{1-1} \cline{3-4}
+		4.2.x & & 17 & 4.6\% \\ \cline{1-1} \cline{3-4}
+		4.3.x & & 18 & 1.3\% \\ \hline
+		4.4 & KitKat & 19 & 18.8\% \\ \hline
+		5.0 & \multirow{2}{1cm}{Lollipop} & 21 & 8.7\% \\ \cline{1-1} \cline{3-4}
+		5.1 & & 22 & 23.3\% \\ \hline
+		6.0 & Marshmallow & 23 & 31.2\% \\ \hline
+		7.0 & \multirow{2}{1cm}{Nougat} & 24 & 6.6\% \\ \cline{1-1} \cline{3-4}
+		7.1 & & 25 & 0.5\% \\ \hline
+	\end{tabular}
+	\caption{Distribución de versiones Android en Mayo de 2017}
+	\label{tabla:distribucion-versiones}
+\end{table}
+
+
+\section{Situación del audio sobre el sistema operativo Android}
+Con respecto a la forma de tratar el audio y las posibilidades que proporciona Android es destacable la estabilidad en la que se encuentra con el paso de las últimas versiones sin grandes novedades en este apartado y mejorando donde debía hacerlo.
+
+
+\subsection{Cambios en las últimas versiones}
+Las primeras versiones de Android desde la primera API publicada, ya incorporaba las funciones básicas para poder realizar llamadas, grabar audios, reproducir música y otros muchos usos convencionales. 
+
+Originalmente se tenía clasificado el audio según tres tipos: normal, tono de llamada y en llamada. A partir de la API 11, con Android 2.3, se incorpora el soporte para llamadas VoIP y con él un cuarto modo de audio denominado en comunicación, usado para clasificar el audio durante una llamada VoIP. En la versión más actual, Android 7.1.1, se siguen manteniendo estos cuatro modos de audio.
+
+Otro añadido destable tiene lugar en la versión 2.1 donde se añade la diferencia entre la grabación de audio mientras se está grabando un vídeo o si por el contrario se trata únicamente de una grabación de voz. Este añadido se realiza en las denominadas fuentes de audio, entre las que destacan: por defecto, grabación de audio en vídeo, micrófono, voz en llamada, reconocimiento de voz, etc. Como se ha comentado en el párrafo anterior, en la API 11 se incluye el soporte para llamadas VoIP y con él también la fuente de audio de voz en comunicación para este caso de uso. En una de las últimas versiones, Android 7.0, se ha incorporado la fuente de audio sin procesar que permite mejorar la latencia de manera considerable.
+
+Con respecto al problema de la latencia en Android, este ha sido uno de los más destacados y que más se ha intentado solucionar desde Android 4.4, portando la API OpenSL de manera parcial. Con la versión 5.0 y 6.0 se consigue reducir el tiempo del rutado de audio por el sistema a través del uso de búfers más pequeños y de una nueva característica para peticiones de audio profesional con latencias en torno a 20 milisegundos, ya existía una característica de baja latencia que conseguía a los 50 milisegundos.
+
+Además de la mejora en la latencia, con la versión 5.0 se incluyeron: el soporte para datos en punto flotante, compatibilidad con frecuencias de muestreo de 96 kHz, ya eran compatibles las de 44.1 y 48 kHz, y para la resolución de 24 bits por muestra, frente a los 16 bits por muestra que ya se soportaban.
+Por su parte, Android 6.0 además de continuar optimizando la latencia del audio, incorporó compatibilidad con el protocolo MIDI.
+
+
+\subsection{Situación actual sobre Android N}
+El salto de Android 6.0 a la versión 7.0 ó 7.1 no ha traído grandes cambios a nivel de audio.
+
+Es destacable eso sí lo que es una tendencia en las últimas versiones, que es el uso de ficheros XML para la descripción de la configuración, sustituyendo a ficheros escritos en C++ habitualmente. En relación al audio, se ha incorporado la descripción de las curvas de volumen para los distintos casos de uso en diferentes ficheros XML, lo que permite al desarrollador sustituir dichos ficheros sin necesidad de recompilar el código. Este cambio se aborda más en profundidad en el apartado 5.Curvas de Volumen. (AGREGAR ENLACE A DICHO APARTADO)
+
+Por último, aunque en el código base de Android no haya habido cambios significativos, a más bajo nivel Qualcomm sí que ha incorporado mejoras en el uso del ADSP, incorporando nuevas versiones de algunos módulos de procesado de audio.
