@@ -1,0 +1,30 @@
+\ifglsentryexists{NFC}{}%
+{%
+\gls@defglossaryentry{NFC}%
+{%
+name={NFC},%
+sort={NFC},%
+type={main},%
+first={Near Field Communication (NFC)},%
+firstplural={Near Field Communication (NFC)s},%
+text={NFC},%
+plural={NFCs},%
+description={Near Field Communication},%
+descriptionplural={Near Field Communication},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%

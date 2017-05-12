@@ -22,6 +22,9 @@
 \newcommand{\BlankPage}{\newpage\null\thispagestyle{empty}\newpage}%Si ponemos \BlankPage añade una página en blanco
 \addto\captionsspanish{\renewcommand{\contentsname}{Índice}} %Para que la tableofcontents se llama Índice en lugar de Contents
 
+\loadglsentries{acronimos}
+\makeglossaries
+
 \begin{document}
 \pagestyle{plain}
 \pagenumbering{gobble}
@@ -67,5 +70,8 @@
 
 %Capítulo 2. Análisis
 \input{analisis}
+
+
+\printglossaries
 
 \end{document}
