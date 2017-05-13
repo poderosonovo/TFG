@@ -11,6 +11,7 @@
 \usepackage{enumitem}%enumeraciones
 \usepackage{fancyhdr}%para encabezados y pie de pagina
 \usepackage{graphicx}%para más opciones al meter imágenes
+\usepackage{wrapfig}%para poder poner imágenes con texto a los lados
 \graphicspath{ {graphics/} }%Ruta de las imágenes
 %Márgenes
 \usepackage[left=1.2in, right=1.2in, top=1in, bottom=1.5in]{geometry}
@@ -21,6 +22,7 @@
 
 \newcommand{\BlankPage}{\newpage\null\thispagestyle{empty}\newpage}%Si ponemos \BlankPage añade una página en blanco
 \addto\captionsspanish{\renewcommand{\contentsname}{Índice}} %Para que la tableofcontents se llama Índice en lugar de Contents
+\addto\captionsspanish{\renewcommand{\glossaryname}{Acrónimos}} %Para que el glosario se llama Acrónimos en lugar de Glosario
 
 \loadglsentries{acronimos}
 \makeglossaries
@@ -48,6 +50,10 @@
 % Contents
 \pagenumbering{roman}
 \tableofcontents
+\BlankPage
+\listoffigures
+\BlankPage
+\listoftables
 \BlankPage
 %\listoffigures
 %\BlankPage

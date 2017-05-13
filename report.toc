@@ -10,8 +10,6 @@
 \select@language {spanish}
 \select@language {english}
 \select@language {spanish}
-\select@language {english}
-\select@language {spanish}
 \contentsline {chapter}{\numberline {1}An\IeC {\'a}lisis}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Evoluci\IeC {\'o}n del sistema operativo Android}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Situaci\IeC {\'o}n del audio sobre el sistema operativo Android}{4}{section.1.2}
