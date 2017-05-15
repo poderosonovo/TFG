@@ -1,0 +1,55 @@
+\chapter{Entorno de trabajo}
+Durante este capítulo se recopilarán todas las herramientas de interés con las que he trabajado durante este proyecto, con el objetivo que los capítulos posteriores se tenga una visión general de la aplicación que tienen.
+
+\section{Código base sobre el que se desarrolla}
+El código base sobre el que se ha desarrollado el proyecto, es el código de Android optimizado por parte de la empresa BQ.
+
+Es destacable que, pese a no introducir BQ muchos cambios sobre el código nativo, el código sin compilar tiene un peso de unos 100 \gls{GB}.
+
+Por tanto, en su gran mayoría dicho código proviene de parte de Google, el nativo de Android, y por parte de Qualcomm, los drivers necesarios para el uso del hardware. Respecto a esto último, hay parte de dicho código que viene precompilado por parte de Qualcomm, para evitar posibles modificaciones por parte de los desarrolladores.
+
+
+\subsection{Estructura del código}
+El código Android se estructura de manera muy similar al diagrama de capas visto en la Figura \ref{fig:audio_layers}. Recordar que la primera de las capas hace referencia al código de la aplicación que este siendo utilizada, y por tanto no se incluye dicha capa en el código.
+
+Se tienen diferentes carpetas que equivalen a cada una de las capas:
+
+\begin{itemize}
+	\item{frameworks: incluye tanto las capas superiores como las intermedias. Por un lado, se encuentra la \gls{JNI} programada en Java en la carpeta base. Por otro lado, la otra carpeta que nos es relevante en este proyecto es av, la cual incluye la política de audio en su totalidad.}
+	\item{hardware: incluye la capa superior de la \gls{HAL}. En ella encontramos la carpeta qcom cuyo desarrollo es parte de Qualcomm y en la cual se incluye toda la configuración del hardware en función de los distintos casos de uso. Incluye, junto con el framework, la mayor parte del código que se ha modificado durante la realización de este proyecto.}
+	\item{vendor: incluye la capa inferior de la \gls{HAL}. En ella se encuentran todos los drivers propietarios de Qualcomm.}
+	\item{kernel: como ya se ha comentado, Android está basado en el kernel de Linux, y es aquí dónde dicha modificación se encuentra.}
+	\item{device: aquí se incluyen ficheros propios de cada dispositivo, como puede ser el de la configuración de las curvas de volumen, o los ficheros de configuración de su \gls{ADSP}.}	
+\end{itemize}
+
+Por supuesto, el código es mucho más extenso, pero con respecto al tratamiento del audio en el sistema operativo Android, estas serían las carpetas más importantes.
+
+Debido a esta extensión, la compilación local sería inviable si cada vez que quisiésemos compilar hubiese que hacerlo de todo el código. Por esa razón, en muchos directorios del código aparecen Makefiles, ficheros que nos permiten compilar únicamente lo que nos interesa generando librerías en lugar de una nueva versión del firmware.
+
+
+\section{Programas de utilidad para el análisis y diseño}
+El fabricante del \gls{SoC} de los dispositivos con los que se ha trabajado es Qualcomm. Esta empresa proporciona software propio dedicado al análisis y configuración del hardware que fabrican. De esta manera, relacionados con el tema del audio, se han utilizado los siguientes programas:
+
+\begin{itemize}
+	\item{\gls{QPST}: proporciona un servidor automático entre un lenguaje, u otro programa, y un puerto del ordenador, al que conectamos el dispositivo móvil. Nos permite analizar y configurar el dispositivo en tiempo real. Es compatible con el resto de software de Qualcomm.}
+	\item{\gls{QACT}: proporciona una interfaz gráfica que nos permite visualizar y modificar la calibración de las diferentes topologías, los distintos caminos que puede seguir el audio, que existen en el \gls{ADSP}. Tiene dos modos de uso, un modo sin conexión, en el que los cambios se guardan en ficheros de configuración que posteriormente hay que cargar en el teléfono, y un modo en tiempo real, en el cual podemos ver y calibrar la topología que se está aplicando en cada momento. Para que sea posible utilizar el modo en tiempo real es necesario que el dispositivo esté conectado por medio del \gls{QPST}.}
+	\item{\gls{QXDM}: aunque su uso en el apartado del audio está muy limitado, permite obtener flujos de datos y trazas informativas en diferentes puntos del camino que sigue el audio a bajo nivel. Estos conjuntos de datos se deberán procesar posteriormente, pues el formato con el que te proporciona la información es propietario de Qualcomm.}
+	\item{\gls{QCAT}: como se ha comentado en el programa anterior, el formato obtenido únicamente es interpretable por parte de Qualcomm que nos proporciona este software con el objetivo de poder obtener ficheros de audio analizables y reproducibles a través de los datos obtenidos con \gls{QXDM}. Además, es un programa de análisis estadístico, proporcionando información del número de trazas obtenidas en cada punto, el tiempo entre trazas, etc.}
+	\item{Adobe Audition: es el programa utilizado por parte del departamento de audio, de la empresa BQ, para el análisis de los distintos ficheros de audio, es propiedad de Adobe. En el caso de este proyecto, se ha utilizado para analizar los ficheros de audio obtenido mediante el programa \gls{QCAT}. Destacar que se trata de un programa con un gran número de herramientas, sobre todo dedicadas a la edición de audio profesional, enfoque que no se ha seguido en este trabajo.}	
+	\item{\gls{ADB}: no es un programa de Qualcomm, sino que es la herramienta que proporciona Google para poder conectarnos al de manera remota, mediante comandos desde el ordenador. Esta herramienta proporciona diferentes acciones en dispositivos, como la instalación de librerías y la depuración mediante trazas.}
+\end{itemize}
+
+\section{Otros recursos utilizados}
+Como ya se ha comentado, este proyecto está al amparo de la empresa Mundo Reader S.L., cuyo nombre comercial es BQ, la cual trabaja con distintas herramientas en su día a día. Con el objetivo de familiarizarse al máximo con la metodología que allí se sigue, se han utilizado dichos recursos durante la realización de este proyecto. Cuales son y el uso que se le han dado se explica a continuación:
+
+\begin{itemize}
+	\item{Jenkins: se trata de un servidor de integración continua, gratuito y abierto. Permite a los desarrolladores compilar sus proyectos en servidos remotos, de una manera más rápida que si lo hicieran en local. Se basa en un sistema de colas, para mantener en espera una compilación hasta que un servidor quede libre.}
+	\item{Gerrit: es un repositorio donde se desarrollan los proyectos de automatización. Los desarrolladores publican su código que tiene que ser aprobados por el resto de compañeros y pasar pruebas de compilación ejecutadas en Jenkins.}
+	\item{Confluence: es un software de colaboración de contenidos, propiedad de Atlassian. De esta manera, cada vez que desarrollas alguna nueva funcionalidad o analizas algún punto de interés, se debe subir a esta plataforma una breve documentación de lo realizado que es accesible y editable por parte del resto de compañeros.}
+	\item{JIRA: permite planificar y supervisar las distintas tareas de un departamento, así como indicar las horas dedicadas a cada tarea por parte de cada trabajador. El objetivo es poder realizar un seguimiento ordenado sobre el estado en que se encuentra cada una de las tareas, si están finalizadas o si ha surgido algún problema, así como saber quienes están al cargo de dicha realización, facilitando la interacción entre ellos en el caso de no pertenecer al mismo grupo de trabajo. También es propiedad de Atlassian, y la integración con Confluence es total.}
+\end{itemize}
+
+
+
+
+
