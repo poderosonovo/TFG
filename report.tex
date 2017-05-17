@@ -19,6 +19,7 @@
 \usepackage{afterpage}
 \usepackage{xcolor}
 \usepackage{multirow}
+\usepackage{float}
 
 \newcommand{\BlankPage}{\newpage\null\thispagestyle{empty}\newpage}%Si ponemos \BlankPage añade una página en blanco
 \addto\captionsspanish{\renewcommand{\contentsname}{Índice}} %Para que la tableofcontents se llama Índice en lugar de Contents
@@ -50,15 +51,11 @@
 % Contents
 \pagenumbering{roman}
 \tableofcontents
-\BlankPage
+%\BlankPage
 \listoffigures
-\BlankPage
+%\BlankPage
 \listoftables
 \BlankPage
-%\listoffigures
-%\BlankPage
-%\listoftables
-%\BlankPage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Body
