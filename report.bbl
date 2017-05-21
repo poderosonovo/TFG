@@ -1,0 +1,53 @@
+\begin{thebibliography}{1}
+
+\bibitem{history}
+Ron Amadeo.
+\newblock The (updated) history of android.
+\newblock
+  \url{https://arstechnica.com/gadgets/2016/10/building-android-a-40000-word-history-of-googles-mobile-os/}.
+\newblock Accedido: 2017-05-04.
+
+\bibitem{jelly_bean}
+Google.
+\newblock Jelly {B}ean 4.3.
+\newblock \url{https://www.android.com/intl/en_us/versions/jelly-bean-4-3/}.
+\newblock Accedido: 2017-05-04.
+
+\bibitem{kitkat}
+Google.
+\newblock Kit{K}at 4.4.
+\newblock \url{https://www.android.com/intl/en_us/versions/kit-kat-4-4/}.
+\newblock Accedido: 2017-05-04.
+
+\bibitem{lollipop}
+Google.
+\newblock Android 5.0, {L}ollipop.
+\newblock \url{https://www.android.com/intl/en_us/versions/lollipop-5-0/}.
+\newblock Accedido: 2017-05-04.
+
+\bibitem{marshmallow}
+Google.
+\newblock Android 6.0, {M}arshmallow.
+\newblock \url{https://www.android.com/intl/en_us/versions/marshmallow-6-0/}.
+\newblock Accedido: 2017-05-04.
+
+\bibitem{nougat}
+Google.
+\newblock Android 7.0 {N}ougat.
+\newblock \url{https://www.android.com/intl/en_us/versions/nougat-7-0/}.
+\newblock Accedido: 2017-05-04.
+
+\bibitem{audio_android}
+Android {S}ource.
+\newblock Audio.
+\newblock \url{https://source.android.com/devices/audio/}.
+\newblock Accedido: 2016-12-15.
+
+\bibitem{audio_manager}
+Android Developers.
+\newblock Audio{M}anager {API} 25.
+\newblock
+  \url{https://developer.android.com/reference/android/media/AudioManager.html}.
+\newblock Accedido: 2017-05-19.
+
+\end{thebibliography}

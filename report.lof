@@ -21,3 +21,13 @@
 \contentsline {figure}{\numberline {2.6}{\ignorespaces P\IeC {\'a}gina inicial de Jenkins.}}{12}{figure.2.6}
 \contentsline {figure}{\numberline {2.7}{\ignorespaces Mi p\IeC {\'a}gina de Confluence.}}{12}{figure.2.7}
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Mis tareas pendientes de JIRA.}}{13}{figure.2.8}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Declaraci\IeC {\'o}n de los modos de audio.}}{15}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Declaraci\IeC {\'o}n de los flujos de audio.}}{16}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Tono de llamada VoIP como MODE\_RINGTONE.}}{17}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Modo por defecto tras tono de llamada VoIP.}}{17}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Declaraci\IeC {\'o}n de MODE\_RINGTONE\_IP.}}{17}{figure.3.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {audio.h}}}{17}{figure.3.5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {AudioManager.java}}}{17}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Trazas Skype con MODE\_RINGTONE\_IP.}}{18}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Mensaje de error de Hangouts con MODE\_RINGTONE\_IP.}}{19}{figure.3.7}

@@ -20,6 +20,9 @@
 \usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{float}
+\usepackage{url}
+\usepackage[nottoc, notlot, notlof]{tocbibind}
+\usepackage{subfigure}
 
 \newcommand{\BlankPage}{\newpage\null\thispagestyle{empty}\newpage}%Si ponemos \BlankPage añade una página en blanco
 \addto\captionsspanish{\renewcommand{\contentsname}{Índice}} %Para que la tableofcontents se llama Índice en lugar de Contents
@@ -41,19 +44,21 @@
 \BlankPage
 \input{title_page_b105}
 \BlankPage
-\input{spanish_abstract}
-\BlankPage
-\input{english_abstract}
-\BlankPage
-
-
 
 % Contents
 \pagenumbering{roman}
+\input{spanish_abstract}
+\BlankPage
+\setcounter{page}{2}
+\input{english_abstract}
+\BlankPage
+\setcounter{page}{3}
 \tableofcontents
-%\BlankPage
+\BlankPage
+\setcounter{page}{4}
 \listoffigures
-%\BlankPage
+\BlankPage
+\setcounter{page}{5}
 \listoftables
 \BlankPage
 
@@ -77,6 +82,12 @@
 %Capítulo 3. Entorno de trabajo
 \input{entorno}
 
+%Capítulo 4. Modos de audio
+\input{modos_audio}
+
+
+\bibliographystyle{unsrt}
+\bibliography{bibliografia}
 
 \printglossaries
 
