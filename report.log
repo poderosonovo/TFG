@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.7)  21 MAY 2017 12:04
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.7)  21 MAY 2017 12:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1631,7 +1631,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 75.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 75.
- [4] <graphics/audio_layers.png, id=255, 380.92313pt x 557.08125pt>
+ [4] <graphics/audio_layers.png, id=257, 380.92313pt x 557.08125pt>
 File: graphics/audio_layers.png Graphic file (type png)
 
 <use graphics/audio_layers.png>
@@ -1784,7 +1784,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 30.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 30.
- <graphics/qpst.png, id=272, 474.27188pt x 335.00156pt>
+ <graphics/qpst.png, id=274, 474.27188pt x 335.00156pt>
 File: graphics/qpst.png Graphic file (type png)
 
 <use graphics/qpst.png>
@@ -1820,13 +1820,13 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 41.
  [8]
-<graphics/qact.png, id=277, 1445.4pt x 812.28468pt>
+<graphics/qact.png, id=279, 1445.4pt x 812.28468pt>
 File: graphics/qact.png Graphic file (type png)
  <use graphics/qact.png>
 Package pdftex.def Info: graphics/qact.png used on input line 44.
 (pdftex.def)             Requested size: 339.24956pt x 190.65143pt.
 
-<graphics/qxdm.png, id=278, 1445.4pt x 782.925pt>
+<graphics/qxdm.png, id=280, 1445.4pt x 782.925pt>
 File: graphics/qxdm.png Graphic file (type png)
  <use graphics/qxdm.png>
 Package pdftex.def Info: graphics/qxdm.png used on input line 51.
@@ -1871,13 +1871,13 @@ name{figure.2.2}) has been already used, duplicate ignored
                                                   \fi \fi 
 l.54 	\end{figure}
                    <./graphics/qpst.png> <./graphics/qact.png>]
-<graphics/qcat.png, id=286, 1445.4pt x 782.925pt>
+<graphics/qcat.png, id=288, 1445.4pt x 782.925pt>
 File: graphics/qcat.png Graphic file (type png)
  <use graphics/qcat.png>
 Package pdftex.def Info: graphics/qcat.png used on input line 58.
 (pdftex.def)             Requested size: 339.24956pt x 183.76042pt.
 
-<graphics/audition.png, id=287, 1445.4pt x 782.925pt>
+<graphics/audition.png, id=289, 1445.4pt x 782.925pt>
 File: graphics/audition.png Graphic file (type png)
 
 <use graphics/audition.png>
@@ -1935,7 +1935,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 73.
 
-<graphics/jenkins.png, id=294, 1445.4pt x 782.925pt>
+<graphics/jenkins.png, id=296, 1445.4pt x 782.925pt>
 File: graphics/jenkins.png Graphic file (type png)
 
 <use graphics/jenkins.png>
@@ -1974,14 +1974,14 @@ Package babel Info: Redefining spanish shorthand "?
                                                   \fi \fi 
 l.83 	\end{figure}
                    <./graphics/audition.png>]
-<graphics/confluence.png, id=300, 1445.4pt x 782.925pt>
+<graphics/confluence.png, id=302, 1445.4pt x 782.925pt>
 File: graphics/confluence.png Graphic file (type png)
 
 <use graphics/confluence.png>
 Package pdftex.def Info: graphics/confluence.png used on input line 88.
 (pdftex.def)             Requested size: 339.24956pt x 183.76042pt.
 
-<graphics/jira.png, id=301, 1445.4pt x 782.925pt>
+<graphics/jira.png, id=303, 1445.4pt x 782.925pt>
 File: graphics/jira.png Graphic file (type png)
  <use graphics/jira.png>
 Package pdftex.def Info: graphics/jira.png used on input line 95.
@@ -2117,7 +2117,7 @@ Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 15.
 [14
 
-] <graphics/audio_modes.png, id=319, 485.815pt x 242.9075pt>
+] <graphics/audio_modes.png, id=321, 485.815pt x 242.9075pt>
 File: graphics/audio_modes.png Graphic file (type png)
 
 <use graphics/audio_modes.png>
@@ -2184,7 +2184,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 59.
 
-<graphics/audio_streams.png, id=330, 529.98pt x 424.58624pt>
+<graphics/audio_streams.png, id=332, 529.98pt x 424.58624pt>
 File: graphics/audio_streams.png Graphic file (type png)
 
 <use graphics/audio_streams.png>
@@ -2223,7 +2223,7 @@ Package babel Info: Redefining spanish shorthand "?
                                                   \fi \fi 
 l.72 
       <./graphics/audio_streams.png>]
-<graphics/mode_ringtone.png, id=335, 738.76pt x 172.645pt>
+<graphics/mode_ringtone.png, id=337, 738.76pt x 172.645pt>
 File: graphics/mode_ringtone.png Graphic file (type png)
 
 <use graphics/mode_ringtone.png>
@@ -2235,21 +2235,21 @@ Overfull \hbox (58.20386pt too wide) in paragraph at lines 84--85
 biar^^Sa a MO-DE[]IN[]COMMUNICATION.
  []
 
-<graphics/mode_ringtone_off.png, id=336, 886.31125pt x 173.64874pt>
+<graphics/mode_ringtone_off.png, id=338, 886.31125pt x 173.64874pt>
 File: graphics/mode_ringtone_off.png Graphic file (type png)
 
 <use graphics/mode_ringtone_off.png>
 Package pdftex.def Info: graphics/mode_ringtone_off.png used on input line 88.
 (pdftex.def)             Requested size: 339.24956pt x 66.46678pt.
 
-<graphics/ring_ip_audio_h.png, id=337, 279.0425pt x 20.075pt>
+<graphics/ring_ip_audio_h.png, id=339, 279.0425pt x 20.075pt>
 File: graphics/ring_ip_audio_h.png Graphic file (type png)
 
 <use graphics/ring_ip_audio_h.png>
 Package pdftex.def Info: graphics/ring_ip_audio_h.png used on input line 99.
 (pdftex.def)             Requested size: 113.81102pt x 8.18791pt.
 
-<graphics/ring_ip_java.png, id=338, 677.53125pt x 21.07875pt>
+<graphics/ring_ip_java.png, id=340, 677.53125pt x 21.07875pt>
 File: graphics/ring_ip_java.png Graphic file (type png)
 
 <use graphics/ring_ip_java.png>
@@ -2323,7 +2323,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 110.
 
-<graphics/logs_mode_ring_ip.png, id=347, 362.35374pt x 123.46124pt>
+<graphics/logs_mode_ring_ip.png, id=349, 362.35374pt x 123.46124pt>
 File: graphics/logs_mode_ring_ip.png Graphic file (type png)
 
 <use graphics/logs_mode_ring_ip.png>
@@ -2331,7 +2331,7 @@ Package pdftex.def Info: graphics/logs_mode_ring_ip.png used on input line 118.
 
 (pdftex.def)             Requested size: 254.43878pt x 86.69354pt.
 
-<graphics/close_mode_ring_ip.png, id=348, 1084.05pt x 1927.2pt>
+<graphics/close_mode_ring_ip.png, id=350, 1084.05pt x 1927.2pt>
 File: graphics/close_mode_ring_ip.png Graphic file (type png)
 
 <use graphics/close_mode_ring_ip.png>
@@ -2534,10 +2534,10 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 488B7EE9134294D847C1843319E76806;1327.
  ) 
 Here is how much of TeX's memory you used:
- 13241 strings out of 493304
- 188900 string characters out of 6139872
- 348189 words of memory out of 5000000
- 16322 multiletter control sequences out of 15000+600000
+ 13245 strings out of 493304
+ 188977 string characters out of 6139872
+ 348204 words of memory out of 5000000
+ 16325 multiletter control sequences out of 15000+600000
  10611 words of font info for 38 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  46i,13n,43p,1718b,627s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2550,10 +2550,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist
 /type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmtt12.pfb>
-Output written on report.pdf (37 pages, 3236849 bytes).
+Output written on report.pdf (37 pages, 3237217 bytes).
 PDF statistics:
- 438 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 82 named destinations out of 1000 (max. 500000)
+ 442 PDF objects out of 1000 (max. 8388607)
+ 343 compressed objects within 4 object streams
+ 83 named destinations out of 1000 (max. 500000)
  242 words of extra memory for PDF output out of 10000 (max. 10000000)
 
