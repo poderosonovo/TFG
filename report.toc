@@ -25,5 +25,8 @@
 \contentsline {section}{\numberline {3.2}Dise\IeC {\~n}o de un nuevo modo de audio para tono de llamada VoIP.}{16}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Implementaci\IeC {\'o}n del modo de audio.}{16}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Pruebas y problemas en su uso.}{18}{subsection.3.2.2}
-\contentsline {chapter}{Bibliograf\'{\i }a}{20}{chapter*.4}
-\contentsline {chapter}{Acr\IeC {\'o}nimos}{21}{section*.5}
+\contentsline {chapter}{\numberline {4}Curvas de volumen}{20}{chapter.4}
+\contentsline {section}{\numberline {4.1}\IeC {\textquestiondown }Qu\IeC {\'e} son las curvas de volumen?}{20}{section.4.1}
+\contentsline {section}{\numberline {4.2}Diferencia entre Android M y Android N}{25}{section.4.2}
+\contentsline {chapter}{Bibliograf\'{\i }a}{26}{chapter*.4}
+\contentsline {chapter}{Acr\IeC {\'o}nimos}{27}{section*.5}

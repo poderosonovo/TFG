@@ -1,0 +1,92 @@
+\chapter{Curvas de volumen}
+En este capítulo se explicarán el funcionamiento de las curvas de volumen en Android. Además, se abordarán los cambios que han tenido lugar con el cambio de versión, de 6.0 Marshmallow a 7.0 Nougat, implementándose y realizando los ajustes necesarios de dichas curvas.
+
+\section{¿Qué son las curvas de volumen?}
+Las curvas de volumen marcan como se atenuará o aumentará el audio según el usuario modifique el volumen de su dispositivo.
+
+Existen múltiples curvas de volumen, una por cada tipo de audio que vaya a reproducirse por cada clase de dispositivo. Esto quiere decir, que habrá una curva de volumen que controle el volumen de las notificaciones cuando suenen por el altavoz, y habrá otra que lo controle cuando suenen por los auriculares.
+
+Para poder entender dicha clasificación es necesario entender los distintos flujos de audio que puede haber en el sistema, ya comentados en la figura \ref{fig:audio_streams}.
+Además, es necesario comprender los tipos de dispositivos que requieren curvas de volumen propias. Los dispositivos que tendrán relación con las curvas de volumen son los de salida, no los de entrada, ya que son los que reproducen el audio. La declaración de los distintos tipos de dispositivos tiene lugar en el fichero audio.h del sistema:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{audio_devices_out.png}
+	\caption{Declaración de los dispositivos de salida.}
+	\label{fig:audio_devices_out}
+\end{figure}
+
+Como no sería mantenible tener curvas de volumen para cada uno de estos dispositivos, pues son demasiados, estos se agrupan en categorías. De esta manera, se tendrá una curva de volumen para cada par de valores, en función del flujo de audio y de la categoría del dispositivo. La declaración de las cuatro categorías de dispositivos se realiza en el fichero Volume.h, ya orientado plenamente al control del audio:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{device_categories.png}
+	\caption{Declaración de las categorías de dispositivos.}
+	\label{fig:device_categories}
+\end{figure}
+
+También en este fichero se lleva a cabo la asignación de los distintos dispositivos de salida a cada una de las posibles categorías, mediante el siguiente método:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{device_categories_association.png}
+	\caption{Asociación de las categorías de dispositivos.}
+	\label{fig:device_categories_association}
+\end{figure}
+
+Los distintos tipos de dispositivos quedan agrupados en las siguientes categorías:
+
+\begin{itemize}
+	\item{Auricular: únicamente se incluye en esta categoría el auricular del teléfono.}
+	\item{Cascos: en esta categoría se incluyen tanto los cascos conectados por cable, mediante un conector de audio analógico \textit{jack} de 3.5mm, como los que se conectan de manera inalámbrica, según la especificación Bluetooth.}
+	\item{Dispositivos externos: se incluyen aquellos que se conectan a través del puerto \gls{USB}, mediante el protocolo \gls{HDMI}.}
+	\item{Altavoz: se incluyen tanto el altavoz propio del teléfono, altavoces conectados mediante Bluetooth, los sistemas de conexión Bluetooth de los coches, dispositivos conectados por \gls{USB} mediante el protocolo \gls{MIDI}, y dispositivos conectados de manera inalámbrica mediante \gls{WiFi}.}
+\end{itemize}
+
+Una vez se ha explicado como se clasifican las distintas curvas de volumen, falta explicar como se definen.
+
+Una curva de volumen, en el sistema operativo Android, está compuesta por un conjunto de puntos. Estos puntos deben seguir la siguiente estructura:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{puntos_curva.png}
+	\caption{Definición de un punto de la curva de volumen.}
+	\label{fig:puntos_curva}
+\end{figure}
+
+En su definición podemos observar que los puntos se definen con dos valores. Por un lado, tenemos el índice el cual nos marca la posición del punto en el eje x. Por otro lado, tenemos la atenuación en \gls{dB} que implicará situar el volumen en ese punto, dicha atenuación se corresponde con el eje y.
+
+La manera que tiene el sistema de definir una curva, a raíz de un conjunto de puntos configurables por parte del desarrollador, es mediante el uso de la interpolación lineal entre puntos.
+
+La interpolación lineal consiste en tratar los segmentos definidos entre dos puntos como una recta. De esta manera, si nuestra curva tiene cuatro puntos, tendremos un total de tres posibles segmentos. En estos segmentos, la atenuación aumenta o disminuye de manera lineal. La pendiente de la recta dependerá de lo cerca que se encuentren los puntos que definen el segmento, según el primer parámetro de su definición, y de la diferencia de atenuación que haya entre ellos, marcada por el segundo parámetro.
+
+Pero, como ya se ha comentado antes, el volumen lo marca el usuario. La relación, entre las curvas definidas en el sistema y la interfaz de volumen que se encuentra el usuario, se encuentra definida en la \gls{JNI}. La interfaz de usuario proporciona una barra de sonido para modificar el volumen. Dicha barra está definida mediante un número diferente de puntos en el fichero AudioService.java como se muestra a continuación:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Volumen máximo.]{\includegraphics[width=74mm]{max_volume_ui}}
+	\subfigure[Volumen mínimo.]{\includegraphics[width=73mm]{min_volume_ui}}
+	\caption{Declaración del control de volumen en la interfaz de usuario.} \label{fig:volume_curves_ui}
+\end{figure}
+
+De esta manera se define para cada tipo de flujo de audio una barra de control del volumen. En la que se empieza en cero, o uno en el caso de las llamadas de voz para que no se puedan silenciar, y se divide en tantos saltos como el volumen máximo indique.
+
+Por ejemplo, en el flujo de música, que sirve para cualquier reproducción multimedia, se define un volumen mínimo de cero y se puede aumentar hasta un total de veinticinco veces.
+
+La interfaz de las barras de volumen de cada uno de los flujos son iguales en longitud. Por tanto, cuanto mayor sea la distancia entre el volumen mínimo y máximo, menor será el cambio de la barra al subir o bajar el volumen. A continuación se muestra una captura para comparar el aumento de la barra de volumen que controla la música y la que controla los sonidos del sistema, al pulsar una vez en el botón de subir volumen:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Volumen de la música original.]{\includegraphics[width=35mm]{volume_music}}
+	\subfigure[Volumen de la música aumentado.]{\includegraphics[width=35mm]{volume_music_up}}
+	\break
+	\subfigure[Volumen del sistema original.]{\includegraphics[width=35mm]{volume_system}}
+	\subfigure[Volumen del sistema aumentado.]{\includegraphics[width=35mm]{volume_system_up}}
+	\caption{Comparación de barras de volumen de la interfaz de usuario.} \label{fig:volume_compare_ui}
+\end{figure}
+
+Como se puede observar, el cambio en la barra de usuario al aumentar el volumen del sistema es mucho mayor al cambio al aumentar el de la música. Esto implicará que el salto en las curvas definidas en el sistema también será mayor.
+
+La relación, entre la barra de control de la interfaz de usuario y las curvas de volumen, a cambiado ligeramente con el cambio de versión de Android M a N. Las implicaciones de estos cambios, así como la relación anteriormente comentada, se explicarán en el siguiente apartado.
+
+\section{Diferencia entre Android M y Android N}

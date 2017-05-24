@@ -31,3 +31,16 @@
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {AudioManager.java}}}{17}{figure.3.5}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Trazas Skype con MODE\_RINGTONE\_IP.}}{18}{figure.3.6}
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Mensaje de error de Hangouts con MODE\_RINGTONE\_IP.}}{19}{figure.3.7}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Declaraci\IeC {\'o}n de los dispositivos de salida.}}{21}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Declaraci\IeC {\'o}n de las categor\IeC {\'\i }as de dispositivos.}}{21}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Asociaci\IeC {\'o}n de las categor\IeC {\'\i }as de dispositivos.}}{22}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Definici\IeC {\'o}n de un punto de la curva de volumen.}}{23}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Declaraci\IeC {\'o}n del control de volumen en la interfaz de usuario.}}{23}{figure.4.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Volumen m\IeC {\'a}ximo.}}}{23}{figure.4.5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen m\IeC {\'\i }nimo.}}}{23}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Comparaci\IeC {\'o}n de barras de volumen de la interfaz de usuario.}}{24}{figure.4.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Volumen de la m\IeC {\'u}sica original.}}}{24}{figure.4.6}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen de la m\IeC {\'u}sica aumentado.}}}{24}{figure.4.6}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Volumen del sistema original.}}}{24}{figure.4.6}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Volumen del sistema aumentado.}}}{24}{figure.4.6}
