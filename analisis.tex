@@ -72,7 +72,7 @@ Por su parte, Android 6.0 además de continuar optimizando la latencia del audio
 \subsection{Situación actual sobre Android N}
 El salto de Android 6.0 a la versión 7.0 ó 7.1 no ha traído grandes cambios a nivel de audio.
 
-Es destacable, eso sí, lo que es una tendencia en las últimas versiones, que es el uso de ficheros XML para la descripción de la configuración, sustituyendo a ficheros escritos en C++ habitualmente. En relación al audio, se ha incorporado la descripción de las curvas de volumen para los distintos casos de uso en diferentes ficheros XML, lo que permite al desarrollador sustituir dichos ficheros sin necesidad de recompilar el código. Este cambio se aborda más en profundidad en el apartado 5.Curvas de Volumen. % AGREGAR ENLACE A DICHO APARTADO
+Es destacable, eso sí, lo que es una tendencia en las últimas versiones, que es el uso de ficheros XML para la descripción de la configuración, sustituyendo a ficheros escritos en C++ habitualmente. En relación al audio, se ha incorporado la descripción de las curvas de volumen para los distintos casos de uso en diferentes ficheros XML, lo que permite al desarrollador sustituir dichos ficheros sin necesidad de recompilar el código. Este cambio se aborda más en profundidad en el capítulo \ref{sec:curvas_volumen}.
 
 Profundizando algo más sobre la estructura actual del audio en Android, se pueden diferenciar cinco capas \cite{audio_android}: el \textit{framework} a nivel de aplicación, la \gls{JNI}, el \textit{framework} nativo, la \gls{HAL} y el Kernel de Linux. En la siguiente imagen se puede observar dichas capas:
 
@@ -100,4 +100,4 @@ Profundizando algo más sobre la estructura actual del audio en Android, se pued
 \end{itemize}
 
 
-Por último, aunque en el código base de Android no haya habido cambios significativos, a más bajo nivel Qualcomm, el proveedor de los \gls{SoC} de los terminales con los que se ha trabajado en este proyecto. Este módulo ha incorporado mejoras en el uso del \gls{ADSP}, el cual nos permiten un procesado del audio más efectivo y una mayor variedad en los efectos aplicados. El uso del \gls{ADSP} y las posibilidades que este nos permite se estudian más a fondo en el apartado 6.Rutas del audio. % AGREGAR ENLACE A DICHO APARTADO
+Por último, aunque en el código base de Android no haya habido cambios significativos, a más bajo nivel Qualcomm, el proveedor de los \gls{SoC} de los terminales con los que se ha trabajado en este proyecto. Este módulo ha incorporado mejoras en el uso del \gls{ADSP}, el cual nos permiten un procesado del audio más efectivo y una mayor variedad en los efectos aplicados. El uso del \gls{ADSP} y las posibilidades que este nos permite se estudian más a fondo en el capítulo 6.Rutas del audio. % AGREGAR ENLACE A DICHO APARTADO

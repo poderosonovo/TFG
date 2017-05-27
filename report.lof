@@ -19,7 +19,7 @@
 \contentsline {figure}{\numberline {2.4}{\ignorespaces P\IeC {\'a}gina inicial de QCAT.}}{10}{figure.2.4}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces P\IeC {\'a}gina inicial de Adobe Audition.}}{11}{figure.2.5}
 \contentsline {figure}{\numberline {2.6}{\ignorespaces P\IeC {\'a}gina inicial de Jenkins.}}{12}{figure.2.6}
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Mi p\IeC {\'a}gina de Confluence.}}{12}{figure.2.7}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Mi p\IeC {\'a}gina de Confluence.}}{13}{figure.2.7}
 \contentsline {figure}{\numberline {2.8}{\ignorespaces Mis tareas pendientes de JIRA.}}{13}{figure.2.8}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Declaraci\IeC {\'o}n de los modos de audio.}}{15}{figure.3.1}
@@ -44,3 +44,12 @@
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen de la m\IeC {\'u}sica aumentado.}}}{24}{figure.4.6}
 \contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Volumen del sistema original.}}}{24}{figure.4.6}
 \contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Volumen del sistema aumentado.}}}{24}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Definici\IeC {\'o}n curvas de volumen Android M.}}{25}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Asociaci\IeC {\'o}n curvas de volumen Android M.}}{26}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Obtenci\IeC {\'o}n de la atenuaci\IeC {\'o}n a partir de un \IeC {\'\i }ndice en Android M.}}{26}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Implementaci\IeC {\'o}n de una nueva curva de volumen en Android M.}}{27}{figure.4.10}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Definici\IeC {\'o}n de la curva.}}}{27}{figure.4.10}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Asociaci\IeC {\'o}n de la curva.}}}{27}{figure.4.10}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Aplicaci\IeC {\'o}n del nuevo formato de curvas de volumen.}}{28}{figure.4.11}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Definici\IeC {\'o}n curvas de volumen Android N.}}{29}{figure.4.12}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Asociaci\IeC {\'o}n curvas de volumen Android N.}}{29}{figure.4.13}

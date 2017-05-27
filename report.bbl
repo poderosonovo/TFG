@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{history}
 Ron Amadeo.
@@ -55,5 +55,11 @@ Android Developers.
 \newblock
   \url{https://developer.android.com/reference/android/media/AudioManager.html}.
 \newblock Accedido: 2017-05-19.
+
+\bibitem{curves_android_n}
+Android {S}ource.
+\newblock Configuring {A}udio {P}olicies.
+\newblock \url{https://source.android.com/devices/audio/implement-policy}.
+\newblock Accedido: 2017-02-22.
 
 \end{thebibliography}

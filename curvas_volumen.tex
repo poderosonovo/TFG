@@ -1,4 +1,4 @@
-\chapter{Curvas de volumen}
+\chapter{Curvas de volumen} \label{sec:curvas_volumen}
 En este capítulo se explicarán el funcionamiento de las curvas de volumen en Android. Además, se abordarán los cambios que han tenido lugar con el cambio de versión, de 6.0 Marshmallow a 7.0 Nougat, implementándose y realizando los ajustes necesarios de dichas curvas.
 
 \section{¿Qué son las curvas de volumen?}
@@ -87,6 +87,169 @@ La interfaz de las barras de volumen de cada uno de los flujos son iguales en lo
 
 Como se puede observar, el cambio en la barra de usuario al aumentar el volumen del sistema es mucho mayor al cambio al aumentar el de la música. Esto implicará que el salto en las curvas definidas en el sistema también será mayor.
 
-La relación, entre la barra de control de la interfaz de usuario y las curvas de volumen, a cambiado ligeramente con el cambio de versión de Android M a N. Las implicaciones de estos cambios, así como la relación anteriormente comentada, se explicarán en el siguiente apartado.
+La relación, entre la barra de control de la interfaz de usuario y las curvas de volumen, ha cambiado ligeramente con el cambio de versión de Android M a N. Las implicaciones de estos cambios, así como la relación anteriormente comentada, se explicarán en el siguiente apartado.
 
 \section{Diferencia entre Android M y Android N}
+Las principales diferencias entre ambas versiones, en relación al audio, se encuentran en la manera que tienen ambas de definir las curvas de volumen. Tanto las curvas de volumen por defecto, como el método de interpolación lineal. Por tanto, este apartado consistirá en aplicar dichos cambios, y explicar las diferencias entre ambas.
+
+\subsection{Android M}
+En Android Marshmallow, la implementación de las curvas de volumen se realiza en en el lenguaje de programación C++. En el fichero Gains.cpp se encuentran definidas por un lado las curvas, y por otro, la asociación de estas a cada uno de los casos de uso, como se muestra a continuación:
+
+\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{definicion_curvas_M}
+		\caption{Definición curvas de volumen Android M.}
+		\label{fig:declaracion_curvas_M}
+\end{figure}
+
+Como se puede observar, la definición de las curvas de volumen está basada en la declaración de cuatro puntos: uno inicial, uno final, y dos intermedios. Es obligatorio definir los cuatro puntos para su correcto funcionamiento. El primer número es el índice y el segundo es la atenuación en \gls{dB} que tendrá esa curva en ese punto.
+
+La asociación de dichas curvas de volumen a cada pareja de flujo de audio y categoría de dispositivo es la siguiente:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{asociacion_curvas_M}
+	\caption{Asociación curvas de volumen Android M.}
+	\label{fig:asociacion_curvas_M}
+\end{figure}
+
+Se trata del siguiente caso de uso: que se trate de un flujo de audio de llamada y entre todas las curvas que tiene asociadas se elige en función de la categoría del dispositivo. Esto permite, que si suena por el altavoz o por los cascos, puedan tener curvas de volumen distintas.
+
+En el mismo fichero, Gains.cpp, se encuentra el método que relaciona la barra de volumen de la interfaz de usuario, con las curvas de volumen aquí descritas. Además en este método se aplica la interpolación lineal para obtener la atenuación a partir de un índice no definido.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{volIndexToDb_M}
+	\caption{Obtención de la atenuación a partir de un índice en Android M.}
+	\label{fig:index_to_db_M}
+\end{figure}
+
+Por un lado la transformación de índice de la interfaz de usuario a un índice de la curva de volumen se realiza en las dos primeras líneas de la siguiente forma:
+
+\begin{equation}
+	nº pasos=1+indiceMaxCurva - indiceMinCurva
+\end{equation}
+\begin{equation}\label{ec:indiceEnCurva}
+	indiceEnCurva= nºpasos*\frac{indiceEnIU - indiceMinIU
+	}{indiceMaxIU-indiceMinIU}
+\end{equation}
+
+El resultado de la operación \ref{ec:indiceEnCurva} se evaluará para ver en que segmento de la curva cae. Al haber definido cuatro puntos, habrá cinco posibles segmentos: inferior al índice mínimo, entre el mínimo y el segundo punto, entre el segundo y el tercero, entre el tercero y el índice máximo, y superior al índice máximo. 
+
+En el caso de ser inferior al índice mínimo, el valor de atenuación es una macro definida en Volume.h que equivale a una atenuación máxima de -758\gls{dB}. Si fuese superior al máximo, la atenuación mínima serán 0\gls{dB}. Esto dependerá del índice mínimo y máximo de cada curva. Si empieza en 0 y acaba en 100 existirá la limitación superior, volumen máximo de 0\gls{dB} independientemente del volumen máximo fijado en la curva. Sin embargo, si empieza en 1 y acaba en 100 existirá la limitación inferior, volumen mínimo fijado a -758\gls{dB} independientemente del volumen mínimo fijado en la curva. Esta limitación ha causado bastantes problemas, pues el volumen máximo/mínimo proporcionado no se correspondía con el definido en la curva.
+
+Para el resto de segmentos, se realiza una interpolación lineal para obtener la atenuación:
+\begin{equation}
+dBPorPaso=\frac{atenuacionMaxSeg-atenuacionMinSeg}{indiceMaxSeg-indiceMinSeg}
+\end{equation}
+\begin{equation}\label{ec:atenuaciondB}
+atenuaciondB=atenuacionMinSeg+(indiceEnCurva-indiceMinSeg)*dBPorPaso
+\end{equation}
+
+De esta manera se obtiene la atenuación en \gls{dB} para una posición de la barra de volumen en la interfaz de usuario.
+
+Si queremos declarar una nueva curva de volumen, la definimos y asociamos en el fichero Gains.cpp. Además, será necesaria declararla junto a las demás en el fichero Gains.h.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Definición de la curva.]{\includegraphics[width=73mm]{curva_propia}}
+	\subfigure[Asociación de la curva.]{\includegraphics[width=74mm]{asociacion_propia_curva}}
+	\caption{Implementación de una nueva curva de volumen en Android M.} \label{fig:curva_propia}
+\end{figure}
+
+Se asocia el caso de uso de reproducción multimedia por el altavoz. Esta curva de volumen, comparada con la que se asociaba anteriormente, tiene un volumen mínimo más alto, y es lineal. Esto quiere decir, que aumenta su volumen siempre igual independientemente del segmento en el que caiga.
+
+Para aplicar estos cambios, es necesario compilar el código desde el textit{framework} nativo. Esto genera librerías, que hay que añadir al sistema del dispositivo mediante la herramienta \gls{ADB}. 
+
+
+Si el teléfono tiene un \textit{firmware} que nunca antes ha sido modificado, es necesario realizar lo siguiente, con el dispositivo conectado vía \gls{USB}, antes de seguir:
+\\
+\lstset{breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[frame=single]
+adb root
+adb disable-verity
+adb reboot
+\end{lstlisting}
+
+Esto permitirá que el \textit{firmware} sea modificable sin ser necesaria su sustitución completa.
+
+Tras esto, o si se trata de un \textit{firmware} ya modificado, y con el dispositivo conectado al ordenador via \gls{USB}, hay que ejecutar desde la consola de comandos:
+\\
+\lstset{breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[frame=single]
+adb root
+adb remount
+adb push /system/path_libreria/nombre_libreria /system/path_libreria
+adb reboot
+\end{lstlisting}
+
+Lo primero es consiste en poner el dispositivo en modo superusuario. Después, se habilita escritura en el sistema. Finalmente, se suben las librerías necesarias a la ruta del sistema indicada en la compilación, y se reinicia el dispositivo para que se apliquen los cambios.
+
+\subsection{Android N}
+En Android Nougat la declaración y asociación de las curvas de volumen ha cambiado, usando el lenguaje de programación XML en lugar de C++.
+
+Para habilitar este cambio, es necesario incluir una opción de compilación en el Makefile de configuración del microcontrolador \cite{curves_android_n}. Para ello, es necesario saber que procesador lleva el dispositivo con el que estamos trabajando. Se debe añadir la siguiente línea:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{makefile_cambio_curvas}
+	\caption{Aplicación del nuevo formato de curvas de volumen.}
+	\label{fig:mk_cambio_curvas}
+\end{figure}
+
+Una vez realizado dicho cambio, las curvas de volumen y los métodos de cálculo de Android M dejarán de usarse. Se empiezan a usar los siguientes ficheros:
+\begin{itemize}
+	\item{default\_volume\_tables.xml: fichero en el que se definen las curvas de volumen que se vayan a utilizar en más de un caso de uso.}
+	\item{audio\_policy\_volumes.xml: fichero en el que se asocian las curvas de volumen. En cada caso de uso, se puede utilizar una curva de volumen ya definida o definir un conjunto de puntos, sin llegar a declarar la curva.}
+	\item{audio\_policy\_configuration.xml: fichero que se encarga de definir los formatos y frecuencias de muestreo soportadas. Entre otras funciones, incluye las curvas de volumen definidas en los dos ficheros ya comentados.}
+\end{itemize}
+
+Como ya se ha comentado, otra diferencia con la versión anterior es el hecho de que no sea necesario declarar todas las curvas de volumen, pudiéndose definir en cada caso de uso como un conjunto de puntos.
+
+Otra diferencia importante es la posibilidad de definir curvas de volumen con un número de puntos distinto de cuatro. Por tanto, se pueden definir curvas con dos puntos, lo que equivaldría a una recta, y curvas con un gran número de puntos, que nos permiten más precisión a la hora de que se aplique una atenuación u otra en cada punto.
+
+Además, la atenuación ahora se define en \gls{mB}, a diferencia de la anterior versión que se definía en \gls{dB}. Esto permite trabajar con números enteros, en lugar de con decimales, lo que resulta mucho más eficiente.
+
+Un ejemplo de declaración de una curva con dos puntos y otra de cuatro, al igual que en la anterior versión, es el siguiente:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{declaracion_curvas_n}
+	\caption{Definición curvas de volumen Android N.}
+	\label{fig:declaracion_curvas_n}
+\end{figure}
+
+Estas curvas pueden asociarse en el fichero audio\_policy\_volumes.xml. Pero también se pueden definir un conjunto de puntos, sin llegar a declarar la curva. Un ejemplo de esto se ve a continuación:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{asociacion_curvas_n}
+	\caption{Asociación curvas de volumen Android N.}
+	\label{fig:asociacion_curvas_n}
+\end{figure}
+
+En este caso, para el caso de uso de los sonidos del sistema reproduciéndose por unos auriculares, se describen cuatro puntos que marcarán su curva de volumen. Sin embargo, para estos mismos sonidos, al reproducirse por el altavoz, se asocia una curva de las curvas ya definidas.
+
+La última diferencia la encontramos en el método que calcula la atenuación en \gls{dB} a partir de la barra de sonido de la interfaz.
+
+A la hora de realizar los cálculos para saber en que segmento de la curva cae el índice proporcionado por la interfaz, se realiza de igual manera que la indicada en la ecuación \ref{ec:indiceEnCurva}. Tras esto, se sigue asociando a uno de los posibles segmentos.
+
+Lo que si que cambia, es la limitación de volumen máximo que existía en Android M. Ahora, independientemente de los índices, el volumen máximo se corresponde con el definido en la curva. No sucede esto con el volumen mínimo, ya que se sigue manteniendo el hecho de que, si la curva comienza en un índice distinto de cero, la atenuación máxima será -758\gls{dB}.
+
+Una vez obtenido el segmento, y comprobado que no estamos en ninguno de los casos mencionados, la interpolación lineal se realiza de la misma manera que la indicada en la ecuación \ref{ec:atenuaciondB}.
+
+Al no estar aplicado este cambio en las curvas de volumen, ha sido necesario crear y ajustar cada curva de volumen para que siguiese los perfiles de las utilizadas en Android M. 
+
+La ventaja principal que supone aplicar este cambio, es que al estar definidas las curvas de volumen y su política en ficheros XML no es necesario compilar cada vez que queramos realizar algún cambio. Se puede directamente sustituir el fichero XML existente el sistema del dispositivo por el nuevo, mientras se mantenga la nomenclatura. Para realizar esta sustitución se hace uso de la herramienta \gls{ADB}.
+\\
+\lstset{breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[frame=single]
+adb root
+adb remount
+adb push /system/etc/default_volume_tables.xml /system/etc
+adb push /system/etc/audio_policy_volumes.xml /system/etc
+adb reboot
+\end{lstlisting}
+
+Como se puede observar, el proceso es similar al ya comentado en Android M. La principal diferencia es que aquí se suben los ficheros y no las librerías compiladas.
+
