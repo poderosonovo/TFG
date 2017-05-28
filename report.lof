@@ -53,3 +53,26 @@
 \contentsline {figure}{\numberline {4.11}{\ignorespaces Aplicaci\IeC {\'o}n del nuevo formato de curvas de volumen.}}{28}{figure.4.11}
 \contentsline {figure}{\numberline {4.12}{\ignorespaces Definici\IeC {\'o}n curvas de volumen Android N.}}{29}{figure.4.12}
 \contentsline {figure}{\numberline {4.13}{\ignorespaces Asociaci\IeC {\'o}n curvas de volumen Android N.}}{29}{figure.4.13}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Esquema del rutado del audio a bajo nivel.}}{32}{figure.5.1}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Declaraci\IeC {\'o}n de dispositivos para cada ruta.}}{33}{figure.5.2}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de reproducci\IeC {\'o}n.}}}{33}{figure.5.2}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivos de captaci\IeC {\'o}n.}}}{33}{figure.5.2}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Asociaci\IeC {\'o}n de topolog\IeC {\'\i }as para cada dispositivo.}}{33}{figure.5.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de reproducci\IeC {\'o}n.}}}{33}{figure.5.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivos de captaci\IeC {\'o}n.}}}{33}{figure.5.3}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Ejemplo de selecci\IeC {\'o}n de dispositivos.}}{34}{figure.5.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivo de reproducci\IeC {\'o}n.}}}{34}{figure.5.4}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivo de captaci\IeC {\'o}n.}}}{34}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Tipos de aplicaci\IeC {\'o}n por defecto.}}{34}{figure.5.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Declaraci\IeC {\'o}n tipos por defecto.}}}{34}{figure.5.5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Asociaci\IeC {\'o}n tipos por defecto.}}}{34}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Asociaci\IeC {\'o}n de rutas \textit {hardware} para cada dispositivo.}}{35}{figure.5.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de reproducci\IeC {\'o}n.}}}{35}{figure.5.6}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivos de captaci\IeC {\'o}n.}}}{35}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Definici\IeC {\'o}n de rutas \textit {hardware}.}}{36}{figure.5.7}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivo de reproducci\IeC {\'o}n.}}}{36}{figure.5.7}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivo de captaci\IeC {\'o}n.}}}{36}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Modificaci\IeC {\'o}n de la ganancia del auricular en tiempo real.}}{36}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Rutado por el c\IeC {\'o}dec de audio del altavoz.}}{37}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces P\IeC {\'a}gina principal del programa QACT.}}{38}{figure.5.10}

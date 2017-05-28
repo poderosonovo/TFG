@@ -18,5 +18,11 @@
 \BOOKMARK [1][-]{section.4.2}{Diferencia entre Android M y Android N}{chapter.4}% 18
 \BOOKMARK [2][-]{subsection.4.2.1}{Android M}{section.4.2}% 19
 \BOOKMARK [2][-]{subsection.4.2.2}{Android N}{section.4.2}% 20
-\BOOKMARK [0][-]{chapter*.4}{Bibliograf\355a}{}% 21
-\BOOKMARK [0][-]{section*.5}{Acr\363nimos}{}% 22
+\BOOKMARK [0][-]{chapter.5}{Rutas del audio}{}% 21
+\BOOKMARK [1][-]{section.5.1}{Rutado en el c\363digo}{chapter.5}% 22
+\BOOKMARK [2][-]{subsection.5.1.1}{Rutado a nivel de DSP}{section.5.1}% 23
+\BOOKMARK [2][-]{subsection.5.1.2}{Rutado a nivel de hardware}{section.5.1}% 24
+\BOOKMARK [1][-]{section.5.2}{Configuraci\363n del DSP a trav\351s del programa QACT}{chapter.5}% 25
+\BOOKMARK [2][-]{subsection.5.2.1}{Modos de dise\361o disponibles}{section.5.2}% 26
+\BOOKMARK [0][-]{chapter*.4}{Bibliograf\355a}{}% 27
+\BOOKMARK [0][-]{section*.5}{Acr\363nimos}{}% 28

@@ -1,0 +1,193 @@
+\chapter{Rutas del audio}\label{chap:rutas_audio}
+En este capítulo se explicará el rutado del audio tanto a nivel \textit{software}, como a nivel \textit{hardware}. Se abordarán temas como el procesado del audio, que es dependiente del camino que se escoja, como la configuración de dicho procesado y la asociación de nuevas rutas. Por tanto, se entrará en detalle a explicar como configurar el \gls{ADSP} y como evaluar los resultados de dichas configuraciones.
+
+
+\section{Rutado en el código}
+Para explicar todo esto, es necesario tener claras las diferencias que existen en Android sobre el rutado a nivel de código. Una parte del código se encargará de rutar el audio por el camino del \gls{ADSP}, y otra parte se encargará de rutarlo por los distintos módulos \textit{hardware}.
+
+Para empezar, la selección de un camino u otro se realiza a nivel de \gls{HAL}. Esto implica, que estamos a un nivel más bajo del que se había trabajado hasta ahora.
+
+En el siguiente diagrama se pueden observar los diferentes bloques por los que se ruta el audio en función de lo que indiquen algunos ficheros de configuración:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{rutas_esquema_audio}
+	\caption{Esquema del rutado del audio a bajo nivel.}
+	\label{figrutas_esquema}
+\end{figure}
+
+\begin{itemize}
+	\item{platform.c: fichero del código que se encarga de la lógica de rutado. Para cada caso de uso asocia una topología, un camino del \gls{ADSP}, y un camino del codec de audio, que puede ser el WCD8x16 o el TFA9911.}
+	\item{\gls{ADSP}: se encarga del procesado digital de la señal de audio. Sus topologías estarán configuradas según unos ficheros en el sistema, los ficheros \gls{ACDB}. No incluye lógica de rutado.}
+	\item{WCD8x16: es el códec de audio de Qualcomm. Se encarga del rutado y procesado del audio al más bajo nivel. Su configuración se realiza mediante un fichero mixer.xml. Incluye por tanto lógica de rutado. Recibe el audio de los micrófonos, lo procesa y se lo envía al \gls{ADSP}. También, recibe el audio del \gls{ADSP} y se encarga de sacarlo por los auriculares, mediante el conector de audio analógico de 3.5mm.}
+	\item{TFA9911: es un códec de audio dedicado exclusivamente para el altavoz del dispositivo. Incluye su propia lógica de rutado y su propio \gls{ADSP}. También se encarga del rutado y procesado al más bajo nivel.Se configura mediante un fichero tfa.cnt que iconfigura diferentes perfiles de sonido para el altavoz.}
+\end{itemize}
+
+\subsection{Rutado a nivel de DSP}
+Como ya se ha comentado, en la \gls{HAL} existe un fichero platform.c que es el encargado de la lógica de rutado del audio. Este fichero, en función de las características de la petición que reciba, habilitará un camino u otro.
+
+En el fichero platform.h se declaran todos los tipos de dispositivos. Estos dispositivos llevarán asociados una ruta del \gls{ADSP} y una ruta del códec de audio. Por tanto, para un sonido por el mismo altavoz, pueden existir muchos dispositivos para aplicarse en diferentes casos de uso.
+
+Se declaran dos tipos de dispositivos. Por un lado, se encuentran los dispositivos asociados con la salida del sonido, la reproducción. Por otro lado, se encuentran los dispositivos asociados con la entrada de sonido al sistema, la captación de audio. La declaración de estos dispositivos se realiza en el fichero platform.h de la siguiente manera:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Dispositivos de reproducción.]{\includegraphics[width=76mm]{declaracion_out_snd}}
+	\subfigure[Dispositivos de captación.]{\includegraphics[width=71mm]{declaracion_in_snd}}
+	\caption{Declaración de dispositivos para cada ruta.} \label{fig:declaracion_snd}
+\end{figure} 
+
+La lista de dispositivos declarados es muy grande, existiendo más dispositivos que rutas. Normalmente, cada dispositivo que se declara sirve para un caso particular. Aunque en la realidad, muchos de los dispositivos se asocian a diferentes situaciones, ya que no sería mantenible configurar tantas topologías del \gls{ADSP}, ni rutad en el códec de audio.
+
+En el fichero platform.c es donde se asocia cada uno de estos dispositivos con una topología y un camino del códec de audio. La asociación a nivel de \gls{ADSP} se realiza mediante unos números que identifican cada una de las topologías. De este modo, para asociar los dispositivos anteriormente declarados se haría así:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Dispositivos de reproducción.]{\includegraphics[width=76mm]{acdb_id_table_out}}
+	\subfigure[Dispositivos de captación.]{\includegraphics[width=71mm]{acdb_id_table_in}}
+	\caption{Asociación de topologías para cada dispositivo.} \label{fig:asociacion_acdb_id}
+\end{figure} 
+
+Pero hasta ahora estos dispositivos sólo de han declarado y configurado, falta seleccionarlos en cada caso de uso. Para ello, existen dos métodos de obtención del dispositivo, uno para salida y otro para entrada de audio. 
+
+En estos métodos se hace uso de todas las características de las peticiones del audio. Estas pueden ser: los modos de audio ya comentados en el capítulo \ref{chap:modos}, los dispositivos por los que vaya a sonar o captar el audio, los tipos de flujos de audio, etc. En función de todo lo anterior y muchas otras características de las peticiones, se asocian los dispositivos.
+
+El método encargado de la selección del dispositivo de salida se denomina platform\_get\_output\_snd\_device. El método encargado de la selección de los dispositivos de entrada se denomina platform\_get\_input\_snd\_device. Destacar que se trata de métodos muy largos, con unas doscientas líneas de código, y con una lógica muy enrevesada. Por tanto, no son métodos muy mantenibles. Vamos a ver algunos ejemplos de asociación de dispositivos: 
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Dispositivo de reproducción.]{\includegraphics[width=62mm]{eleccion_snd_handset}}
+	\subfigure[Dispositivo de captación.]{\includegraphics[width=85mm]{eleccion_handset_mic_snd}}
+	\caption{Ejemplo de selección de dispositivos.} \label{fig:eleccion_snd}
+\end{figure} 
+
+Pero las topologías del \gls{ADSP} no dependen únicamente del dispositivo asociado, también dependen del tipo de aplicación. Esto es un identificador, que en función del tipo de petición, asociará una topología u otra para un dispositivo seleccionado.
+
+En el fichero platform.c se definen los tipos por defecto tanto para recepción, encargada de la reproducción de sonido, como para transmisión, encargada de la captación de sonido. Su declaración y asociación se puede observar a continuación:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Declaración tipos por defecto.]{\includegraphics[width=62mm]{declaracion_app_type}}
+	\subfigure[Asociación tipos por defecto.]{\includegraphics[width=85mm]{default_app_type}}
+	\caption{Tipos de aplicación por defecto.} \label{fig:default_app_type}
+\end{figure} 
+
+Además para el caso de recepción, otros tipos de aplicación se asocian. Esta asociación se realiza en el fichero de la \gls{HAL} audio\_output\_policy.conf. Pero, por lo general, los casos por defecto son los que se utilizan.
+
+Cabe destacar, que en el caso de estar tratando con una llamada de voz, y que el código la interprete correctamente, los tipos de aplicación no se utilizan. Sólo se utilizan en los casos de reproducción o de grabación de audio.
+
+Teniendo todo esto en cuenta, el rutado hacia una topología del \gls{ADSP} se haría correctamente.
+
+\subsection{Rutado a nivel de \textit{hardware}}
+Tras pasar por el \gls{ADSP}, el audio tiene que ir por un camino físico hasta el dispositivo que se encargará de reproducirlo.
+
+Este camino, como ya se ha comentado, se selecciona con el fichero mixer.xml, el cual contiene los diferentes caminos existentes en el \textit{hardware}.
+
+La selección de uno de estos caminos también se realiza en el fichero platform.c. Se asocia a uno de los dispositivos, de manera similar a los identificadores del \gls{ACDB}. Al igual que en ese caso, hay que asociar tanto para dispositivos de salida como de entrada:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Dispositivos de reproducción.]{\includegraphics[width=76mm]{snd_out_mixer}}
+	\subfigure[Dispositivos de captación.]{\includegraphics[width=71mm]{snd_in_mixer}}
+	\caption{Asociación de rutas \textit{hardware} para cada dispositivo.} \label{fig:asociacion_snd_mixer}
+\end{figure}
+
+Una vez seleccionado el tipo de dispositivo, como se mostraba en la figura \ref{fig:eleccion_snd}, se aplicará la ruta definida en el fichero mixer.xml.
+
+Este fichero se compone de tres partes:
+\begin{itemize}
+	\item{Configuración inicial: en esta zona se definen los valores por defecto que tendrán los diferentes elementos \textit{hardware}. Se definen los estados en reposo de: líneas, buses, amplificadores, multiplexores, filtros, conversores, etc.}
+	\item{Configuraciones específicas: en esta zona se definen configuraciones más específicas en función de los requisitos de latencia, el uso del \gls{HDMI}, el uso de la radio \gls{FM}, el uso del Bluetooth, etc.}
+	\item{Configuraciones de cada dispositivo: en esta zona es dónde se definen las distintas rutas para cada dispositivo. Muchos de ellos utilizan las mismas configuraciones.}
+\end{itemize}
+
+Un ejemplo de ruta para los dispositivos SND\_DEVICE\_OUT\_HANDSET y SND\_DEVICE\_IN\_HANDSET\_MIC queda definido de la siguiente forma:
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Dispositivo de reproducción.]{\includegraphics[width=76mm]{mixer_handset}}
+	\subfigure[Dispositivo de captación.]{\includegraphics[width=71mm]{mixer_handset_mic}}
+	\caption{Definición de rutas \textit{hardware}.} \label{fig:definicion_rutas_mixer}
+\end{figure}
+
+Esto asocia a unas etiquetas ciertos valores. A más bajo nivel, al nivel del kernel, estos valores se interpretan y se escribe en los registros necesarios.
+
+En el caso del dispositivo de reproducción, que está asociado a la reproducción por el auricular del teléfono, se transmite el audio por el camino "RX1", configurándose un volumen, una ganancia del amplificador y configurando que el sonido salga por el auricular, dando a la etiqueta EAR\_S el valor Switch.
+
+Esto nos permite abstraernos de la lógica a nivel de registros, con el uso de un lenguaje de programación y una topología más simple.
+
+Se puede consultar el valor de cada etiqueta en tiempo real. Para ello, es necesario tener conectado el dispositivo al ordenador vía \gls{USB}. Se hace uso de las herramientas \gls{ADB} y del comando tinymix de la siguiente manera:
+\\
+\lstset{breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[frame=single]
+adb root
+adb shell
+tinymix "nombre_etiqueta"
+\end{lstlisting}
+
+Si queremos además cambia el valor de la etiqueta en tiempo real:
+\begin{lstlisting}[frame=single]
+adb root
+adb shell
+tinymix "nombre_etiqueta" "valor_etiqueta"
+\end{lstlisting}
+
+En la siguiente imagen se puede observar como se consulta el valor del amplificador del auricular y se modifica, produciéndose una bajada de volumen:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{tinymix_ear_pa}
+	\caption{Modificación de la ganancia del auricular en tiempo real.} 
+	\label{fig:tinymix_ear_pa}
+\end{figure}
+
+El valor, cuando se está escuchando un audio por el auricular en el móvil, es de una ganancia de 6\gls{dB}, pero mediante el comando tinymix se puede forzar a que baje a 1.5\gls{dB}.
+
+Como caso particular, falta por comentar el altavoz. Este altavoz tiene un códec de audio propio, por tanto para que se rute correctamente ha de añadirse, para todos los dispositivos que vayan a reproducirse por ahí, lo siguiente en el fichero audio\_hw.c:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{mixer_smpa}
+	\caption{Rutado por el códec de audio del altavoz.} 
+	\label{fig:mixer_smpa}
+\end{figure}
+
+De esta manera, para cada dispositivo relacionado con el altavoz, se asocia una nueva etiqueta que hará que el audio se rute por el códec TFA9911 en lugar de por el WCD8x16.
+
+\section{Configuración del DSP a través del programa QACT}
+La configuración del \gls{ADSP} únicamente es posible realizarla mediante el programa \gls{QACT}. Este programa sólo funciona en el sistema operativo Windows, por tanto durante esta sección se trabajará con dicho sistema.
+
+Este programa permite dos tipos de conexión:
+\begin{itemize}
+	\item{Modo sin conexión: permite editar los ficheros \gls{ACDB} sin tener conectado el dispositivo, siempre que los tengamos en el directorio local del ordenador. En este modo se permite, no sólo la configuración, sino también la creación y asociación de nuevas topologías. Tras editar los ficheros, será necesario cargarlos en el teléfono.}
+	\item{Modo con conexión: permite realizar la configuración de los ficheros \gls{ACDB} que se encuentran en el dispositivo. También permite observar que topología se aplica en tiempo real y modificarla. Los cambios realizados en tiempo real no serán permanentes. Para poder utilizar este modo, es necesario estar conectado mediante el programa \gls{QPST} al ordenador.}
+\end{itemize}
+
+La página principal del programa es la siguiente:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{QACT_MainPage}
+	\caption{Página principal del programa QACT.} 
+	\label{fig:qact_main}
+\end{figure}
+
+En ella se puede observar que hay tres desplegables que seleccionan el caso de uso que se muestra:
+\begin{itemize}
+	\item{Caso de uso del audio: puede ser grabación, reproducción o voz. Cada dispositivo debe ser de una de estas clases.}
+	\item{Dispositivo: se selecciona entre un conjunto de dispositivos, que serán los que tengan asociados el identificador que se asocia en el rutado del código, como se muestra en la figura \ref{fig:asociacion_acdb_id}. Se pueden añadir, modificar y eliminar dispositivos.}
+	\item{Frecuencia de muestreo: cada caso de uso puede ser configurado para cada una de las frecuencias de muestreo que soporta.}
+\end{itemize}
+
+Además, se puede observar que una ruta se divide en tres áreas, con distintas topologías en cada área. Estas áreas son:
+\begin{itemize}
+	\item{\gls{AFE}: sólo una topología de esta área puede ser asociada a cada dispositivo.}
+	\item{\gls{COPP}: se asocia una topología distinta de esta área para cada tipo de aplicación en cada dispositivo.}
+	\item{\gls{POPP}: se asocia una topología distinta de esta área para cada tipo de aplicación para todos los dispositivos. Es común para todos los dispositivos.}
+\end{itemize}
+
+Cada topología se compone de módulos ordenados. Estos módulos realizan distintos procesados, y se pueden configurar seleccionándolos. Existen módulos de filtrado de: amplificación, supresión de ruido, compresión multibanda, muestreo, generación de ruido, potenciación de bajos, ecualización, etc.
+
+\subsection{Modos de diseño disponibles}
+
+ 
