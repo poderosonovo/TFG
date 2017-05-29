@@ -3,7 +3,7 @@ En este capítulo se explicarán que son y para que se utilizan los distintos mo
 Además, se explicará la implementación de nuevos modos de audio y se evaluará su posible implementación en dispositivos comerciales.
 
 \section{¿Qué son los modos de audio en Android?}
-El sistema operativo Android se divide en distintas capas. El programador de alto nivel, el desarrollador de aplicaciones,únicamente tiene acceso a la capa superior del sistema. Por tanto, debe tener recursos a su disposición para que en las capas inferiores el audio se interprete como él quiera.
+El sistema operativo Android se divide en distintas capas, como se ha visto en la figura \ref{fig:audio_layers}. El programador de alto nivel, el desarrollador de aplicaciones, únicamente tiene acceso a la capa superior del sistema. Esto se debe a que el desarrollador se basa en las \gls{API} que publica Google para programas sus aplicaciones, sin tener información de que es lo que esas \gls{API} hacen a más bajo nivel. Por tanto, debe tener recursos a su disposición para que en las capas inferiores el audio se interprete como él quiera.
 
 Con este fin existen las \gls{API}, que proporcionan al programador estos recursos. Los modos de audio se incluyen en dichas \gls{API} desde la primera versión. El objetivo de estos modos es clasificar el audio en función de su uso. Los modos de audio existentes en la \gls{API} 25 \cite{audio_manager}, son:
 
@@ -18,77 +18,46 @@ Con este fin existen las \gls{API}, que proporcionan al programador estos recurs
 
 Los dos últimos modos de audio no se utilizan habitualmente, sino que suelen indicar errores. 
 
-Estos modos de audio se encuentran declarados en el fichero audio.h del sistema. 
-
-%\lstset{language=C, breaklines=true, basicstyle=\footnotesize}
-%\begin{lstlisting}[frame=single]
-%typedef enum {
-%	AUDIO_MODE_INVALID          = -2,
-%	AUDIO_MODE_CURRENT          = -1,
-%	AUDIO_MODE_NORMAL           = 0,
-%	AUDIO_MODE_RINGTONE         = 1,
-%	AUDIO_MODE_IN_CALL          = 2,
-%	AUDIO_MODE_IN_COMMUNICATION = 3,
-%	
-%	AUDIO_MODE_CNT,
-%	AUDIO_MODE_MAX              = AUDIO_MODE_CNT - 1,
-%} audio_mode_t;
-%\end{lstlisting}
+Estos modos de audio se encuentran declarados en el fichero audio.h del sistema.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{audio_modes.png}
+	\includegraphics[width=0.6\textwidth]{audio_modes.png}
 	\caption{Declaración de los modos de audio.}
 	\label{fig:audio_modes}
 \end{figure}
 
-El uso de un modo de audio u otro depende del desarrollador de la aplicación. A lo largo del sistema, únicamente se realizan las siguientes tareas:
+El uso de un modo de audio u otro depende del desarrollador de la aplicación. El flujo de ejecución en el resto de capas del sistema operativo es el siguiente:
 
 \begin{enumerate}
-	\item Comprobación del modo de audio seleccionado por la aplicación mediante el uso de métodos de obtención. De esta manera, en cada una de las capas se sabe que modo de audio se está usando y se aplicará la política de audio correspondiente.
+	\item Comprobación del modo seleccionado por la aplicación mediante el uso de métodos de obtención, de esta manera, en cada una de las capas se sabe que modo de audio se está usando y se aplicará la política de audio correspondiente.
 	\item Aplicación de la política de audio a casos de uso particulares. Por ejemplo, si se termina de aplicar el modo de audio en llamada, de manera automática se pasa al modo de audio normal.
 	\item Elección del uso de los modos de audio por parte del desarrollador de bajo nivel. Se puede hacer que el sistema interprete un caso de uso , con un modo de audio elegido por la aplicación, como un modo de audio distinto, que puede ser cualquiera de los otros o uno propio del desarrollador. En el siguiente apartado se explica este uso más en profundidad.
 \end{enumerate}
 
 
-\section{Diseño de un nuevo modo de audio para tono de llamada VoIP.}
+\section{Implementación de un nuevo modo de audio para tono de llamada VoIP.}
 Esta implementación se ha realizado sobre la versión de Android 6.0, Marshmallow. Esto se debe a que fue la primera parte del proyecto, que tuvo lugar antes de que se actualizasen los dispositivos a la versión 7.0, Nougat. Pese a ello, su implementación sobre la nueva versión del sistema operativo no varía.
 
 Las llamadas \gls{VoIP} tienen un modo de audio propio, en comunicación. Sin embargo, los tonos de llamada de estas llamadas \gls{VoIP} no tienen un modo de audio dedicado, sino que usan el modo de audio normal.
 
 \subsection{Implementación del modo de audio.}
-El primer desarrollo ha consistido en la utilización de un modo de los ya existentes. De esta manera, en vez de usar el modo de audio por defecto se utiliza el modo tono de llamada. Esto implica que se interprete de la misma manera un tono de llamada \gls{GSM} y uno \gls{VoIP}.
+Antes de la implementación de un nuevo modo de audio, el primer desarrollo ha consistido en la utilización de un modo de los ya existentes. Se ha seguido este orden para comprender primero las asociaciones de los modos de audio, y que así resultase más sencillo la implementación de uno nuevo. De esta manera, en vez de usar el modo de audio por defecto se utiliza el modo tono de llamada cuando recibamos una llamada \gls{VoIP}. Esto implica que se interprete de la misma manera un tono de llamada \gls{GSM} y uno \gls{VoIP}.
 
 Saber cuando se trata de un tono de llamada \gls{VoIP} es posible debido a la existencia de otra forma de clasificación del audio en el código. No solo existen los modos de audio, sino que también existen los tipos de flujos \cite{audio_manager}. La declaración de los tipos de flujos se realiza también en el fichero audio.h:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{audio_streams.png}
+	\includegraphics[width=0.6\textwidth]{audio_streams.png}
 	\caption{Declaración de los flujos de audio.}
 	\label{fig:audio_streams}
 \end{figure}
 
-Debido a la extensión de su código, la clasificación del audio se realiza de distintas maneras. Los tipos de flujos de datos permiten seleccionar la curva de volumen concreta, esto se aborda con mayor profundidad en el apartado 5.Curvas de Volumen. %AÑADIR SECCIÓN AL APARTADO 5.
+Además de los modos de audio y los tipos de flujos de datos, existen otras formas de clasificación que no serán abordadas en este proyecto. Los tipos de flujos de datos permiten seleccionar la curva de volumen concreta, esto se aborda con mayor profundidad en el capítulo \ref{chap:curvas_volumen}.
 
-Una vez se han introducido los flujos de datos, se pueden aprovechar estos para realizar la comparación.  En el fichero MediaPlayer.java, que se utiliza para controlar la reproducción de audio y vídeo, cuando se inicia la reproducción se comprueba si el flujo de datos está clasificado como timbre, AUDIO\_STREAM\_RING. 
+Una vez se han introducido los flujos de datos, se pueden aprovechar estos para realizar la comparación.  En el fichero MediaPlayer.java, que se utiliza para controlar la reproducción de audio y vídeo, cuando se inicia la reproducción se comprueba si el flujo de datos está clasificado como timbre, AUDIO\_STREAM\_RING. Si es así, se modifica el modo de audio a MODE\_RINGTONE.
 
-De esta manera saber si se trata de un tono de llamada \gls{VoIP} se implementa de la siguiente manera:
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{mode_ringtone.png}
-	\caption{Tono de llamada VoIP como MODE\_RINGTONE.}
-	\label{fig:mode_ringtone}
-\end{figure}
-
-Pero de esta manera, al acabar de sonar el tono de llamada pueden darse dos situaciones. Si se contesta la llamda el modo de audio se cambiará a MODE\_IN\_COMMUNICATION. Pero si no se contesta, el modo que se quedaría es MODE\_RINGTONE. Para que vuelva al modo por defecto, en el método que para la reproducción, se debe volver a fijar dicho modo:
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{mode_ringtone_off.png}
-	\caption{Modo por defecto tras tono de llamada VoIP.}
-	\label{fig:mode_ringtone_off}
-\end{figure}
+Pero de esta manera, al acabar de sonar el tono de llamada pueden darse dos situaciones. Si se contesta la llamada el modo de audio se cambiará a MODE\_IN\_COMMUNICATION. Pero si no se contesta, el modo que se quedaría es MODE\_RINGTONE. Para que vuelva al modo por defecto, en el método que para la reproducción, se debe volver a fijar dicho modo.
 
 El siguiente paso en el desarrollo ha sido la implementación de un modo propio. Para ello, es necesario declarar un nuevo modo de audio en las distintas capas del \textit{framework}.
 
@@ -107,22 +76,14 @@ A la hora de compilar la nueva implementación, es recomendable realizar una com
 
 Para realizar este proceso de una manera más rápida, se ha hecho uso de la herramienta Jenkins, añadiendo las modificaciones en el repositorio de Gerrit. Más información sobre la función de estas herramientas en \ref{sec:otros_recursos}.
 
-Una vez se tiene el nuevo \textit{firmware} descargado en el ordenador, se le debe dar permisos de ejecución al fichero que se encarga de sustituirlo en el dispositivo. Además, es necesario ejecutar el fichero con permisos de superusuario. Desde la consola de comandos es necesario ejecutar lo siguiente:
-\\
-\lstset{breaklines=true, basicstyle=\footnotesize}
-\begin{lstlisting}[frame=single]
-chmod +x nombre_fichero.sh
-sudo ./nombre_fichero.sh
-\end{lstlisting}
-
-Tras ejecutar esto, el dispositivo entrará en el modo textit{fastboot} y comenzará a realizar los cambios necesarios.
+Una vez se tiene el nuevo \textit{firmware} descargado en el ordenador, se le debe dar permisos de ejecución al fichero que se encarga de sustituirlo en el dispositivo. Además, es necesario ejecutar el fichero con permisos de superusuario. Tras ejecutarlo, el dispositivo entrará en el modo textit{fastboot} y comenzará a realizar los cambios necesarios.
  
 \subsection{Pruebas y problemas en su uso.}
 Una vez modificado el \textit{firmware} del dispositivo, se ha procedido a comprobar si se realiza de manera correcta la asociación del nuevo modo de audio.
 
 Se han realizado dos pruebas:
 \begin{enumerate}
-	\item Llamada \gls{VoIP} con la aplicación de Skype: los resultados son satisfactorios. Se aplica el modo de audio MODE\_RINGTONE\_IP sin ningún tipo de problema. En la siguiente imagen se observa una traza del dispositivo que indica que modo de audio se está aplicando:
+	\item Llamada \gls{VoIP} con la aplicación de Skype: el dispositivo A tiene la implementación realizada. Se realiza una llamada con la aplicación de Skype desde un dispositivo B al dispositivo A. Cuando el dispositivo A la recibe, comienza a reproducir el tono. Los resultados son satisfactorios. Se aplica el modo de audio MODE\_RINGTONE\_IP sin ningún tipo de problema. En la siguiente imagen se observa una traza del dispositivo que indica que modo de audio se está aplicando:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\textwidth]{logs_mode_ring_ip.png}
@@ -130,9 +91,9 @@ Se han realizado dos pruebas:
 		\label{fig:logs_mode_ring_ip}
 	\end{figure}
 	
-	Dichas traza muestran que se está en el modo por defecto, el cero. Llega una llamada de Skype y se pone el modo de tono de llamada \gls{VoIP}. Una vez que se contesta, se pasa al modo en comunicación. Finalmente, al colgar se vuelve al modo por defecto.
+	Dichas traza muestran que se está en el modo por defecto, el cero. Llega una llamada de Skype y se pone el modo de tono de llamada \gls{VoIP}. Una vez que se contesta, se pasa al modo en comunicación. Finalmente, al colgar se vuelve al modo por defecto. Este comportamiento es el esperado.
 	
-	\item Llamada \gls{VoIP} con la aplicación de Hangouts: en este caso los resultados no han sido los esperados. Cuando se realiza la llamada y se establece el nuevo modo de audio, la aplicación se cierra automáticamente. La captura de pantalla del dispositivo, con el mensaje de error, se puede observar a continuación:
+	\item Llamada \gls{VoIP} con la aplicación de Hangouts: el dispositivo A tiene la implementación realizada. Se realiza una llamada con la aplicación de Hangouts desde un dispositivo B al dispositivo A. Cuando el dispositivo A la recibe, comienza a reproducir el tono. En este caso los resultados no han sido los esperados. Cuando se realiza la llamada y se establece el nuevo modo de audio, la aplicación se cierra automáticamente. La captura de pantalla del dispositivo, con el mensaje de error, se puede observar a continuación:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.3\textwidth]{close_mode_ring_ip.png}
@@ -141,7 +102,7 @@ Se han realizado dos pruebas:
 	\end{figure}
 \end{enumerate}
 
-Finalmente, esta implementación no se ha llevado al producto final. Esto se ha debido a los problemas surgidos con la aplicación de Hangouts. Cabe destacar, que esta aplicación está diseñada por Google y por tanto es un indicativo de la incompatibilidad de crear nuevos modos de audio.
+Este problema sólo se ha reproducido con la aplicación de Hangouts. Cabe destacar, que esta aplicación está diseñada por Google y por tanto es un indicativo de la incompatibilidad de crear nuevos modos de audio.
 
-Como conclusiones de este apartado sacamos que, pese a su fácil implementación, no es conveniente el uso de modos de audio propios. Esto tiene sentido, ya que los modos de audio se incluyen en las \gls{API} para los desarrolladores de alto nivel. Y si se modifican dichas \gls{API}, esto será una fuente importante de futuras incompatibilidades.
+Como conclusiones de este apartado sacamos que, pese a su fácil implementación, no es conveniente el uso de modos de audio propios. Esto tiene sentido, ya que los modos de audio se incluyen en las \gls{API} para los desarrolladores de alto nivel. Y si se modifican dichas \gls{API}, sin notificárselo a los desarrolladores de las aplicaciones, esto será una fuente importante de futuras incompatibilidades.
 

@@ -24,13 +24,11 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Declaraci\IeC {\'o}n de los modos de audio.}}{15}{figure.3.1}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Declaraci\IeC {\'o}n de los flujos de audio.}}{16}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Tono de llamada VoIP como MODE\_RINGTONE.}}{17}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Modo por defecto tras tono de llamada VoIP.}}{17}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Declaraci\IeC {\'o}n de MODE\_RINGTONE\_IP.}}{17}{figure.3.5}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {audio.h}}}{17}{figure.3.5}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {AudioManager.java}}}{17}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Trazas Skype con MODE\_RINGTONE\_IP.}}{18}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Mensaje de error de Hangouts con MODE\_RINGTONE\_IP.}}{19}{figure.3.7}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Declaraci\IeC {\'o}n de MODE\_RINGTONE\_IP.}}{17}{figure.3.3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {audio.h}}}{17}{figure.3.3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {AudioManager.java}}}{17}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Trazas Skype con MODE\_RINGTONE\_IP.}}{18}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Mensaje de error de Hangouts con MODE\_RINGTONE\_IP.}}{19}{figure.3.5}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Declaraci\IeC {\'o}n de los dispositivos de salida.}}{21}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Declaraci\IeC {\'o}n de las categor\IeC {\'\i }as de dispositivos.}}{21}{figure.4.2}
@@ -39,17 +37,19 @@
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Declaraci\IeC {\'o}n del control de volumen en la interfaz de usuario.}}{23}{figure.4.5}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Volumen m\IeC {\'a}ximo.}}}{23}{figure.4.5}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen m\IeC {\'\i }nimo.}}}{23}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Comparaci\IeC {\'o}n de barras de volumen de la interfaz de usuario.}}{24}{figure.4.6}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Volumen de la m\IeC {\'u}sica original.}}}{24}{figure.4.6}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen de la m\IeC {\'u}sica aumentado.}}}{24}{figure.4.6}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Volumen del sistema original.}}}{24}{figure.4.6}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Volumen del sistema aumentado.}}}{24}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Definici\IeC {\'o}n curvas de volumen Android M.}}{25}{figure.4.7}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Asociaci\IeC {\'o}n curvas de volumen Android M.}}{26}{figure.4.8}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Obtenci\IeC {\'o}n de la atenuaci\IeC {\'o}n a partir de un \IeC {\'\i }ndice en Android M.}}{26}{figure.4.9}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Implementaci\IeC {\'o}n de una nueva curva de volumen en Android M.}}{27}{figure.4.10}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Definici\IeC {\'o}n de la curva.}}}{27}{figure.4.10}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Asociaci\IeC {\'o}n de la curva.}}}{27}{figure.4.10}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Comparaci\IeC {\'o}n de volumen m\IeC {\'\i }nimos.}}{24}{figure.4.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Volumen m\IeC {\'\i }nimo de una llamada.}}}{24}{figure.4.6}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen m\IeC {\'\i }nimo del sistema.}}}{24}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Comparaci\IeC {\'o}n de barras de volumen de la interfaz de usuario.}}{25}{figure.4.7}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Volumen de la m\IeC {\'u}sica original.}}}{25}{figure.4.7}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Volumen de la m\IeC {\'u}sica aumentado.}}}{25}{figure.4.7}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Volumen del sistema original.}}}{25}{figure.4.7}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Volumen del sistema aumentado.}}}{25}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Definici\IeC {\'o}n curvas de volumen Android M.}}{26}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Asociaci\IeC {\'o}n curvas de volumen Android M.}}{26}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Implementaci\IeC {\'o}n de una nueva curva de volumen en Android M.}}{28}{figure.4.10}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Definici\IeC {\'o}n de la curva.}}}{28}{figure.4.10}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Asociaci\IeC {\'o}n de la curva.}}}{28}{figure.4.10}
 \contentsline {figure}{\numberline {4.11}{\ignorespaces Aplicaci\IeC {\'o}n del nuevo formato de curvas de volumen.}}{28}{figure.4.11}
 \contentsline {figure}{\numberline {4.12}{\ignorespaces Definici\IeC {\'o}n curvas de volumen Android N.}}{29}{figure.4.12}
 \contentsline {figure}{\numberline {4.13}{\ignorespaces Asociaci\IeC {\'o}n curvas de volumen Android N.}}{29}{figure.4.13}
@@ -61,18 +61,13 @@
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Asociaci\IeC {\'o}n de topolog\IeC {\'\i }as para cada dispositivo.}}{33}{figure.5.3}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de reproducci\IeC {\'o}n.}}}{33}{figure.5.3}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivos de captaci\IeC {\'o}n.}}}{33}{figure.5.3}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Ejemplo de selecci\IeC {\'o}n de dispositivos.}}{34}{figure.5.4}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivo de reproducci\IeC {\'o}n.}}}{34}{figure.5.4}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivo de captaci\IeC {\'o}n.}}}{34}{figure.5.4}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Tipos de aplicaci\IeC {\'o}n por defecto.}}{34}{figure.5.5}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Declaraci\IeC {\'o}n tipos por defecto.}}}{34}{figure.5.5}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Asociaci\IeC {\'o}n tipos por defecto.}}}{34}{figure.5.5}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Asociaci\IeC {\'o}n de rutas \textit {hardware} para cada dispositivo.}}{35}{figure.5.6}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de reproducci\IeC {\'o}n.}}}{35}{figure.5.6}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivos de captaci\IeC {\'o}n.}}}{35}{figure.5.6}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Definici\IeC {\'o}n de rutas \textit {hardware}.}}{36}{figure.5.7}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivo de reproducci\IeC {\'o}n.}}}{36}{figure.5.7}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivo de captaci\IeC {\'o}n.}}}{36}{figure.5.7}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Modificaci\IeC {\'o}n de la ganancia del auricular en tiempo real.}}{36}{figure.5.8}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Rutado por el c\IeC {\'o}dec de audio del altavoz.}}{37}{figure.5.9}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces P\IeC {\'a}gina principal del programa QACT.}}{38}{figure.5.10}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Tipos de aplicaci\IeC {\'o}n por defecto.}}{34}{figure.5.4}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Asociaci\IeC {\'o}n de rutas \textit {hardware} para cada dispositivo.}}{35}{figure.5.5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de reproducci\IeC {\'o}n.}}}{35}{figure.5.5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivos de captaci\IeC {\'o}n.}}}{35}{figure.5.5}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Definici\IeC {\'o}n de rutas \textit {hardware}.}}{35}{figure.5.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivo de reproducci\IeC {\'o}n.}}}{35}{figure.5.6}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivo de captaci\IeC {\'o}n.}}}{35}{figure.5.6}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Modificaci\IeC {\'o}n de la ganancia del auricular en tiempo real.}}{36}{figure.5.7}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Rutado por el c\IeC {\'o}dec de audio del altavoz.}}{36}{figure.5.8}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces P\IeC {\'a}gina principal del programa QACT.}}{37}{figure.5.9}

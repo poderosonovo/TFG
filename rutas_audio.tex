@@ -52,14 +52,7 @@ Pero hasta ahora estos dispositivos sólo de han declarado y configurado, falta 
 
 En estos métodos se hace uso de todas las características de las peticiones del audio. Estas pueden ser: los modos de audio ya comentados en el capítulo \ref{chap:modos}, los dispositivos por los que vaya a sonar o captar el audio, los tipos de flujos de audio, etc. En función de todo lo anterior y muchas otras características de las peticiones, se asocian los dispositivos.
 
-El método encargado de la selección del dispositivo de salida se denomina platform\_get\_output\_snd\_device. El método encargado de la selección de los dispositivos de entrada se denomina platform\_get\_input\_snd\_device. Destacar que se trata de métodos muy largos, con unas doscientas líneas de código, y con una lógica muy enrevesada. Por tanto, no son métodos muy mantenibles. Vamos a ver algunos ejemplos de asociación de dispositivos: 
-
-\begin{figure}[H]
-	\centering
-	\subfigure[Dispositivo de reproducción.]{\includegraphics[width=62mm]{eleccion_snd_handset}}
-	\subfigure[Dispositivo de captación.]{\includegraphics[width=85mm]{eleccion_handset_mic_snd}}
-	\caption{Ejemplo de selección de dispositivos.} \label{fig:eleccion_snd}
-\end{figure} 
+El método encargado de la selección del dispositivo de salida se denomina platform\_get\_output\_snd\_device. El método encargado de la selección de los dispositivos de entrada se denomina platform\_get\_input\_snd\_device. Destacar que se trata de métodos muy largos, con unas doscientas líneas de código, y con una lógica muy enrevesada. Por tanto, no son métodos muy mantenibles.
 
 Pero las topologías del \gls{ADSP} no dependen únicamente del dispositivo asociado, también dependen del tipo de aplicación. Esto es un identificador, que en función del tipo de petición, asociará una topología u otra para un dispositivo seleccionado.
 
@@ -67,12 +60,12 @@ En el fichero platform.c se definen los tipos por defecto tanto para recepción,
 
 \begin{figure}[H]
 	\centering
-	\subfigure[Declaración tipos por defecto.]{\includegraphics[width=62mm]{declaracion_app_type}}
-	\subfigure[Asociación tipos por defecto.]{\includegraphics[width=85mm]{default_app_type}}
-	\caption{Tipos de aplicación por defecto.} \label{fig:default_app_type}
+	\includegraphics[width=0.5\textwidth]{declaracion_app_type}
+	\caption{Tipos de aplicación por defecto.} 
+	\label{fig:default_app_type}
 \end{figure} 
 
-Además para el caso de recepción, otros tipos de aplicación se asocian. Esta asociación se realiza en el fichero de la \gls{HAL} audio\_output\_policy.conf. Pero, por lo general, los casos por defecto son los que se utilizan.
+La asociación de dichos tipos se realiza, también, en el fichero platform.c en función de si se trata de una petición de recepción o de transmisión. Además para el caso de recepción, otros tipos de aplicación se pueden asociar. Esta asociación se realiza en el fichero de la \gls{HAL} audio\_output\_policy.conf, pero por lo general, los casos por defecto son los que se utilizan.
 
 Cabe destacar, que en el caso de estar tratando con una llamada de voz, y que el código la interprete correctamente, los tipos de aplicación no se utilizan. Sólo se utilizan en los casos de reproducción o de grabación de audio.
 
@@ -92,7 +85,7 @@ La selección de uno de estos caminos también se realiza en el fichero platform
 	\caption{Asociación de rutas \textit{hardware} para cada dispositivo.} \label{fig:asociacion_snd_mixer}
 \end{figure}
 
-Una vez seleccionado el tipo de dispositivo, como se mostraba en la figura \ref{fig:eleccion_snd}, se aplicará la ruta definida en el fichero mixer.xml.
+Una vez seleccionado el tipo de dispositivo se aplicará la ruta definida en el fichero mixer.xml.
 
 Este fichero se compone de tres partes:
 \begin{itemize}
@@ -101,7 +94,7 @@ Este fichero se compone de tres partes:
 	\item{Configuraciones de cada dispositivo: en esta zona es dónde se definen las distintas rutas para cada dispositivo. Muchos de ellos utilizan las mismas configuraciones.}
 \end{itemize}
 
-Un ejemplo de ruta para los dispositivos SND\_DEVICE\_OUT\_HANDSET y SND\_DEVICE\_IN\_HANDSET\_MIC queda definido de la siguiente forma:
+Un ejemplo de ruta para los dispositivos SND\_DEVICE\_OUT\_HANDSET y \\ SND\_DEVICE\_IN\_HANDSET\_MIC queda definido de la siguiente forma:
 
 \begin{figure}[H]
 	\centering
@@ -112,31 +105,17 @@ Un ejemplo de ruta para los dispositivos SND\_DEVICE\_OUT\_HANDSET y SND\_DEVICE
 
 Esto asocia a unas etiquetas ciertos valores. A más bajo nivel, al nivel del kernel, estos valores se interpretan y se escribe en los registros necesarios.
 
-En el caso del dispositivo de reproducción, que está asociado a la reproducción por el auricular del teléfono, se transmite el audio por el camino "RX1", configurándose un volumen, una ganancia del amplificador y configurando que el sonido salga por el auricular, dando a la etiqueta EAR\_S el valor Switch.
+En el caso del dispositivo de reproducción, que está asociado a la reproducción por el auricular del teléfono, se transmite el audio por el camino RX1, configurándose un volumen, una ganancia del amplificador y configurando que el sonido salga por el auricular, para lo cual se da a la etiqueta EAR\_S el valor Switch.
 
 Esto nos permite abstraernos de la lógica a nivel de registros, con el uso de un lenguaje de programación y una topología más simple.
 
-Se puede consultar el valor de cada etiqueta en tiempo real. Para ello, es necesario tener conectado el dispositivo al ordenador vía \gls{USB}. Se hace uso de las herramientas \gls{ADB} y del comando tinymix de la siguiente manera:
-\\
-\lstset{breaklines=true, basicstyle=\footnotesize}
-\begin{lstlisting}[frame=single]
-adb root
-adb shell
-tinymix "nombre_etiqueta"
-\end{lstlisting}
-
-Si queremos además cambia el valor de la etiqueta en tiempo real:
-\begin{lstlisting}[frame=single]
-adb root
-adb shell
-tinymix "nombre_etiqueta" "valor_etiqueta"
-\end{lstlisting}
+Se puede consultar el valor de cada etiqueta en tiempo real. Para ello, es necesario tener conectado el dispositivo al ordenador vía \gls{USB}. Se hace uso de las herramientas \gls{ADB} y del comando tinymix. Además, con este comando también sera posible la modificación en tiempo real de las etiquetas.
 
 En la siguiente imagen se puede observar como se consulta el valor del amplificador del auricular y se modifica, produciéndose una bajada de volumen:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth]{tinymix_ear_pa}
+	\includegraphics[width=0.5\textwidth]{tinymix_ear_pa}
 	\caption{Modificación de la ganancia del auricular en tiempo real.} 
 	\label{fig:tinymix_ear_pa}
 \end{figure}

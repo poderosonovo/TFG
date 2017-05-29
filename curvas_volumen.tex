@@ -1,10 +1,10 @@
 \chapter{Curvas de volumen} \label{chap:curvas_volumen}
-En este capítulo se explicarán el funcionamiento de las curvas de volumen en Android. Además, se abordarán los cambios que han tenido lugar con el cambio de versión, de 6.0 Marshmallow a 7.0 Nougat, implementándose y realizando los ajustes necesarios de dichas curvas.
+En este capítulo se explicará el funcionamiento de las curvas de volumen en Android. Además, se abordarán los cambios que han tenido lugar con el cambio de versión, de 6.0 Marshmallow a 7.0 Nougat, implementándose y realizando los ajustes necesarios de dichas curvas.
 
 \section{¿Qué son las curvas de volumen?}
 Las curvas de volumen marcan como se atenuará o aumentará el audio según el usuario modifique el volumen de su dispositivo.
 
-Existen múltiples curvas de volumen, una por cada tipo de audio que vaya a reproducirse por cada clase de dispositivo. Esto quiere decir, que habrá una curva de volumen que controle el volumen de las notificaciones cuando suenen por el altavoz, y habrá otra que lo controle cuando suenen por los auriculares.
+Existen múltiples curvas de volumen, una por cada tipo de audio que vaya a reproducirse por cada clase de dispositivo. Un ejemplo de esto es que existirá una curva de volumen que controle el volumen de las notificaciones cuando suenen por el altavoz, y habrá otra que lo controle cuando suenen por los auriculares.
 
 Para poder entender dicha clasificación es necesario entender los distintos flujos de audio que puede haber en el sistema, ya comentados en la figura \ref{fig:audio_streams}.
 Además, es necesario comprender los tipos de dispositivos que requieren curvas de volumen propias. Los dispositivos que tendrán relación con las curvas de volumen son los de salida, no los de entrada, ya que son los que reproducen el audio. La declaración de los distintos tipos de dispositivos tiene lugar en el fichero audio.h del sistema:
@@ -54,13 +54,13 @@ Una curva de volumen, en el sistema operativo Android, está compuesta por un co
 	\label{fig:puntos_curva}
 \end{figure}
 
-En su definición podemos observar que los puntos se definen con dos valores. Por un lado, tenemos el índice el cual nos marca la posición del punto en el eje x. Por otro lado, tenemos la atenuación en \gls{dB} que implicará situar el volumen en ese punto, dicha atenuación se corresponde con el eje y.
+En su definición podemos observar que los puntos se definen con dos valores. Por un lado tenemos el índice el cual nos marca la posición del punto en el eje x. Por otro lado, tenemos la atenuación en \gls{dB} que implicará situar el volumen en ese punto, dicha atenuación se corresponde con el eje y.
 
 La manera que tiene el sistema de definir una curva, a raíz de un conjunto de puntos configurables por parte del desarrollador, es mediante el uso de la interpolación lineal entre puntos.
 
 La interpolación lineal consiste en tratar los segmentos definidos entre dos puntos como una recta. De esta manera, si nuestra curva tiene cuatro puntos, tendremos un total de tres posibles segmentos. En estos segmentos, la atenuación aumenta o disminuye de manera lineal. La pendiente de la recta dependerá de lo cerca que se encuentren los puntos que definen el segmento, según el primer parámetro de su definición, y de la diferencia de atenuación que haya entre ellos, marcada por el segundo parámetro.
 
-Pero, como ya se ha comentado antes, el volumen lo marca el usuario. La relación, entre las curvas definidas en el sistema y la interfaz de volumen que se encuentra el usuario, se encuentra definida en la \gls{JNI}. La interfaz de usuario proporciona una barra de sonido para modificar el volumen. Dicha barra está definida mediante un número diferente de puntos en el fichero AudioService.java como se muestra a continuación:
+Pero, como ya se ha comentado antes, el volumen lo fija el usuario. La relación, entre las curvas definidas en el sistema y la interfaz de volumen que se encuentra el usuario, se encuentra definida en la \gls{JNI}. La interfaz de usuario proporciona una barra de sonido para modificar el volumen. Dicha barra está definida mediante un número diferente de puntos en el fichero AudioService.java como se muestra a continuación:
 
 \begin{figure}[H]
 	\centering
@@ -69,31 +69,39 @@ Pero, como ya se ha comentado antes, el volumen lo marca el usuario. La relació
 	\caption{Declaración del control de volumen en la interfaz de usuario.} \label{fig:volume_curves_ui}
 \end{figure}
 
-De esta manera se define para cada tipo de flujo de audio una barra de control del volumen. En la que se empieza en cero, o uno en el caso de las llamadas de voz para que no se puedan silenciar, y se divide en tantos saltos como el volumen máximo indique.
+De esta manera se define para cada tipo de flujo de audio una barra de control del volumen. El límite inferior de la barra de volumen será habitualmente cero, la barra completamente a la izquierda. Pero, puede quererse fijar un volumen mínimo que resulte audible, para ello se selecciona un uno.De esta manera, nunca se alcanzará la atenuación máxima, ya que está asociada a la posición más baja de la barra de volumen. Un ejemplo de esto es el volumen en las llamadas, el cual no se puede llegar a silenciar, como si ocurre en el volumen del sistema:
 
-Por ejemplo, en el flujo de música, que sirve para cualquier reproducción multimedia, se define un volumen mínimo de cero y se puede aumentar hasta un total de veinticinco veces.
+\begin{figure}[H]
+	\centering
+	\subfigure[Volumen mínimo de una llamada.]{\includegraphics[width=40mm]{vol_min_llamada}}
+	\subfigure[Volumen mínimo del sistema.]{\includegraphics[width=40mm]{vol_min_sistema}}
+	\caption{Comparación de volumen mínimos.}
+	\label{fig:vol_min}
+\end{figure}
+
+Por otra parte, el número de saltos que hay en cada barra de volumen dependerá de la diferencia entre el límite inferior de la barra de volumen y el límite superior. Por ejemplo, en el flujo de música, que sirve para cualquier reproducción multimedia, se define un volumen mínimo de cero y se puede aumentar hasta un total de veinticinco veces.
 
 La interfaz de las barras de volumen de cada uno de los flujos son iguales en longitud. Por tanto, cuanto mayor sea la distancia entre el volumen mínimo y máximo, menor será el cambio de la barra al subir o bajar el volumen. A continuación se muestra una captura para comparar el aumento de la barra de volumen que controla la música y la que controla los sonidos del sistema, al pulsar una vez en el botón de subir volumen:
 
 \begin{figure}[H]
 	\centering
-	\subfigure[Volumen de la música original.]{\includegraphics[width=35mm]{volume_music}}
-	\subfigure[Volumen de la música aumentado.]{\includegraphics[width=35mm]{volume_music_up}}
+	\subfigure[Volumen de la música original.]{\includegraphics[width=40mm]{volume_music}}
+	\subfigure[Volumen de la música aumentado.]{\includegraphics[width=40mm]{volume_music_up}}
 	\break
-	\subfigure[Volumen del sistema original.]{\includegraphics[width=35mm]{volume_system}}
-	\subfigure[Volumen del sistema aumentado.]{\includegraphics[width=35mm]{volume_system_up}}
+	\subfigure[Volumen del sistema original.]{\includegraphics[width=40mm]{volume_system}}
+	\subfigure[Volumen del sistema aumentado.]{\includegraphics[width=40mm]{volume_system_up}}
 	\caption{Comparación de barras de volumen de la interfaz de usuario.} \label{fig:volume_compare_ui}
 \end{figure}
 
 Como se puede observar, el cambio en la barra de usuario al aumentar el volumen del sistema es mucho mayor al cambio al aumentar el de la música. Esto implicará que el salto en las curvas definidas en el sistema también será mayor.
 
-La relación, entre la barra de control de la interfaz de usuario y las curvas de volumen, ha cambiado ligeramente con el cambio de versión de Android M a N. Las implicaciones de estos cambios, así como la relación anteriormente comentada, se explicarán en el siguiente apartado.
+La relación entre la barra de control de la interfaz de usuario y las curvas de volumen ha cambiado ligeramente con el cambio de versión de Android M a N. Las implicaciones de estos cambios, así como la relación anteriormente comentada, se explicarán en el siguiente apartado.
 
 \section{Diferencia entre Android M y Android N}
-Las principales diferencias entre ambas versiones, en relación al audio, se encuentran en la manera que tienen ambas de definir las curvas de volumen. Tanto las curvas de volumen por defecto, como el método de interpolación lineal. Por tanto, este apartado consistirá en aplicar dichos cambios, y explicar las diferencias entre ambas.
+Las principales diferencias entre ambas versiones, en relación al audio, se encuentran en la manera que tienen ambas de definir las curvas de volumen. Tanto las curvas de volumen por defecto, como el método de interpolación lineal, han cambiado. Por tanto, este apartado consistirá en aplicar dichos cambios, pues aunque se haya cambiado de versión no se habían aplicado, y explicar las diferencias entre ambas.
 
 \subsection{Android M}
-En Android Marshmallow, la implementación de las curvas de volumen se realiza en en el lenguaje de programación C++. En el fichero Gains.cpp se encuentran definidas por un lado las curvas, y por otro, la asociación de estas a cada uno de los casos de uso, como se muestra a continuación:
+En Android Marshmallow, la implementación de las curvas de volumen se realiza en el lenguaje de programación C++. En el fichero Gains.cpp se encuentran definidas por un lado las curvas y, por otro, la asociación de estas a cada uno de los casos de uso, como se muestra a continuación:
 
 \begin{figure}[H]
 		\centering
@@ -113,18 +121,11 @@ La asociación de dichas curvas de volumen a cada pareja de flujo de audio y cat
 	\label{fig:asociacion_curvas_M}
 \end{figure}
 
-Se trata del siguiente caso de uso: que se trate de un flujo de audio de llamada y entre todas las curvas que tiene asociadas se elige en función de la categoría del dispositivo. Esto permite, que si suena por el altavoz o por los cascos, puedan tener curvas de volumen distintas.
+En la imagen se muestran cuatro curvas de volumen, una por cada categoría de dispositivo, todas ellas asociadas al caso de que se trate de un flujo de audio de llamada. Esto permite por ejemplo, que si suena una llamada por el altavoz, tenga asociada una curva de volumen, y si suena una llamada por los cascos, tenga asociada otra curva de volumen.
 
 En el mismo fichero, Gains.cpp, se encuentra el método que relaciona la barra de volumen de la interfaz de usuario, con las curvas de volumen aquí descritas. Además en este método se aplica la interpolación lineal para obtener la atenuación a partir de un índice no definido.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth]{volIndexToDb_M}
-	\caption{Obtención de la atenuación a partir de un índice en Android M.}
-	\label{fig:index_to_db_M}
-\end{figure}
-
-Por un lado la transformación de índice de la interfaz de usuario a un índice de la curva de volumen se realiza en las dos primeras líneas de la siguiente forma:
+Por un lado, la transformación de índice de la interfaz de usuario a un índice de la curva de volumen se realiza de la siguiente forma:
 
 \begin{equation}
 	nº pasos=1+indiceMaxCurva - indiceMinCurva
@@ -148,7 +149,7 @@ atenuaciondB=atenuacionMinSeg+(indiceEnCurva-indiceMinSeg)*dBPorPaso
 
 De esta manera se obtiene la atenuación en \gls{dB} para una posición de la barra de volumen en la interfaz de usuario.
 
-Si queremos declarar una nueva curva de volumen, la definimos y asociamos en el fichero Gains.cpp. Además, será necesaria declararla junto a las demás en el fichero Gains.h.
+Si queremos declarar una nueva curva de volumen, la definimos y asociamos en el fichero Gains.cpp. Además, será necesario declararla junto a las demás en el fichero Gains.h.
 
 \begin{figure}[H]
 	\centering
@@ -157,33 +158,11 @@ Si queremos declarar una nueva curva de volumen, la definimos y asociamos en el 
 	\caption{Implementación de una nueva curva de volumen en Android M.} \label{fig:curva_propia}
 \end{figure}
 
-Se asocia el caso de uso de reproducción multimedia por el altavoz. Esta curva de volumen, comparada con la que se asociaba anteriormente, tiene un volumen mínimo más alto, y es lineal. Esto quiere decir, que aumenta su volumen siempre igual independientemente del segmento en el que caiga.
+La curva se asocia al caso de uso de reproducción multimedia por el altavoz. Esta curva de volumen, comparada con la que se asociaba anteriormente, tiene un volumen mínimo más alto, y es lineal. Esto quiere decir, que aumenta su volumen siempre igual independientemente del segmento en el que caiga.
 
-Para aplicar estos cambios, es necesario compilar el código desde el textit{framework} nativo. Esto genera librerías, que hay que añadir al sistema del dispositivo mediante la herramienta \gls{ADB}. 
+Para aplicar estos cambios es necesario compilar el código desde el textit{framework} nativo. Esto genera librerías, que hay que añadir al sistema del dispositivo mediante la herramienta \gls{ADB}. 
 
-
-Si el teléfono tiene un \textit{firmware} que nunca antes ha sido modificado, es necesario realizar lo siguiente, con el dispositivo conectado vía \gls{USB}, antes de seguir:
-\\
-\lstset{breaklines=true, basicstyle=\footnotesize}
-\begin{lstlisting}[frame=single]
-adb root
-adb disable-verity
-adb reboot
-\end{lstlisting}
-
-Esto permitirá que el \textit{firmware} sea modificable sin ser necesaria su sustitución completa.
-
-Tras esto, o si se trata de un \textit{firmware} ya modificado, y con el dispositivo conectado al ordenador via \gls{USB}, hay que ejecutar desde la consola de comandos:
-\\
-\lstset{breaklines=true, basicstyle=\footnotesize}
-\begin{lstlisting}[frame=single]
-adb root
-adb remount
-adb push /system/path_libreria/nombre_libreria /system/path_libreria
-adb reboot
-\end{lstlisting}
-
-Lo primero es consiste en poner el dispositivo en modo superusuario. Después, se habilita escritura en el sistema. Finalmente, se suben las librerías necesarias a la ruta del sistema indicada en la compilación, y se reinicia el dispositivo para que se apliquen los cambios.
+Para modificar las librerías del dispositivo, hay que conectarse a él como superusuario. Después, se habilita escritura en el sistema. Finalmente, se suben las librerías necesarias a la ruta del sistema indicada en la compilación. Al reiniciar el dispositivo los cambios se habrán aplicado.
 
 \subsection{Android N}
 En Android Nougat la declaración y asociación de las curvas de volumen ha cambiado, usando el lenguaje de programación XML en lugar de C++.
@@ -228,28 +207,20 @@ Estas curvas pueden asociarse en el fichero audio\_policy\_volumes.xml. Pero tam
 	\label{fig:asociacion_curvas_n}
 \end{figure}
 
-En este caso, para el caso de uso de los sonidos del sistema reproduciéndose por unos auriculares, se describen cuatro puntos que marcarán su curva de volumen. Sin embargo, para estos mismos sonidos, al reproducirse por el altavoz, se asocia una curva de las curvas ya definidas.
+En este caso, para el caso de uso de los sonidos del sistema reproduciéndose por unos auriculares, se describen cuatro puntos que marcarán su curva de volumen. Sin embargo, para estos mismos sonidos, al reproducirse por el altavoz se asocia una curva de las curvas ya definidas.
 
 La última diferencia la encontramos en el método que calcula la atenuación en \gls{dB} a partir de la barra de sonido de la interfaz.
 
 A la hora de realizar los cálculos para saber en que segmento de la curva cae el índice proporcionado por la interfaz, se realiza de igual manera que la indicada en la ecuación \ref{ec:indiceEnCurva}. Tras esto, se sigue asociando a uno de los posibles segmentos.
 
-Lo que si que cambia, es la limitación de volumen máximo que existía en Android M. Ahora, independientemente de los índices, el volumen máximo se corresponde con el definido en la curva. No sucede esto con el volumen mínimo, ya que se sigue manteniendo el hecho de que, si la curva comienza en un índice distinto de cero, la atenuación máxima será -758\gls{dB}.
+Lo que si que cambia es la limitación de volumen máximo que existía en Android M. Ahora, independientemente de los índices, el volumen máximo se corresponde con el definido en la curva. No sucede esto con el volumen mínimo, ya que se sigue manteniendo el hecho de que, si la curva comienza en un índice distinto de cero, la atenuación máxima será -758\gls{dB}.
 
-Una vez obtenido el segmento, y comprobado que no estamos en ninguno de los casos mencionados, la interpolación lineal se realiza de la misma manera que la indicada en la ecuación \ref{ec:atenuaciondB}.
+Una vez obtenido el segmento y comprobado que no estamos en ninguno de los casos mencionados, la interpolación lineal se realiza de la misma manera que la indicada en la ecuación \ref{ec:atenuaciondB}.
 
 Al no estar aplicado este cambio en las curvas de volumen, ha sido necesario crear y ajustar cada curva de volumen para que siguiese los perfiles de las utilizadas en Android M. 
 
-La ventaja principal que supone aplicar este cambio, es que al estar definidas las curvas de volumen y su política en ficheros XML no es necesario compilar cada vez que queramos realizar algún cambio. Se puede directamente sustituir el fichero XML existente el sistema del dispositivo por el nuevo, mientras se mantenga la nomenclatura. Para realizar esta sustitución se hace uso de la herramienta \gls{ADB}.
-\\
-\lstset{breaklines=true, basicstyle=\footnotesize}
-\begin{lstlisting}[frame=single]
-adb root
-adb remount
-adb push /system/etc/default_volume_tables.xml /system/etc
-adb push /system/etc/audio_policy_volumes.xml /system/etc
-adb reboot
-\end{lstlisting}
+La ventaja principal que supone aplicar este cambio, es que al estar definidas las curvas de volumen y su política en ficheros XML no es necesario compilar cada vez que queramos realizar algún cambio. Se puede directamente sustituir el fichero XML existente el sistema del dispositivo por el nuevo, mientras se mantenga la nomenclatura. Para realizar esta sustitución se hace uso de la herramienta \gls{ADB}. 
 
-Como se puede observar, el proceso es similar al ya comentado en Android M. La principal diferencia es que aquí se suben los ficheros y no las librerías compiladas.
+El proceso es similar al ya comentado en Android M. La principal diferencia es que aquí se suben los ficheros y no las librerías compiladas.
 
+En la versión de Android Nougat, Google ha introducido un mecanismo de verificación para desarrolladores. Si el teléfono tiene un \textit{firmware} que nunca antes ha sido modificado, antes de nada, es necesario deshabilitar dicho mecanismo para que el sistema pueda ser modificado. Esto únicamente podrá realizarse en \textit{firmwares} de desarrollo. 
