@@ -71,3 +71,17 @@
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Modificaci\IeC {\'o}n de la ganancia del auricular en tiempo real.}}{36}{figure.5.7}
 \contentsline {figure}{\numberline {5.8}{\ignorespaces Rutado por el c\IeC {\'o}dec de audio del altavoz.}}{36}{figure.5.8}
 \contentsline {figure}{\numberline {5.9}{\ignorespaces P\IeC {\'a}gina principal del programa QACT.}}{37}{figure.5.9}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Puntos posibles donde obtener trazas en una llamada.}}{40}{figure.5.10}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Puntos posibles donde obtener trazas para el resto de audio.}}{41}{figure.5.11}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Nueva topolog\IeC {\'\i }a de grabaci\IeC {\'o}n mono con supresi\IeC {\'o}n de ruido.}}{43}{figure.5.12}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Nueva topolog\IeC {\'\i }a de grabaci\IeC {\'o}n est\IeC {\'e}reo con supresi\IeC {\'o}n de ruido.}}{43}{figure.5.13}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Comparaci\IeC {\'o}n de una grabaci\IeC {\'o}n mono con y sin supresi\IeC {\'o}n de ruido.}}{44}{figure.5.14}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Con supresi\IeC {\'o}n de ruido activada.}}}{44}{figure.5.14}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Con supresi\IeC {\'o}n de ruido desactivada.}}}{44}{figure.5.14}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Asociaci\IeC {\'o}n de rutas del \gls {ADSP} y del c\IeC {\'o}dec de audio para los nuevos dispositivos.}}{46}{figure.5.15}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dispositivos de salida.}}}{46}{figure.5.15}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dispositivo de entrada.}}}{46}{figure.5.15}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Dispositivos de salida.}}}{46}{figure.5.15}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Dispositivo de entrada.}}}{46}{figure.5.15}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Rutado del nuevo dispositivo de manos libres por el c\IeC {\'o}dec de audio propio del altavoz.}}{46}{figure.5.16}
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Ganancia de los micr\IeC {\'o}fonos en llamadas VoIP.}}{47}{figure.5.17}

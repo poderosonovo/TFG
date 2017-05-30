@@ -27,7 +27,7 @@ Por supuesto, el código es mucho más extenso, pero con respecto al tratamiento
 Debido a esta extensión, la compilación local sería inviable si cada vez que quisiésemos compilar hubiese que hacerlo de todo el código. Por esa razón, se utiliza la herramienta Make, una herramienta de gestión de dependencias existentes en el código fuente que facilita su compilación. Para que esta herramienta sea útil es necesaria la presencia de ficheros Makefiles, los cuales establecen dichas dependencias entre ficheros. De esta manera, si queremos compilar un conjunto limitado de ficheros, habrá que buscar el Makefile del que dependan y ejecutar la herramienta Make desde ese directorio, proporcionando librerías en lugar de una nueva versión del textit{firmware}.
 
 
-\section{Programas de utilidad para el análisis y diseño}
+\section{Programas de utilidad para el análisis y diseño} \label{sec:programas}
 El fabricante del \gls{SoC} de los dispositivos con los que se ha trabajado es Qualcomm. Esta empresa proporciona software propio dedicado al análisis y configuración del hardware que fabrican. De esta manera, relacionados con el tema del audio, se han utilizado los siguientes programas:
 
 \begin{itemize}

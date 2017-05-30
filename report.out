@@ -24,5 +24,9 @@
 \BOOKMARK [2][-]{subsection.5.1.2}{Rutado a nivel de hardware}{section.5.1}% 24
 \BOOKMARK [1][-]{section.5.2}{Configuraci\363n del DSP a trav\351s del programa QACT}{chapter.5}% 25
 \BOOKMARK [2][-]{subsection.5.2.1}{Modos de dise\361o disponibles}{section.5.2}% 26
-\BOOKMARK [0][-]{chapter*.4}{Bibliograf\355a}{}% 27
-\BOOKMARK [0][-]{section*.5}{Acr\363nimos}{}% 28
+\BOOKMARK [1][-]{section.5.3}{An\341lisis de la salida de las \341reas del DSP a trav\351s del los programas QXDM y QCAT}{chapter.5}% 27
+\BOOKMARK [1][-]{section.5.4}{Dise\361o de nuevas rutas}{chapter.5}% 28
+\BOOKMARK [2][-]{subsection.5.4.1}{Para la supresi\363n de ruido en grabaciones}{section.5.4}% 29
+\BOOKMARK [2][-]{subsection.5.4.2}{Para el correcto funcionamiento de aplicaciones de llamadas VoIP}{section.5.4}% 30
+\BOOKMARK [0][-]{chapter*.4}{Bibliograf\355a}{}% 31
+\BOOKMARK [0][-]{section*.5}{Acr\363nimos}{}% 32

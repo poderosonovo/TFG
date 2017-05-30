@@ -2,7 +2,7 @@
 En este capítulo se explicará el rutado del audio tanto a nivel \textit{software}, como a nivel \textit{hardware}. Se abordarán temas como el procesado del audio, que es dependiente del camino que se escoja, como la configuración de dicho procesado y la asociación de nuevas rutas. Por tanto, se entrará en detalle a explicar como configurar el \gls{ADSP} y como evaluar los resultados de dichas configuraciones.
 
 
-\section{Rutado en el código}
+\section{Rutado en el código}\label{sec:rutado_codigo}
 Para explicar todo esto, es necesario tener claras las diferencias que existen en Android sobre el rutado a nivel de código. Una parte del código se encargará de rutar el audio por el camino del \gls{ADSP}, y otra parte se encargará de rutarlo por los distintos módulos \textit{hardware}.
 
 Para empezar, la selección de un camino u otro se realiza a nivel de \gls{HAL}. Esto implica, que estamos a un nivel más bajo del que se había trabajado hasta ahora.
@@ -133,7 +133,7 @@ Como caso particular, falta por comentar el altavoz. Este altavoz tiene un códe
 
 De esta manera, para cada dispositivo relacionado con el altavoz, se asocia una nueva etiqueta que hará que el audio se rute por el códec TFA9911 en lugar de por el WCD8x16.
 
-\section{Configuración del DSP a través del programa QACT}
+\section{Configuración del DSP a través del programa QACT} \label{sec:conf_DSP}
 La configuración del \gls{ADSP} únicamente es posible realizarla mediante el programa \gls{QACT}. Este programa sólo funciona en el sistema operativo Windows, por tanto durante esta sección se trabajará con dicho sistema.
 
 Este programa permite dos tipos de conexión:
@@ -161,12 +161,205 @@ En ella se puede observar que hay tres desplegables que seleccionan el caso de u
 Además, se puede observar que una ruta se divide en tres áreas, con distintas topologías en cada área. Estas áreas son:
 \begin{itemize}
 	\item{\gls{AFE}: sólo una topología de esta área puede ser asociada a cada dispositivo.}
-	\item{\gls{COPP}: se asocia una topología distinta de esta área para cada tipo de aplicación en cada dispositivo.}
-	\item{\gls{POPP}: se asocia una topología distinta de esta área para cada tipo de aplicación para todos los dispositivos. Es común para todos los dispositivos.}
+	\item{\gls{COPP}: se asocia una topología de esta área para cada tipo de aplicación en cada dispositivo.}
+	\item{\gls{POPP}: se asocia una topología distinta de esta área para cada tipo de aplicación, siendo común para todos los dispositivos. Es común para todos los dispositivos.}
 \end{itemize}
 
-Cada topología se compone de módulos ordenados. Estos módulos realizan distintos procesados, y se pueden configurar seleccionándolos. Existen módulos de filtrado de: amplificación, supresión de ruido, compresión multibanda, muestreo, generación de ruido, potenciación de bajos, ecualización, etc.
+Cada topología se compone de módulos ordenados. Estos módulos realizan distintos procesados, y se pueden configurar seleccionándolos. Existen módulos de: filtrado, amplificación, supresión de ruido, compresión multibanda, muestreo, generación de ruido, potenciación de bajos, ecualización, etc.
 
 \subsection{Modos de diseño disponibles}
-
+Este programa permite diferentes modos de modificar el \gls{ADSP}, estos son: 
  
+\begin{itemize}
+	\item{Ajustar los módulos aplicados: se pueden configurar los módulos aplicados a cada topología, siempre que la topología este asociada a un caso de uso. Hay módulos que únicamente permiten ser activados o desactivados, pero otros, como los algunos filtros o compresores, permiten una configuración mucho más precisa.}
+	\item{Reordenar los módulos de una topología aplicada: se pueden cambiar el orden en el que se aplican los módulos de procesado.}
+	\item{Cambiar la topología aplicada: se pueden modificar la topología que se quiere aplicar en cada área. Habrá que tener en cuenta que si las cambiamos en la \gls{AFE} se cambiará para todo el tipo de dispositivo, y si la cambiamos en la \gls{POPP} será común para todos los tipos de dispositivos. Por esa razón, los cambios más habituales se suelen hacer en la \gls{COPP} en función del tipo de aplicación. Las topologías a aplicar en un área tienen que pertenecer a esa área en concreto.}
+	\item{Crear una nueva topología: se puede crear desde cero una nueva topología. Se deben seleccionar los módulos de procesado que incluirá y el orden de estos. Sobre las topologías ya creadas no se pueden añadir nuevos módulos. Además, debe seleccionarse el área al que pertenecerá. Se debe tener en cuenta que, en las áreas \gls{COPP} y \gls{POPP}, se distingue entre topologías orientadas al uso en llamadas y entre el resto de topologías. Tras esto, podrá aplicarse al caso de uso que queramos.}
+	\item{Crear un nuevo tipo de dispositivo: se puede crear desde cero un nuevo dispositivo, al que habrá que
+	asociar un nuevo identificador tanto a nivel de \gls{ADSP} como a nivel de código. Se debe configurar lo siguiente:}
+	\begin{itemize}
+		\item{Categoría del dispositivo: si se aplicará dicho dispositivo a un caso de uso de Bluetooth, Auricular, \gls{HDMI}, Cascos, Altavoz o General.}
+		\item{Identificador del dispositivo: es necesario definir el mismo identificador a nivel de \gls{ADSP} y a nivel de código, para que pueda rutarse por el nuevo dispositivo que se está creando.}
+		\item{Frecuencias de muestreo soportadas por el dispositivo.}
+		\item{Configuración del canal: hay que definir si el dispositivo se va a aplicar a un canal mono, estéreo o de un mayor número de canales.}
+		\item{Dirección: indicar si el dispositivo se va a usar para recepción o para transmisión. Si el dispositivo se va a aplicar a un caso de uso de llamada, además, será necesario definirlo como un par nuevo de dispositivos junto con otro de recepción o transmisión, según sea el dispositivo que se ha diseñado. Para que, cuando se rute por él, se apliquen ambos caminos.}
+		\item{El número de bits por muestra que el dispositivo soporta.}
+		\item{Topologías utilizadas: se debe asociar una topología del área \gls{AFE} y una topología por cada tipo de aplicación, del área \gls{COPP}. Además, habrá que asociar una topología de voz del área \gls{COPP}, que no depende del tipo de aplicación.}
+		\item{Retardos: para cada frecuencia de muestreo se puede indicar un retardo a aplicar.}
+	\end{itemize}
+	\item{Crear nuevos tipos de aplicación: se pueden crear nuevos tipos de aplicación y asociarles una topología de \gls{POPP}. Este nuevo tipo será necesario declararlo y asociarlo en el código, como se ha visto con los tipos de aplicación por defecto.}
+\end{itemize}
+
+Una vez se ha realizado alguna modificación, de las indicadas anteriormente, en los ficheros \gls{ACDB}, será necesario cargar estos ficheros en el sistema del teléfono. Para ello, deben obtenerse permisos de superusuario, habilitar la escritura del sistema, y sustituir los ficheros \gls{ACDB} existentes por los nuevos. Finalmente, para que se apliquen los cambios, es necesario reiniciar el dispositivo.
+
+\section{Análisis de la salida de las áreas del DSP a través del los programas QXDM y QCAT} \label{sec:salida_qxdm}
+En este capítulo se explicará las posibilidades que ofrece el fabricante Qualcomm para depurar a nivel de \gls{ADSP} y códec de audio. Ambas capas, al ser propietarias de Qualcomm, se encuentran muy protegidas.Por tanto, una forma sencilla de obtener información es mediante su \textit{software}.
+
+El programa \gls{QXDM} nos permite obtener trazas de los diferentes flujos de información que pasan por ciertos puntos. Para poder hacer uso de este programa, el dispositivo tiene que estar conectado al ordenador mediante el programa \gls{QPST}.
+
+Este programa permite obtener trazas para muchas aplicaciones, para configurar que las que se quieren obtener son las trazas de audio es necesario en cuales puntos se pueden sacar. Se realiza una distinción entre las trazas obtenibles en una llamada, y las trazas obtenibles en el resto de casos de uso:
+
+\begin{itemize}
+		\item{Trazas en llamada: se pueden obtener en los puntos indicados posteriormente. El número hexadecimal es un identificador que será el que haya que configurar en el \gls{QXDM}.}
+		\begin{itemize}
+			\item{[0x1586]: trazas entre el área de \gls{AFE} y el códec de audio.}
+			\item{[0x158A]: trazas a la entrada y salida del \gls{COPP} en transmisión, y sólo a la salida en recepción.}
+			\item{[0x158B]: trazas a la entrada y salida del \gls{POPP}.}
+			\item{[0x1804]: trazas entre el área de \gls{POPP} y los \gls{CVD} en transmisión.}
+			\item{[0x1805]: trazas entre el área de \gls{POPP} y los \gls{CVD} en recepción.}
+			\item{[0x14D2]: trazas del \gls{APR} del \gls{ADSP}.}
+			\item{[0x14D0]: trazas del \gls{MVS} o \gls{VS}.}
+			\item{[0x7143]: trazas del \gls{MVS} a la pila de protocolo del módem.}
+			\item{[0x1009]: trazas del \gls{VS} a la pila de protocolo del módem.}
+			\item{[0x7144]: trazas de la pila de protocolo del módem al \gls{MVS}.}
+			\item{[0x100A]: trazas de la pila de protocolo del módem al \gls{VS}.}
+		\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.1\textwidth]{voice_QXDM}
+		\caption{Puntos posibles donde obtener trazas en una llamada.} 
+		\label{fig:voice_qxdm}
+\end{figure}
+
+\begin{itemize}
+	\item{Trazas en el resto del audio: se pueden obtener en los siguientes puntos:}
+	\begin{itemize}
+		\item{[0x1586]: trazas entre el área de \gls{AFE} y el códec de audio.}
+		\item{[0x1532]: trazas entre el área de \gls{AFE} y el área \gls{COPP} en transmisión.}
+		\item{[0x1533]: trazas entre el área de \gls{COPP} y la matriz de transmisión.}
+		\item{[0x1531]: trazas entre la matriz de recepción y el área \gls{COPP}.}
+		\item{[0x1534]: trazas entre la matriz de transmisión y el área de \gls{POPP}.}
+		\item{[0x1530]: trazas entre el área de \gls{POPP} y la matriz de recepción.}
+		\item{[0x1535]: trazas entre el área de \gls{POPP} y el codificador de audio.}
+		\item{[0x152F]: trazas entre el descodificador de audio y el área de \gls{POPP}.}
+		\item{[0x1536]: trazas a la salida del codificador.}
+		\item{[0x152E]: trazas a la entrada del descodificador.}
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{audio_QXDM}
+	\caption{Puntos posibles donde obtener trazas para el resto de audio.} 
+	\label{fig:audio_qxdm}
+\end{figure}
+
+En función a estos puntos posibles, se deberá configurar en el programa \gls{QXDM} una vista filtrada que proporcione las trazas en las que se está interesado. Una vez se tenga esta vista, se debe reproducir el caso de uso que se quiera capturar.
+
+Una vez obtenidas las trazas, estas se encontrarán en un formato propietario de Qualcomm. Para poder interpretarlas será necesario utilizar el programa \gls{QCAT}. Con este programa, se podrán obtener los flujos de audio, en formatos WAV o RAW, que se podrán analizar con cualquier programa de edición de audio. Se generará al menos dos ficheros, uno por cada formato, por cada punto del que se han obtenido trazas. En los puntos comunes a transmisión y recepción, se diferenciará entre ambos caminos, creando dos ficheros distintos.
+
+Además, este programa permite sustituir las trazas perdidas, rellenando en función del resto de trazas los huecos temporales que existan. De esta manera, se consigue una reconstrucción del audio completa en cada punto. 
+
+Como ya se ha comentado en la sección \ref{sec:programas}, el programa de edición de audio que se ha utilizado para el análisis de los ficheros de audio obtenidos ha sido Adobe Audition.
+
+\section{Diseño de nuevas rutas}
+En este apartado se aplicará lo explicado en las secciones \ref{sec:rutado_codigo}, \ref{sec:conf_DSP} y \ref{sec:salida_qxdm} para abordar algunos problemas que han surgido durante la realización de este proyecto y que tienen que ver con la configuración y asociación de rutas del \gls{ADSP}. 
+
+\subsection{Para la supresión de ruido en grabaciones}
+El problema es que las rutas del \gls{ADSP} que se aplicaban en los casos de uso en que se iba a grabar un audio, ya sea con una aplicación de mensajería o con la propia aplicación de grabación del sistema, la supresión de ruido no estaba activa. Esto se debía a que cuando lo estaba, tardaba en activarse unos segundos desde que se iniciaba la grabación. Por tanto, durante esos primeros segundos de grabación no se reducía el ruido ambiente, pero en el resto de grabación si que se reducía. Este efecto no era el deseado y por tanto se tenía desactivado el módulo encargado de ello.
+
+Para solucionarlo, se debe implementar una nueva topología que ya no tenga este problema. Esto se ha conseguido gracias al uso de una segunda versión del módulo de supresión de ruido el cual no produce dicho efecto, sino que permanece activo desde el principio.
+
+Para identificar en cuales tipos de dispositivos habría que cambiar la topología aplicada, se ha observado el identificador del \gls{ACDB} asociado cuando se graba un audio. Las condiciones evaluadas han sido:
+
+\begin{itemize}
+	\item{Al grabar un audio con la aplicación de mensajería Whatsapp: el identificador asociado es el número cuatro. Por tanto, en la lista de tipos de dispositivos existente en el \gls{ADSP}, se busca el que tenga asociado el identificador número cuatro. En él, habrá que cambiar la topología asociada al tipo de aplicación por defecto de transmisión, por la nueva topología creada.}
+	\item{Al realizar una grabación mono con la aplicación Grabadora del sistema: el identificador asociado también es el número cuatro. Por tanto, el cambio anteriormente descrito es suficiente.}
+	\item{Al realizar una grabación estéreo con la aplicación Grabadora del sistema: el identificador asociado es el número treinta y cuatro. De igual manera, se busca en la lista de dispositivos el que tenga asociado ese número. Se sustituye la topología asociada al tipo de aplicación por defecto de transmisión por una nueva topología. Esta topología ha de ser diferente, pues es grabación estéreo en lugar de mono, que es la que se había aplicado en los dos casos anteriores.}
+	\item{Al realizar una grabación con cascos con cable que tengan micrófono incorporado: el identificador asociado es el número ocho. La topología que se pondrá será la misma que en los dos primeros casos, pues se trata de grabación mono.}
+\end{itemize}
+
+Por tanto, ha sido necesario crear dos topologías, ambas añadidas al área de \gls{COPP}. La nueva topología de grabación mono es la siguiente:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{topologia_mono_eans2}
+	\caption{Nueva topología de grabación mono con supresión de ruido.} 
+	\label{fig:mono_eans2}
+\end{figure}
+
+Se pueden observar como se aplica primero un filtrado paso alto. Posteriormente, se amplifica el sonido con una ganancia de 18\gls{dB}. El siguiente módulo activo es la segunda versión del que suprime el ruido. El siguiente módulo activo es un compresor multibanda. Finalmente, se aplica un módulo que vuelve a muestrear a la salida del área.
+
+La configuración de todos los módulos, a excepción del de supresión de ruido, se ha mantenido sin cambios con respecto a la antigua topología aplicada.
+
+La nueva topología de grabación estéreo es muy similar a la anterior:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{topologia_stereo_eans2}
+	\caption{Nueva topología de grabación estéreo con supresión de ruido.} 
+	\label{fig:stereo_eans2}
+\end{figure}
+
+La principal diferencia la encontramos en el uso de dos canales en el tipo de dispositivo. Además, la ganancia aplicada es menor, 10\gls{dB}, con el objetivo de no saturar el audio al grabarse desde dos micrófonos.
+
+Tras realizar las modificaciones necesarias, se deben cambiar los ficheros \gls{ACDB} del teléfono por los que tienen la nueva topología.
+
+Una vez aplicados los cambios, se han realiza dos tipos de pruebas:
+
+\begin{enumerate}
+	\item Comprobación de la topología aplicada: para todos los casos de uso, en los que se ha cambiado la topología aplicada, se comprueba, si conectando el dispositivo en tiempo real al programa \gls{QACT}, se aplica la topología correspondiente en cada caso. Los resultados han sido todos satisfactorios, aplicándose las nuevas topologías en la grabación mono y estéreo tal y como se han configurado.
+	\item Mediante el programa Adobe Audition se comprueban los resultados de estas topologías: con la aplicación Grabadora realizamos una grabación mono antes de aplicar la nueva topología y después de aplicarla. Los resultados de ambos audios analizados con Audition son los siguientes:
+	\begin{figure}[H]
+		\centering
+		\subfigure[Con supresión de ruido activada.]{\includegraphics[width=0.7\textwidth]{audition_eans_activo}}
+		\subfigure[Con supresión de ruido desactivada.]{\includegraphics[width=0.7\textwidth]{audition_eans_desactivado}}
+		\caption{Comparación de una grabación mono con y sin supresión de ruido.} \label{fig:comparacion_eans_on_off}
+	\end{figure}
+	
+	Como se puede observar, cuando no se aplica la supresión de ruido, el ruido de fondo en todas las frecuencias es mucho más apreciable. Por tanto, se puede concluir que las nuevas topologías cumplen su función de manera satisfactoria.
+\end{enumerate}
+
+\subsection{Para el correcto funcionamiento de aplicaciones de llamadas VoIP}
+Las aplicaciones que utilizan llamadas \gls{VoIP} suelen tener comportamientos erráticos. Teóricamente, cuando una llamada \gls{VoIP} se establece, debería interpretarse como una llamada tradicional, al menos a nivel de \gls{ADSP}, aplicando una topología de voz que combine los caminos de recepción y transmisión. Esto nos permitiría utilizar módulos de procesado de la voz específicos para llamadas.
+
+En la práctica esto puede no ocurrir en todas las aplicaciones debido a que el programador de la aplicación no realiza las peticiones necesarias para interpretarse de ese modo. En varios casos se acaba interpretando como si se tratase de dos caminos separados y sin relación, uno que actúa como si grabase un audio y otro que lo hace como si estuviese en reproducción. Este comportamiento, aunque no es el ideal, es suficiente para que las llamadas se puedan mantener con un nivel y calidad de audio razonables.
+
+El problema surge en dos aplicaciones de mensajería, Skype y Viber. Ambas sufren del problema comentado anteriormente. Como conseguir que se interpreten como llamadas no se puede forzar, sino que se debe realizar una petición por parte de la aplicación, se ha optado por la siguiente solución:
+	
+\begin{enumerate}
+	\item Crear nuevos tipos de dispositivos: se crean nuevos dispositivos en el \gls{ADSP} que se configuran de igual modo a los dispositivos que se estaban aplicando para la reproducción y grabación de audio simultánea. Esto permite configurar las topologías del área \gls{COPP} de ese dispositivo de manera que no afecten al resto de casos de uso. Si se mantuviesen los dispositivos aplicados anteriormente y se quisiesen configurar para las llamadas \gls{VoIP} podría afectar este cambio a otros casos de uso. Se han creado un total de tres dispositivos:
+	\begin{itemize}
+		\item{Uno que se asociará a la reproducción por el auricular. Se le ha asociado el identificador 171. }
+		\item{Otro que se asociará a la reproducción por el altavoz, cuando la función manos libres esté activa. Se le ha asociado el identificador 172}
+		\item{Otro que se asociara a la grabación de audio cuando se esté reproduciendo por el auricular. Este dispositivo debe usar ambos micrófonos para la captación. Se le ha asociado el identificador 173.}
+		\item{Para el caso de la grabación de audio cuando se esté reproduciendo por el altavoz no será necesario crear un nuevo dispositivo, pues el que se aplica por defecto en las llamadas \gls{VoIP} de Skype y Viber sólo se usa en ese caso. El identificador de este dispositivo es el 117.}
+	\end{itemize}
+	\item Declarar nuevos SND\_DEVICE: en el código se han declarado tres nuevos dispositivos, dos de salida y uno de entrada, a los que se asocian los identificadores anteriormente descritos. Además, hay que asociar una ruta \textit{hardware}. En los dispositivos de recepción será la misma que tenían los anteriores dispositivos asociados, pero en el de transmisión se utilizará una que proporcione la grabación dual de los micros:
+	\begin{figure}[H]
+		\centering
+		\subfigure[Dispositivos de salida.]{\includegraphics[width=74mm]{snd_voip_id}}
+		\subfigure[Dispositivo de entrada.]{\includegraphics[width=73mm]{snd_voip_id_in}}
+		\subfigure[Dispositivos de salida.]{\includegraphics[width=74mm]{snd_voip_mixer}}
+		\subfigure[Dispositivo de entrada.]{\includegraphics[width=73mm]{snd_voip_mixer_in}}
+		\caption{Asociación de rutas del \gls{ADSP} y del códec de audio para los nuevos dispositivos.} \label{fig:snd_voip_asociacion}
+	\end{figure}
+	\item Seleccionar los nuevos SND\_DEVICE: una vez declarados y asociados los nuevos dispositivos, se debe seleccionar cuando deben utilizarse. En los métodos platform\_get\_output\_snd\_device y platform\_get\_input\_snd\_device se sustituyen los dispositivos seleccionados anteriormente por la selección de los nuevos.
+	\item Para el caso de la reproducción por el altavoz en la función manos libres, se debe hacer uso del códec dedicado del altavoz, para ello en el fichero audio\_hw.c indicamos que se rute por ahí:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1\textwidth]{snd_voip_smpa}
+		\caption{Rutado del nuevo dispositivo de manos libres por el códec de audio propio del altavoz.} 
+		\label{fig:snd_voip_smpa}
+	\end{figure}
+	\item Hacer la \gls{HAL} compatible a los nuevos dispositivos: se han añadido los nuevos dispositivos a las comparaciones en las que los anteriores dispositivos se incluían.
+	\item Compilar la \gls{HAL} y sustituir las librerías generadas en el teléfono. Es necesario estar conectado como superusuario y hacer el sistema compatible a la escritura.
+	\item Sustituir los ficheros \gls{ACDB} del teléfono por los que incluyen los nuevos dispositivos. Al reiniciar se tienen aplicados los cambios.
+\end{enumerate}
+
+Para probar dichas implementaciones se han realizado la misma prueba con ambas aplicaciones. Sobre un dispositivo A con la implementación realizada se ha realizado lo siguiente: 
+
+\begin{enumerate}
+	\item Conectado al dispositivo A mediante la herramienta \gls{ADB}, desde un dispositivo B se ha realizado una llamada \gls{VoIP} al dispositivo A. Al coger la llamada se comprueban los identificadores \gls{ACDB} que se asocian en el dispositivo A, que son 171 y 173. Se pone el dispositivo A en modo manos libres y se vuelve a comprobar los identificadores, que son el 172 y el 117. Se vuelve a pasar al modo normal y se vuelven a comprobar los identificadores, que vuelven a ser 171 y 173. Se finaliza la llamada. Los resultados han sido los esperados, aplicándose bien los identificadores que relacionan los dispositivos con las rutas del \gls{ADSP}.
+	\item Con el dispositivo A conectado en tiempo real con el programa \gls{QACT}, desde un dispositivo B se ha realizado otra llamada \gls{VoIP} al dispositivo A. Al coger la llamada se comprueba si el camino aplicado tanto de recepción como de transmisión, en el dispositivo A, se corresponde con los identificadores \gls{ACDB}. Se pone el dispositivo A en manos libres y se comprueba si los caminos aplicados se corresponden con los identificadores. Los resultados han sido los esperados, seleccionándose correctamente los caminos de recepción y transmisión que se han añadido nuevos en el \gls{ADSP}.
+	\item Conectado al dispositivo A mediante la herramienta \gls{ADB}, se realiza una llamada \gls{VoIP} desde un dispositivo B al dispositivo A. Cuando se contesta se pone en modo manos libres y se comprueba mediante el comando tinymix la ganancia de ambos micrófonos. Esta ganancia, al estar utilizando ambos, debería estar puesta al mismo valor. Una captura de los valores durante la prueba se muestra a continuación:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\textwidth]{snd_voip_dmic}
+		\caption{Ganancia de los micrófonos en llamadas VoIP.} 
+		\label{fig:snd_voip_dmic}
+	\end{figure}
+	En la imagen anterior se puede comprobar como cuando el dispositivo A está en manos libres tienen el mismo valor, pero al cambiar al modo normal tiene un mayor valor el micro principal, que es el que está habilitado. El resultado, por tanto, es el esperado.
+\end{enumerate}

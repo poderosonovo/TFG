@@ -36,5 +36,9 @@
 \contentsline {subsection}{\numberline {5.1.2}Rutado a nivel de \textit {hardware}}{34}{subsection.5.1.2}
 \contentsline {section}{\numberline {5.2}Configuraci\IeC {\'o}n del DSP a trav\IeC {\'e}s del programa QACT}{36}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Modos de dise\IeC {\~n}o disponibles}{38}{subsection.5.2.1}
-\contentsline {chapter}{Bibliograf\'{\i }a}{39}{chapter*.4}
-\contentsline {chapter}{Acr\IeC {\'o}nimos}{40}{section*.5}
+\contentsline {section}{\numberline {5.3}An\IeC {\'a}lisis de la salida de las \IeC {\'a}reas del DSP a trav\IeC {\'e}s del los programas QXDM y QCAT}{39}{section.5.3}
+\contentsline {section}{\numberline {5.4}Dise\IeC {\~n}o de nuevas rutas}{42}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Para la supresi\IeC {\'o}n de ruido en grabaciones}{42}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Para el correcto funcionamiento de aplicaciones de llamadas VoIP}{45}{subsection.5.4.2}
+\contentsline {chapter}{Bibliograf\'{\i }a}{48}{chapter*.4}
+\contentsline {chapter}{Acr\IeC {\'o}nimos}{49}{section*.5}
