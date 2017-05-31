@@ -11,7 +11,7 @@ Con este fin existen las \gls{API}, que proporcionan al programador estos recurs
 	\item{Modo normal: en el código se declara como MODE\_NORMAL. Es el modo de audio por defecto. Es el que se utiliza en la reproducción de contenido multimedia, sonidos del sistema o alarmas. Además, es el utilizado por defecto en tonos de llamada \gls{VoIP}.}
 	\item{Modo tono de llamada: en el código se declara como MODE\_RINGTONE. Es el utilizado cuando se reproduce un tono de llamada tradicional, \gls{GSM}.}
 	\item{Modo en llamada: en el código se declara como MODE\_IN\_CALL. Es el utilizado para indicar que se está en una llamada \gls{GSM}.}
-	\item{Modo en comunicación: en el código se declara como MODE\_IN\_COMMUNICATION. Es el utilizado para indicar que se está en una llamada \gls{VoIP} o en una videollamada. Es el único modo que no está presente en la primera versión de la \gls{API}, se incorpora en la versión 11.}
+	\item{Modo en comunicación: en el código se declara como \\ MODE\_IN\_COMMUNICATION. Es el utilizado para indicar que se está en una llamada \gls{VoIP} o en una videollamada. Es el único modo que no está presente en la primera versión de la \gls{API}, se incorpora en la versión 11.}
 	\item{Modo actual: en el código se declara como MODE\_CURRENT. Sirve para referirse al modo actual de audio.}
 	\item{Modo no válido: en el código se declara como MODE\_INVALID. Sirve para clasificar como no válido el audio.}
 \end{itemize}
@@ -57,7 +57,7 @@ Además de los modos de audio y los tipos de flujos de datos, existen otras form
 
 Una vez se han introducido los flujos de datos, se pueden aprovechar estos para realizar la comparación.  En el fichero MediaPlayer.java, que se utiliza para controlar la reproducción de audio y vídeo, cuando se inicia la reproducción se comprueba si el flujo de datos está clasificado como timbre, AUDIO\_STREAM\_RING. Si es así, se modifica el modo de audio a MODE\_RINGTONE.
 
-Pero de esta manera, al acabar de sonar el tono de llamada pueden darse dos situaciones. Si se contesta la llamada el modo de audio se cambiará a MODE\_IN\_COMMUNICATION. Pero si no se contesta, el modo que se quedaría es MODE\_RINGTONE. Para que vuelva al modo por defecto, en el método que para la reproducción, se debe volver a fijar dicho modo.
+Pero de esta manera, al acabar de sonar el tono de llamada pueden darse dos situaciones. Si se contesta la llamada el modo de audio se cambiará a \\ MODE\_IN\_COMMUNICATION. Pero si no se contesta, el modo que se quedaría es MODE\_RINGTONE. Para que vuelva al modo por defecto, en el método que para la reproducción, se debe volver a fijar dicho modo.
 
 El siguiente paso en el desarrollo ha sido la implementación de un modo propio. Para ello, es necesario declarar un nuevo modo de audio en las distintas capas del \textit{framework}.
 
@@ -70,7 +70,7 @@ Se ha creado un nuevo modo de audio denominado MODE\_RINGTONE\_IP. Hay que decla
 	\caption{Declaración de MODE\_RINGTONE\_IP.} \label{fig:mode_ringtone_ip}
 \end{figure}
 
-Tras esto, únicamente es necesario sustituir MODE\_RINGTONE por MODE\_RINGTONE\_IP en la implementación realizada en MediaPlayer.java.
+Tras esto, únicamente es necesario sustituir MODE\_RINGTONE por \\ MODE\_RINGTONE\_IP en la implementación realizada en MediaPlayer.java.
 
 A la hora de compilar la nueva implementación, es recomendable realizar una compilación completa del código. Esto se debe a que se han modificado diferentes partes. Por un lado, el fichero audio.h se encuentra en el directorio de sistema. Por otro, el fichero AudioManager.java y MediaPlayer.java se encuentran en el \gls{JNI}.
 

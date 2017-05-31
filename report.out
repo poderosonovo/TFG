@@ -1,32 +1,37 @@
-\BOOKMARK [0][-]{chapter.1}{An\341lisis}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Evoluci\363n del sistema operativo Android}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Situaci\363n del audio sobre el sistema operativo Android}{chapter.1}% 3
-\BOOKMARK [2][-]{subsection.1.2.1}{Cambios en las \372ltimas versiones}{section.1.2}% 4
-\BOOKMARK [2][-]{subsection.1.2.2}{Situaci\363n actual sobre Android N}{section.1.2}% 5
-\BOOKMARK [0][-]{chapter.2}{Entorno de trabajo}{}% 6
-\BOOKMARK [1][-]{section.2.1}{C\363digo base sobre el que se desarrolla}{chapter.2}% 7
-\BOOKMARK [2][-]{subsection.2.1.1}{Estructura del c\363digo}{section.2.1}% 8
-\BOOKMARK [1][-]{section.2.2}{Programas de utilidad para el an\341lisis y dise\361o}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.3}{Otros recursos utilizados}{chapter.2}% 10
-\BOOKMARK [0][-]{chapter.3}{Modos de audio}{}% 11
-\BOOKMARK [1][-]{section.3.1}{\277Qu\351 son los modos de audio en Android?}{chapter.3}% 12
-\BOOKMARK [1][-]{section.3.2}{Implementaci\363n de un nuevo modo de audio para tono de llamada VoIP.}{chapter.3}% 13
-\BOOKMARK [2][-]{subsection.3.2.1}{Implementaci\363n del modo de audio.}{section.3.2}% 14
-\BOOKMARK [2][-]{subsection.3.2.2}{Pruebas y problemas en su uso.}{section.3.2}% 15
-\BOOKMARK [0][-]{chapter.4}{Curvas de volumen}{}% 16
-\BOOKMARK [1][-]{section.4.1}{\277Qu\351 son las curvas de volumen?}{chapter.4}% 17
-\BOOKMARK [1][-]{section.4.2}{Diferencia entre Android M y Android N}{chapter.4}% 18
-\BOOKMARK [2][-]{subsection.4.2.1}{Android M}{section.4.2}% 19
-\BOOKMARK [2][-]{subsection.4.2.2}{Android N}{section.4.2}% 20
-\BOOKMARK [0][-]{chapter.5}{Rutas del audio}{}% 21
-\BOOKMARK [1][-]{section.5.1}{Rutado en el c\363digo}{chapter.5}% 22
-\BOOKMARK [2][-]{subsection.5.1.1}{Rutado a nivel de DSP}{section.5.1}% 23
-\BOOKMARK [2][-]{subsection.5.1.2}{Rutado a nivel de hardware}{section.5.1}% 24
-\BOOKMARK [1][-]{section.5.2}{Configuraci\363n del DSP a trav\351s del programa QACT}{chapter.5}% 25
-\BOOKMARK [2][-]{subsection.5.2.1}{Modos de dise\361o disponibles}{section.5.2}% 26
-\BOOKMARK [1][-]{section.5.3}{An\341lisis de la salida de las \341reas del DSP a trav\351s del los programas QXDM y QCAT}{chapter.5}% 27
-\BOOKMARK [1][-]{section.5.4}{Dise\361o de nuevas rutas}{chapter.5}% 28
-\BOOKMARK [2][-]{subsection.5.4.1}{Para la supresi\363n de ruido en grabaciones}{section.5.4}% 29
-\BOOKMARK [2][-]{subsection.5.4.2}{Para el correcto funcionamiento de aplicaciones de llamadas VoIP}{section.5.4}% 30
-\BOOKMARK [0][-]{chapter*.4}{Bibliograf\355a}{}% 31
-\BOOKMARK [0][-]{section*.5}{Acr\363nimos}{}% 32
+\BOOKMARK [0][-]{chapter.1}{Introducci\363n}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Motivaci\363n}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Objetivos}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Acerca de este documento}{chapter.1}% 4
+\BOOKMARK [0][-]{chapter.2}{An\341lisis}{}% 5
+\BOOKMARK [1][-]{section.2.1}{Evoluci\363n del sistema operativo Android}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{Situaci\363n del audio sobre el sistema operativo Android}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.2.1}{Cambios en las \372ltimas versiones}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.2}{Situaci\363n actual sobre Android N}{section.2.2}% 9
+\BOOKMARK [0][-]{chapter.3}{Entorno de trabajo}{}% 10
+\BOOKMARK [1][-]{section.3.1}{C\363digo base sobre el que se desarrolla}{chapter.3}% 11
+\BOOKMARK [2][-]{subsection.3.1.1}{Estructura del c\363digo}{section.3.1}% 12
+\BOOKMARK [1][-]{section.3.2}{Programas de utilidad para el an\341lisis y dise\361o}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.3}{Otros recursos utilizados}{chapter.3}% 14
+\BOOKMARK [0][-]{chapter.4}{Modos de audio}{}% 15
+\BOOKMARK [1][-]{section.4.1}{\277Qu\351 son los modos de audio en Android?}{chapter.4}% 16
+\BOOKMARK [1][-]{section.4.2}{Implementaci\363n de un nuevo modo de audio para tono de llamada VoIP.}{chapter.4}% 17
+\BOOKMARK [2][-]{subsection.4.2.1}{Implementaci\363n del modo de audio.}{section.4.2}% 18
+\BOOKMARK [2][-]{subsection.4.2.2}{Pruebas y problemas en su uso.}{section.4.2}% 19
+\BOOKMARK [0][-]{chapter.5}{Curvas de volumen}{}% 20
+\BOOKMARK [1][-]{section.5.1}{\277Qu\351 son las curvas de volumen?}{chapter.5}% 21
+\BOOKMARK [1][-]{section.5.2}{Diferencia entre Android M y Android N}{chapter.5}% 22
+\BOOKMARK [2][-]{subsection.5.2.1}{Android M}{section.5.2}% 23
+\BOOKMARK [2][-]{subsection.5.2.2}{Android N}{section.5.2}% 24
+\BOOKMARK [0][-]{chapter.6}{Rutas del audio}{}% 25
+\BOOKMARK [1][-]{section.6.1}{Rutado en el c\363digo}{chapter.6}% 26
+\BOOKMARK [2][-]{subsection.6.1.1}{Rutado a nivel de DSP}{section.6.1}% 27
+\BOOKMARK [2][-]{subsection.6.1.2}{Rutado a nivel de hardware}{section.6.1}% 28
+\BOOKMARK [1][-]{section.6.2}{Configuraci\363n del DSP a trav\351s del programa QACT}{chapter.6}% 29
+\BOOKMARK [2][-]{subsection.6.2.1}{Modos de dise\361o disponibles}{section.6.2}% 30
+\BOOKMARK [1][-]{section.6.3}{An\341lisis de la salida de las \341reas del DSP a trav\351s del los programas QXDM y QCAT}{chapter.6}% 31
+\BOOKMARK [1][-]{section.6.4}{Dise\361o de nuevas rutas}{chapter.6}% 32
+\BOOKMARK [2][-]{subsection.6.4.1}{Para la supresi\363n de ruido en grabaciones}{section.6.4}% 33
+\BOOKMARK [2][-]{subsection.6.4.2}{Para el correcto funcionamiento de aplicaciones de llamadas VoIP}{section.6.4}% 34
+\BOOKMARK [0][-]{chapter.7}{Conclusiones y futuro desarrollo}{}% 35
+\BOOKMARK [0][-]{chapter*.4}{Bibliograf\355a}{}% 36
+\BOOKMARK [0][-]{section*.5}{Acr\363nimos}{}% 37

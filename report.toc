@@ -10,35 +10,40 @@
 \select@language {spanish}
 \select@language {english}
 \select@language {spanish}
-\contentsline {chapter}{\numberline {1}An\IeC {\'a}lisis}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Evoluci\IeC {\'o}n del sistema operativo Android}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Situaci\IeC {\'o}n del audio sobre el sistema operativo Android}{4}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Cambios en las \IeC {\'u}ltimas versiones}{4}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Situaci\IeC {\'o}n actual sobre Android N}{5}{subsection.1.2.2}
-\contentsline {chapter}{\numberline {2}Entorno de trabajo}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}C\IeC {\'o}digo base sobre el que se desarrolla}{7}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Estructura del c\IeC {\'o}digo}{7}{subsection.2.1.1}
-\contentsline {section}{\numberline {2.2}Programas de utilidad para el an\IeC {\'a}lisis y dise\IeC {\~n}o}{8}{section.2.2}
-\contentsline {section}{\numberline {2.3}Otros recursos utilizados}{12}{section.2.3}
-\contentsline {chapter}{\numberline {3}Modos de audio}{14}{chapter.3}
-\contentsline {section}{\numberline {3.1}\IeC {\textquestiondown }Qu\IeC {\'e} son los modos de audio en Android?}{14}{section.3.1}
-\contentsline {section}{\numberline {3.2}Implementaci\IeC {\'o}n de un nuevo modo de audio para tono de llamada VoIP.}{16}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Implementaci\IeC {\'o}n del modo de audio.}{16}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Pruebas y problemas en su uso.}{18}{subsection.3.2.2}
-\contentsline {chapter}{\numberline {4}Curvas de volumen}{20}{chapter.4}
-\contentsline {section}{\numberline {4.1}\IeC {\textquestiondown }Qu\IeC {\'e} son las curvas de volumen?}{20}{section.4.1}
-\contentsline {section}{\numberline {4.2}Diferencia entre Android M y Android N}{26}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Android M}{26}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Android N}{28}{subsection.4.2.2}
-\contentsline {chapter}{\numberline {5}Rutas del audio}{31}{chapter.5}
-\contentsline {section}{\numberline {5.1}Rutado en el c\IeC {\'o}digo}{31}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Rutado a nivel de DSP}{32}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}Rutado a nivel de \textit {hardware}}{34}{subsection.5.1.2}
-\contentsline {section}{\numberline {5.2}Configuraci\IeC {\'o}n del DSP a trav\IeC {\'e}s del programa QACT}{36}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Modos de dise\IeC {\~n}o disponibles}{38}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}An\IeC {\'a}lisis de la salida de las \IeC {\'a}reas del DSP a trav\IeC {\'e}s del los programas QXDM y QCAT}{39}{section.5.3}
-\contentsline {section}{\numberline {5.4}Dise\IeC {\~n}o de nuevas rutas}{42}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Para la supresi\IeC {\'o}n de ruido en grabaciones}{42}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}Para el correcto funcionamiento de aplicaciones de llamadas VoIP}{45}{subsection.5.4.2}
-\contentsline {chapter}{Bibliograf\'{\i }a}{48}{chapter*.4}
-\contentsline {chapter}{Acr\IeC {\'o}nimos}{49}{section*.5}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivaci\IeC {\'o}n}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Objetivos}{1}{section.1.2}
+\contentsline {section}{\numberline {1.3}Acerca de este documento}{2}{section.1.3}
+\contentsline {chapter}{\numberline {2}An\IeC {\'a}lisis}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Evoluci\IeC {\'o}n del sistema operativo Android}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Situaci\IeC {\'o}n del audio sobre el sistema operativo Android}{6}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Cambios en las \IeC {\'u}ltimas versiones}{6}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Situaci\IeC {\'o}n actual sobre Android N}{7}{subsection.2.2.2}
+\contentsline {chapter}{\numberline {3}Entorno de trabajo}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}C\IeC {\'o}digo base sobre el que se desarrolla}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Estructura del c\IeC {\'o}digo}{9}{subsection.3.1.1}
+\contentsline {section}{\numberline {3.2}Programas de utilidad para el an\IeC {\'a}lisis y dise\IeC {\~n}o}{10}{section.3.2}
+\contentsline {section}{\numberline {3.3}Otros recursos utilizados}{14}{section.3.3}
+\contentsline {chapter}{\numberline {4}Modos de audio}{16}{chapter.4}
+\contentsline {section}{\numberline {4.1}\IeC {\textquestiondown }Qu\IeC {\'e} son los modos de audio en Android?}{16}{section.4.1}
+\contentsline {section}{\numberline {4.2}Implementaci\IeC {\'o}n de un nuevo modo de audio para tono de llamada VoIP.}{18}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Implementaci\IeC {\'o}n del modo de audio.}{18}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Pruebas y problemas en su uso.}{20}{subsection.4.2.2}
+\contentsline {chapter}{\numberline {5}Curvas de volumen}{22}{chapter.5}
+\contentsline {section}{\numberline {5.1}\IeC {\textquestiondown }Qu\IeC {\'e} son las curvas de volumen?}{22}{section.5.1}
+\contentsline {section}{\numberline {5.2}Diferencia entre Android M y Android N}{28}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Android M}{28}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Android N}{30}{subsection.5.2.2}
+\contentsline {chapter}{\numberline {6}Rutas del audio}{33}{chapter.6}
+\contentsline {section}{\numberline {6.1}Rutado en el c\IeC {\'o}digo}{33}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Rutado a nivel de DSP}{34}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Rutado a nivel de \textit {hardware}}{36}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}Configuraci\IeC {\'o}n del DSP a trav\IeC {\'e}s del programa QACT}{38}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Modos de dise\IeC {\~n}o disponibles}{40}{subsection.6.2.1}
+\contentsline {section}{\numberline {6.3}An\IeC {\'a}lisis de la salida de las \IeC {\'a}reas del DSP a trav\IeC {\'e}s del los programas QXDM y QCAT}{41}{section.6.3}
+\contentsline {section}{\numberline {6.4}Dise\IeC {\~n}o de nuevas rutas}{44}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Para la supresi\IeC {\'o}n de ruido en grabaciones}{44}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Para el correcto funcionamiento de aplicaciones de llamadas VoIP}{47}{subsection.6.4.2}
+\contentsline {chapter}{\numberline {7}Conclusiones y futuro desarrollo}{50}{chapter.7}
+\contentsline {chapter}{Bibliograf\'{\i }a}{51}{chapter*.4}
+\contentsline {chapter}{Acr\IeC {\'o}nimos}{52}{section*.5}

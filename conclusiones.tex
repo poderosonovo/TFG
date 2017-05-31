@@ -1,0 +1,13 @@
+\chapter{Conclusiones y futuro desarrollo}
+Como conclusiones generales de este proyecto se ha podido observar que las versiones del sistema operativo Android 6.0 y 7.1.1, que han sido con las que se ha trabajado, son versiones muy estables. En relación al audio, este se encuentra en una situación similar, pudiendo configurarse de muchas maneras distintas según el caso de uso que se requiera en cada momento.
+
+La mayor parte de los problemas surgen relacionados con un desarrollo incorrecto de las aplicaciones que se ejecutan sobre este sistema operativo. Esto se debe a que, en algunos casos, no se utilizan las \gls{API} de la manera correcta, y por tanto el caso de uso que detecta el sistema no se corresponde con el que la aplicación necesita.
+
+Otro tipo de problemas que se han abordado en este proyecto han sido los relacionados con las compatibilidades del microcontrolador. El fabricante, Qualcomm en este caso, no siempre proporciona compatibilidad con todo tipo de peticiones del sistema. Estas incompatibilidades llevan a un uso diferente al esperado por parte de capas como el \gls{ADSP} o el códec de audio.
+
+Por tanto, el trabajo desarrollado ha consistido en asegurar la compatibilidad de las distintas peticiones en todas las capas de Android. Así como implementar los cambios en el paso de la versión de Android 6.0 a 7.1.1.
+
+Como desarrollo futuro, sería interesante estudiar más a fondo el problema de la latencia del audio en Android, aún demasiado alta y variable según para que caso de uso. Además, se está trabajando para encontrar la relación entre el fichero mixer.xml, que se encuentra en la \gls{HAL} y se encarga de configurar las rutas del códec de audio mediante etiquetas, y la última capa del sistema, el kernel de Android, donde se realizan las escrituras en los registros de memoria necesarios.
+
+
+
