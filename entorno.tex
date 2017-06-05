@@ -6,7 +6,7 @@ El código base sobre el que se ha desarrollado el proyecto, es el código de An
 
 Es destacable que, pese a no introducir BQ muchos cambios sobre el código nativo, el código sin compilar tiene un peso de unos 100 \gls{GB}.
 
-Por tanto, en su gran mayoría dicho código proviene de parte de Google, el nativo de Android, y por parte de Qualcomm, los controladores necesarios para el uso del hardware. Respecto a esto último, hay parte de dicho código que viene precompilado por parte de Qualcomm, para evitar posibles modificaciones por parte de los desarrolladores.
+Por tanto, en su gran mayoría dicho código proviene de parte de Google, el nativo de Android, y por parte de Qualcomm, los controladores necesarios para el uso del hardware. Qualcomm es el fabricante del \gls{SoC} de los dispositivos con los que se ha trabajado. Respecto a esto último, hay parte de dicho código que viene precompilado por parte de Qualcomm, para evitar posibles modificaciones por parte de los desarrolladores.
 
 
 \subsection{Estructura del código}
@@ -24,11 +24,11 @@ Se tienen diferentes carpetas que equivalen a cada una de las capas:
 
 Por supuesto, el código es mucho más extenso, pero con respecto al tratamiento del audio en el sistema operativo Android, estas serían las carpetas más importantes.
 
-Debido a esta extensión, la compilación local sería inviable si cada vez que quisiésemos compilar hubiese que hacerlo de todo el código. Por esa razón, se utiliza la herramienta Make, una herramienta de gestión de dependencias existentes en el código fuente que facilita su compilación. Para que esta herramienta sea útil es necesaria la presencia de ficheros Makefiles, los cuales establecen dichas dependencias entre ficheros. De esta manera, si queremos compilar un conjunto limitado de ficheros, habrá que buscar el Makefile del que dependan y ejecutar la herramienta Make desde ese directorio, proporcionando librerías en lugar de una nueva versión del textit{firmware}.
+Debido a esta extensión, la compilación local sería inviable si cada vez que quisiésemos compilar hubiese que hacerlo de todo el código. Por esa razón, se utiliza la herramienta Make, una herramienta de gestión de dependencias existentes en el código fuente que facilita su compilación. Para que esta herramienta sea útil es necesaria la presencia de ficheros Makefiles, los cuales establecen dichas dependencias entre ficheros. De esta manera, si queremos compilar un conjunto limitado de ficheros, habrá que buscar el Makefile del que dependan y ejecutar la herramienta Make desde ese directorio, proporcionando librerías en lugar de una nueva versión del \textit{firmware}.
 
 
 \section{Programas de utilidad para el análisis y diseño} \label{sec:programas}
-El fabricante del \gls{SoC} de los dispositivos con los que se ha trabajado es Qualcomm. Esta empresa proporciona software propio dedicado al análisis y configuración del hardware que fabrican. De esta manera, relacionados con el tema del audio, se han utilizado los siguientes programas:
+El fabricante del \gls{SoC} de los dispositivos con los que se ha trabajado, Qualcomm, proporciona software propio dedicado al análisis y configuración del hardware que fabrican. De esta manera, relacionados con el tema del audio, se han utilizado los siguientes programas:
 
 \begin{itemize}
 	\item{\gls{QPST}: proporciona un servidor automático entre un lenguaje, u otro programa, y un puerto del ordenador, al que conectamos el dispositivo móvil. Nos permite analizar y configurar el dispositivo en tiempo real. Es compatible con el resto de software de Qualcomm.}

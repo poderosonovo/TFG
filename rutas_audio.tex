@@ -5,7 +5,7 @@ En este capítulo se explicará el rutado del audio tanto a nivel \textit{softwa
 \section{Rutado en el código}\label{sec:rutado_codigo}
 Para explicar todo esto, es necesario tener claras las diferencias que existen en Android sobre el rutado a nivel de código. Una parte del código se encargará de rutar el audio por el camino del \gls{ADSP}, y otra parte se encargará de rutarlo por los distintos módulos \textit{hardware}.
 
-Para empezar, la selección de un camino u otro se realiza a nivel de \gls{HAL}. Esto implica, que estamos a un nivel más bajo del que se había trabajado hasta ahora.
+Para empezar, la selección de un camino u otro se realiza a nivel de \gls{HAL}. Esto implica que estamos a un nivel más bajo del que se había trabajado hasta ahora.
 
 En el siguiente diagrama se pueden observar los diferentes bloques por los que se ruta el audio en función de lo que indiquen algunos ficheros de configuración:
 
@@ -19,8 +19,8 @@ En el siguiente diagrama se pueden observar los diferentes bloques por los que s
 \begin{itemize}
 	\item{platform.c: fichero del código que se encarga de la lógica de rutado. Para cada caso de uso asocia una topología, un camino del \gls{ADSP}, y un camino del codec de audio, que puede ser el WCD8x16 o el TFA9911.}
 	\item{\gls{ADSP}: se encarga del procesado digital de la señal de audio. Sus topologías estarán configuradas según unos ficheros en el sistema, los ficheros \gls{ACDB}. No incluye lógica de rutado.}
-	\item{WCD8x16: es el códec de audio de Qualcomm. Se encarga del rutado y procesado del audio al más bajo nivel. Su configuración se realiza mediante un fichero mixer.xml. Incluye por tanto lógica de rutado. Recibe el audio de los micrófonos, lo procesa y se lo envía al \gls{ADSP}. También, recibe el audio del \gls{ADSP} y se encarga de sacarlo por los auriculares, mediante el conector de audio analógico de 3.5mm.}
-	\item{TFA9911: es un códec de audio dedicado exclusivamente para el altavoz del dispositivo. Incluye su propia lógica de rutado y su propio \gls{ADSP}. También se encarga del rutado y procesado al más bajo nivel.Se configura mediante un fichero tfa.cnt que iconfigura diferentes perfiles de sonido para el altavoz.}
+	\item{WCD8x16: es el códec de audio de Qualcomm. Se encarga del rutado y procesado del audio al más bajo nivel. Su configuración se realiza mediante un fichero mixer.xml. Incluye, por tanto, lógica de rutado. Recibe el audio de los micrófonos, lo procesa y se lo envía al \gls{ADSP}. También, recibe el audio del \gls{ADSP} y se encarga de sacarlo por los auriculares, mediante el conector de audio analógico de 3.5mm.}
+	\item{TFA9911: es un códec de audio dedicado exclusivamente para el altavoz del dispositivo. Incluye su propia lógica de rutado y su propio \gls{ADSP}. También se encarga del rutado y procesado al más bajo nivel. Se configura mediante un fichero tfa.cnt que configura diferentes perfiles de sonido para el altavoz.}
 \end{itemize}
 
 \subsection{Rutado a nivel de DSP}
@@ -37,7 +37,7 @@ Se declaran dos tipos de dispositivos. Por un lado, se encuentran los dispositiv
 	\caption{Declaración de dispositivos para cada ruta.} \label{fig:declaracion_snd}
 \end{figure} 
 
-La lista de dispositivos declarados es muy grande, existiendo más dispositivos que rutas. Normalmente, cada dispositivo que se declara sirve para un caso particular. Aunque en la realidad, muchos de los dispositivos se asocian a diferentes situaciones, ya que no sería mantenible configurar tantas topologías del \gls{ADSP}, ni rutad en el códec de audio.
+La lista de dispositivos declarados es muy grande, existiendo más dispositivos que rutas. Normalmente, cada dispositivo que se declara sirve para un caso particular. Aunque, en la realidad, muchos de los dispositivos se asocian a diferentes situaciones, ya que no sería mantenible configurar tantas topologías del \gls{ADSP}, ni rutas en el códec de audio.
 
 En el fichero platform.c es donde se asocia cada uno de estos dispositivos con una topología y un camino del códec de audio. La asociación a nivel de \gls{ADSP} se realiza mediante unos números que identifican cada una de las topologías. De este modo, para asociar los dispositivos anteriormente declarados se haría así:
 
@@ -48,13 +48,13 @@ En el fichero platform.c es donde se asocia cada uno de estos dispositivos con u
 	\caption{Asociación de topologías para cada dispositivo.} \label{fig:asociacion_acdb_id}
 \end{figure} 
 
-Pero hasta ahora estos dispositivos sólo de han declarado y configurado, falta seleccionarlos en cada caso de uso. Para ello, existen dos métodos de obtención del dispositivo, uno para salida y otro para entrada de audio. 
+Pero hasta ahora estos dispositivos sólo se han declarado y configurado, falta seleccionarlos en cada caso de uso. Para ello, existen dos métodos de obtención del dispositivo, uno para salida y otro para entrada de audio. 
 
 En estos métodos se hace uso de todas las características de las peticiones del audio. Estas pueden ser: los modos de audio ya comentados en el capítulo \ref{chap:modos}, los dispositivos por los que vaya a sonar o captar el audio, los tipos de flujos de audio, etc. En función de todo lo anterior y muchas otras características de las peticiones, se asocian los dispositivos.
 
 El método encargado de la selección del dispositivo de salida se denomina platform\_get\_output\_snd\_device. El método encargado de la selección de los dispositivos de entrada se denomina platform\_get\_input\_snd\_device. Destacar que se trata de métodos muy largos, con unas doscientas líneas de código, y con una lógica muy enrevesada. Por tanto, no son métodos muy mantenibles.
 
-Pero las topologías del \gls{ADSP} no dependen únicamente del dispositivo asociado, también dependen del tipo de aplicación. Esto es un identificador, que en función del tipo de petición, asociará una topología u otra para un dispositivo seleccionado.
+Pero las topologías del \gls{ADSP} no dependen únicamente del dispositivo asociado, también dependen del tipo de aplicación. Esto es un identificador, que en función del tipo de petición, asociará una topología u otra, para un dispositivo seleccionado.
 
 En el fichero platform.c se definen los tipos por defecto tanto para recepción, encargada de la reproducción de sonido, como para transmisión, encargada de la captación de sonido. Su declaración y asociación se puede observar a continuación:
 
@@ -65,9 +65,9 @@ En el fichero platform.c se definen los tipos por defecto tanto para recepción,
 	\label{fig:default_app_type}
 \end{figure} 
 
-La asociación de dichos tipos se realiza, también, en el fichero platform.c en función de si se trata de una petición de recepción o de transmisión. Además para el caso de recepción, otros tipos de aplicación se pueden asociar. Esta asociación se realiza en el fichero de la \gls{HAL} audio\_output\_policy.conf, pero por lo general, los casos por defecto son los que se utilizan.
+La asociación de dichos tipos se realiza, también, en el fichero platform.c en función de si se trata de una petición de recepción o de transmisión. Además, para el caso de recepción, otros tipos de aplicación se pueden asociar. Esta asociación se realiza en el fichero de la \gls{HAL} audio\_output\_policy.conf, pero por lo general, los casos por defecto son los que se utilizan.
 
-Cabe destacar, que en el caso de estar tratando con una llamada de voz, y que el código la interprete correctamente, los tipos de aplicación no se utilizan. Sólo se utilizan en los casos de reproducción o de grabación de audio.
+Cabe destacar que en el caso de estar tratando con una llamada de voz, y que el código la interprete correctamente, los tipos de aplicación no se utilizan. Sólo se utilizan en los casos de reproducción o de grabación de audio.
 
 Teniendo todo esto en cuenta, el rutado hacia una topología del \gls{ADSP} se haría correctamente.
 
@@ -103,7 +103,7 @@ Un ejemplo de ruta para los dispositivos SND\_DEVICE\_OUT\_HANDSET y \\ SND\_DEV
 	\caption{Definición de rutas \textit{hardware}.} \label{fig:definicion_rutas_mixer}
 \end{figure}
 
-Esto asocia a unas etiquetas ciertos valores. A más bajo nivel, al nivel del kernel, estos valores se interpretan y se escribe en los registros necesarios.
+Esto asocia a unas etiquetas ciertos valores. A más bajo nivel, al nivel del \textit{kernel}, estos valores se interpretan y se escribe en los registros necesarios.
 
 En el caso del dispositivo de reproducción, que está asociado a la reproducción por el auricular del teléfono, se transmite el audio por el camino RX1, configurándose un volumen, una ganancia del amplificador y configurando que el sonido salga por el auricular, para lo cual se da a la etiqueta EAR\_S el valor Switch.
 
@@ -165,7 +165,7 @@ Además, se puede observar que una ruta se divide en tres áreas, con distintas 
 	\item{\gls{POPP}: se asocia una topología distinta de esta área para cada tipo de aplicación, siendo común para todos los dispositivos. Es común para todos los dispositivos.}
 \end{itemize}
 
-Cada topología se compone de módulos ordenados. Estos módulos realizan distintos procesados, y se pueden configurar seleccionándolos. Existen módulos de: filtrado, amplificación, supresión de ruido, compresión multibanda, muestreo, generación de ruido, potenciación de bajos, ecualización, etc.
+Cada topología se compone de módulos ordenados. Estos módulos realizan distintos procesados y se pueden configurar seleccionándolos. Existen módulos de: filtrado, amplificación, supresión de ruido, compresión multibanda, muestreo, generación de ruido, potenciación de bajos, ecualización, etc.
 
 \subsection{Modos de diseño disponibles}
 Este programa permite diferentes modos de modificar el \gls{ADSP}, estos son: 
@@ -190,10 +190,10 @@ Este programa permite diferentes modos de modificar el \gls{ADSP}, estos son:
 	\item{Crear nuevos tipos de aplicación: se pueden crear nuevos tipos de aplicación y asociarles una topología de \gls{POPP}. Este nuevo tipo será necesario declararlo y asociarlo en el código, como se ha visto con los tipos de aplicación por defecto.}
 \end{itemize}
 
-Una vez se ha realizado alguna modificación, de las indicadas anteriormente, en los ficheros \gls{ACDB}, será necesario cargar estos ficheros en el sistema del teléfono. Para ello, deben obtenerse permisos de superusuario, habilitar la escritura del sistema, y sustituir los ficheros \gls{ACDB} existentes por los nuevos. Finalmente, para que se apliquen los cambios, es necesario reiniciar el dispositivo.
+Una vez se ha realizado alguna modificación de las indicadas anteriormente, en los ficheros \gls{ACDB} será necesario cargar estos ficheros en el sistema del teléfono. Para ello, deben obtenerse permisos de superusuario, habilitar la escritura del sistema, y sustituir los ficheros \gls{ACDB} existentes por los nuevos. Finalmente, para que se apliquen los cambios, es necesario reiniciar el dispositivo.
 
 \section{Análisis de la salida de las áreas del DSP a través del los programas QXDM y QCAT} \label{sec:salida_qxdm}
-En este capítulo se explicará las posibilidades que ofrece el fabricante Qualcomm para depurar a nivel de \gls{ADSP} y códec de audio. Ambas capas, al ser propietarias de Qualcomm, se encuentran muy protegidas.Por tanto, una forma sencilla de obtener información es mediante su \textit{software}.
+En esta sección se explicará las posibilidades que ofrece el fabricante Qualcomm para depurar a nivel de \gls{ADSP} y códec de audio. Ambas capas, al ser propietarias de Qualcomm, se encuentran muy protegidas.Por tanto, una forma sencilla de obtener información es mediante su \textit{software}.
 
 El programa \gls{QXDM} nos permite obtener trazas de los diferentes flujos de información que pasan por ciertos puntos. Para poder hacer uso de este programa, el dispositivo tiene que estar conectado al ordenador mediante el programa \gls{QPST}.
 
@@ -258,9 +258,9 @@ Como ya se ha comentado en la sección \ref{sec:programas}, el programa de edici
 En este apartado se aplicará lo explicado en las secciones \ref{sec:rutado_codigo}, \ref{sec:conf_DSP} y \ref{sec:salida_qxdm} para abordar algunos problemas que han surgido durante la realización de este proyecto y que tienen que ver con la configuración y asociación de rutas del \gls{ADSP}. 
 
 \subsection{Para la supresión de ruido en grabaciones}
-El problema es que las rutas del \gls{ADSP} que se aplicaban en los casos de uso en que se iba a grabar un audio, ya sea con una aplicación de mensajería o con la propia aplicación de grabación del sistema, la supresión de ruido no estaba activa. Esto se debía a que cuando lo estaba, tardaba en activarse unos segundos desde que se iniciaba la grabación. Por tanto, durante esos primeros segundos de grabación no se reducía el ruido ambiente, pero en el resto de grabación si que se reducía. Este efecto no era el deseado y por tanto se tenía desactivado el módulo encargado de ello.
+El problema es que las rutas del \gls{ADSP} que se aplicaban en los casos de uso en que se iba a grabar un audio, ya sea con una aplicación de mensajería o con la propia aplicación de grabación del sistema, la supresión de ruido no estaba activa. Esto se debía a que, cuando lo estaba, tardaba en activarse unos segundos desde que se iniciaba la grabación. Por tanto, durante esos primeros segundos de grabación no se reducía el ruido ambiente, pero en el resto de grabación si que se reducía. Este efecto no era el deseado y por tanto se tenía desactivado el módulo encargado de ello.
 
-Para solucionarlo, se debe implementar una nueva topología que ya no tenga este problema. Esto se ha conseguido gracias al uso de una segunda versión del módulo de supresión de ruido el cual no produce dicho efecto, sino que permanece activo desde el principio.
+Para solucionarlo se debe implementar una nueva topología que ya no tenga este problema. Esto se ha conseguido gracias al uso de una segunda versión del módulo de supresión de ruido el cual no produce dicho efecto, sino que permanece activo desde el principio.
 
 Para identificar en cuales tipos de dispositivos habría que cambiar la topología aplicada, se ha observado el identificador del \gls{ACDB} asociado cuando se graba un audio. Las condiciones evaluadas han sido:
 
@@ -315,7 +315,7 @@ Una vez aplicados los cambios, se han realiza dos tipos de pruebas:
 \subsection{Para el correcto funcionamiento de aplicaciones de llamadas VoIP}
 Las aplicaciones que utilizan llamadas \gls{VoIP} suelen tener comportamientos erráticos. Teóricamente, cuando una llamada \gls{VoIP} se establece, debería interpretarse como una llamada tradicional, al menos a nivel de \gls{ADSP}, aplicando una topología de voz que combine los caminos de recepción y transmisión. Esto nos permitiría utilizar módulos de procesado de la voz específicos para llamadas.
 
-En la práctica esto puede no ocurrir en todas las aplicaciones debido a que el programador de la aplicación no realiza las peticiones necesarias para interpretarse de ese modo. En varios casos se acaba interpretando como si se tratase de dos caminos separados y sin relación, uno que actúa como si grabase un audio y otro que lo hace como si estuviese en reproducción. Este comportamiento, aunque no es el ideal, es suficiente para que las llamadas se puedan mantener con un nivel y calidad de audio razonables.
+En la práctica esto puede no ocurrir en todas las aplicaciones debido a que el programador de la aplicación no realiza las peticiones necesarias, para interpretarse de ese modo. En varios casos se acaba interpretando como si se tratase de dos caminos separados y sin relación, uno que actúa como si grabase un audio y otro que lo hace como si estuviese en reproducción. Este comportamiento, aunque no es el ideal, es suficiente para que las llamadas se puedan mantener con un nivel y calidad de audio razonables.
 
 El problema surge en dos aplicaciones de mensajería, Skype y Viber. Ambas sufren del problema comentado anteriormente. Como conseguir que se interpreten como llamadas no se puede forzar, sino que se debe realizar una petición por parte de la aplicación, se ha optado por la siguiente solución:
 	
@@ -349,7 +349,7 @@ El problema surge en dos aplicaciones de mensajería, Skype y Viber. Ambas sufre
 	\item Sustituir los ficheros \gls{ACDB} del teléfono por los que incluyen los nuevos dispositivos. Al reiniciar se tienen aplicados los cambios.
 \end{enumerate}
 
-Para probar dichas implementaciones se han realizado la misma prueba con ambas aplicaciones. Sobre un dispositivo A con la implementación realizada se ha realizado lo siguiente: 
+Para probar dichas implementaciones se ha realizado la misma prueba con ambas aplicaciones. Sobre un dispositivo A con la implementación realizada se ha realizado lo siguiente: 
 
 \begin{enumerate}
 	\item Conectado al dispositivo A mediante la herramienta \gls{ADB}, desde un dispositivo B se ha realizado una llamada \gls{VoIP} al dispositivo A. Al coger la llamada se comprueban los identificadores \gls{ACDB} que se asocian en el dispositivo A, que son 171 y 173. Se pone el dispositivo A en modo manos libres y se vuelve a comprobar los identificadores, que son el 172 y el 117. Se vuelve a pasar al modo normal y se vuelven a comprobar los identificadores, que vuelven a ser 171 y 173. Se finaliza la llamada. Los resultados han sido los esperados, aplicándose bien los identificadores que relacionan los dispositivos con las rutas del \gls{ADSP}.

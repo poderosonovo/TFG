@@ -2,6 +2,7 @@
 \glossaryentry{TFG?\glossentry{TFG}|setentrycounter[]{page}\glsnumberformat}{ii}
 \glossaryentry{ADSP?\glossentry{ADSP}|setentrycounter[]{page}\glsnumberformat}{v}
 \glossaryentry{TFG?\glossentry{TFG}|setentrycounter[]{page}\glsnumberformat}{1}
+\glossaryentry{GB?\glossentry{GB}|setentrycounter[]{page}\glsnumberformat}{1}
 \glossaryentry{TFG?\glossentry{TFG}|setentrycounter[]{page}\glsnumberformat}{2}
 \glossaryentry{WVGA?\glossentry{WVGA}|setentrycounter[]{page}\glsnumberformat}{4}
 \glossaryentry{NFC?\glossentry{NFC}|setentrycounter[]{page}\glsnumberformat}{4}
@@ -31,6 +32,7 @@
 \glossaryentry{ADSP?\glossentry{ADSP}|setentrycounter[]{page}\glsnumberformat}{8}
 \glossaryentry{ADSP?\glossentry{ADSP}|setentrycounter[]{page}\glsnumberformat}{8}
 \glossaryentry{GB?\glossentry{GB}|setentrycounter[]{page}\glsnumberformat}{9}
+\glossaryentry{SoC?\glossentry{SoC}|setentrycounter[]{page}\glsnumberformat}{9}
 \glossaryentry{JNI?\glossentry{JNI}|setentrycounter[]{page}\glsnumberformat}{9}
 \glossaryentry{HAL?\glossentry{HAL}|setentrycounter[]{page}\glsnumberformat}{10}
 \glossaryentry{HAL?\glossentry{HAL}|setentrycounter[]{page}\glsnumberformat}{10}
