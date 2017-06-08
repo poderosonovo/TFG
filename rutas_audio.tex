@@ -23,7 +23,7 @@ En el siguiente diagrama se pueden observar los diferentes bloques por los que s
 	\item{TFA9911: es un códec de audio dedicado exclusivamente para el altavoz del dispositivo. Incluye su propia lógica de rutado y su propio \gls{ADSP}. También se encarga del rutado y procesado al más bajo nivel. Se configura mediante un fichero tfa.cnt que configura diferentes perfiles de sonido para el altavoz.}
 \end{itemize}
 
-\subsection{Rutado a nivel de DSP}
+\subsection{Rutado a nivel de DSP} \label{sec:rutado_DSP}
 Como ya se ha comentado, en la \gls{HAL} existe un fichero platform.c que es el encargado de la lógica de rutado del audio. Este fichero, en función de las características de la petición que reciba, habilitará un camino u otro.
 
 En el fichero platform.h se declaran todos los tipos de dispositivos. Estos dispositivos llevarán asociados una ruta del \gls{ADSP} y una ruta del códec de audio. Por tanto, para un sonido por el mismo altavoz, pueden existir muchos dispositivos para aplicarse en diferentes casos de uso.
@@ -257,7 +257,7 @@ Como ya se ha comentado en la sección \ref{sec:programas}, el programa de edici
 \section{Diseño de nuevas rutas}
 En este apartado se aplicará lo explicado en las secciones \ref{sec:rutado_codigo}, \ref{sec:conf_DSP} y \ref{sec:salida_qxdm} para abordar algunos problemas que han surgido durante la realización de este proyecto y que tienen que ver con la configuración y asociación de rutas del \gls{ADSP}. 
 
-\subsection{Para la supresión de ruido en grabaciones}
+\subsection{Para la supresión de ruido en grabaciones} \label{sec:supresion_ruido}
 El problema es que las rutas del \gls{ADSP} que se aplicaban en los casos de uso en que se iba a grabar un audio, ya sea con una aplicación de mensajería o con la propia aplicación de grabación del sistema, la supresión de ruido no estaba activa. Esto se debía a que, cuando lo estaba, tardaba en activarse unos segundos desde que se iniciaba la grabación. Por tanto, durante esos primeros segundos de grabación no se reducía el ruido ambiente, pero en el resto de grabación si que se reducía. Este efecto no era el deseado y por tanto se tenía desactivado el módulo encargado de ello.
 
 Para solucionarlo se debe implementar una nueva topología que ya no tenga este problema. Esto se ha conseguido gracias al uso de una segunda versión del módulo de supresión de ruido el cual no produce dicho efecto, sino que permanece activo desde el principio.
@@ -312,7 +312,7 @@ Una vez aplicados los cambios, se han realiza dos tipos de pruebas:
 	Como se puede observar, cuando no se aplica la supresión de ruido, el ruido de fondo en todas las frecuencias es mucho más apreciable. Por tanto, se puede concluir que las nuevas topologías cumplen su función de manera satisfactoria.
 \end{enumerate}
 
-\subsection{Para el correcto funcionamiento de aplicaciones de llamadas VoIP}
+\subsection{Para el correcto funcionamiento de aplicaciones de llamadas VoIP} \label{sec:llamadas_VoIP}
 Las aplicaciones que utilizan llamadas \gls{VoIP} suelen tener comportamientos erráticos. Teóricamente, cuando una llamada \gls{VoIP} se establece, debería interpretarse como una llamada tradicional, al menos a nivel de \gls{ADSP}, aplicando una topología de voz que combine los caminos de recepción y transmisión. Esto nos permitiría utilizar módulos de procesado de la voz específicos para llamadas.
 
 En la práctica esto puede no ocurrir en todas las aplicaciones debido a que el programador de la aplicación no realiza las peticiones necesarias, para interpretarse de ese modo. En varios casos se acaba interpretando como si se tratase de dos caminos separados y sin relación, uno que actúa como si grabase un audio y otro que lo hace como si estuviese en reproducción. Este comportamiento, aunque no es el ideal, es suficiente para que las llamadas se puedan mantener con un nivel y calidad de audio razonables.

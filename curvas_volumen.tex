@@ -1,7 +1,7 @@
 \chapter{Curvas de volumen} \label{chap:curvas_volumen}
 En este capítulo se explicará el funcionamiento de las curvas de volumen en Android. Además, se abordarán los cambios que han tenido lugar con el cambio de versión, de 6.0 Marshmallow a 7.0 Nougat, implementándose y realizando los ajustes necesarios de dichas curvas.
 
-\section{¿Qué son las curvas de volumen?}
+\section{¿Qué son las curvas de volumen?} \label{sec:def_curvas}
 Las curvas de volumen marcan como se atenuará o aumentará el audio según el usuario modifique el volumen de su dispositivo.
 
 Existen múltiples curvas de volumen, una por cada tipo de audio que vaya a reproducirse por cada clase de dispositivo. Un ejemplo de esto es que existirá una curva de volumen que controle el volumen de las notificaciones cuando suenen por el altavoz, y habrá otra que lo controle cuando suenen por los auriculares.
@@ -97,7 +97,7 @@ Como se puede observar, el cambio en la barra de usuario al aumentar el volumen 
 
 La relación entre la barra de control de la interfaz de usuario y las curvas de volumen ha cambiado ligeramente con el cambio de versión de Android M a N. Las implicaciones de estos cambios, así como la relación anteriormente comentada, se explicarán en el siguiente apartado.
 
-\section{Diferencia entre Android M y Android N}
+\section{Diferencia entre Android M y Android N} \label{sec:dif_N_M}
 Las principales diferencias entre ambas versiones, en relación al audio, se encuentran en la manera que tienen ambas de definir las curvas de volumen. Tanto las curvas de volumen por defecto, como el método de interpolación lineal, han cambiado. Por tanto, este apartado consistirá en aplicar dichos cambios, pues aunque se haya cambiado de versión no se habían aplicado, y explicar las diferencias entre ambas.
 
 \subsection{Android M}
