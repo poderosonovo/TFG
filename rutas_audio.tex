@@ -122,7 +122,7 @@ En la siguiente imagen se puede observar como se consulta el valor del amplifica
 
 El valor, cuando se está escuchando un audio por el auricular en el móvil, es de una ganancia de 6\gls{dB}, pero mediante el comando tinymix se puede forzar a que baje a 1.5\gls{dB}.
 
-Como caso particular, falta por comentar el altavoz. Este altavoz tiene un códec de audio propio, por tanto para que se rute correctamente ha de añadirse, para todos los dispositivos que vayan a reproducirse por ahí, lo siguiente en el fichero audio\_hw.c:
+Como caso particular, falta por comentar el altavoz. Este altavoz tiene un códec de audio propio, por tanto para que se rute correctamente ha de añadirse, para todos los dispositivos que vayan a reproducirse por ahí, las siguientes líneas en el fichero audio\_hw.c:
 
 \begin{figure}[H]
 	\centering
@@ -134,7 +134,7 @@ Como caso particular, falta por comentar el altavoz. Este altavoz tiene un códe
 De esta manera, para cada dispositivo relacionado con el altavoz, se asocia una nueva etiqueta que hará que el audio se rute por el códec TFA9911 en lugar de por el WCD8x16.
 
 \section{Configuración del DSP a través del programa QACT} \label{sec:conf_DSP}
-La configuración del \gls{ADSP} únicamente es posible realizarla mediante el programa \gls{QACT}. Este programa sólo funciona en el sistema operativo Windows, por tanto durante esta sección se trabajará con dicho sistema.
+La configuración del \gls{ADSP} únicamente es posible realizarla mediante el programa \gls{QACT}. Este programa sólo funciona en el sistema operativo Windows, por tanto para realizar esta implementación se trabajará con dicho sistema.
 
 Este programa permite dos tipos de conexión:
 \begin{itemize}
@@ -248,7 +248,7 @@ Este programa permite obtener trazas para muchas aplicaciones, para configurar q
 
 En función a estos puntos posibles, se deberá configurar en el programa \gls{QXDM} una vista filtrada que proporcione las trazas en las que se está interesado. Una vez se tenga esta vista, se debe reproducir el caso de uso que se quiera capturar.
 
-Una vez obtenidas las trazas, estas se encontrarán en un formato propietario de Qualcomm. Para poder interpretarlas será necesario utilizar el programa \gls{QCAT}. Con este programa, se podrán obtener los flujos de audio, en formatos WAV o RAW, que se podrán analizar con cualquier programa de edición de audio. Se generará al menos dos ficheros, uno por cada formato, por cada punto del que se han obtenido trazas. En los puntos comunes a transmisión y recepción, se diferenciará entre ambos caminos, creando dos ficheros distintos.
+Una vez obtenidas las trazas, estas se encontrarán en un formato propietario de Qualcomm. Para poder interpretarlas será necesario utilizar el programa \gls{QCAT}. Con este programa, se podrán obtener los flujos de audio, en formatos WAV o RAW, que se podrán analizar con cualquier programa de edición de audio. Se generarán al menos dos ficheros, uno por cada formato, por cada punto del que se han obtenido trazas. En los puntos comunes a transmisión y recepción, se diferenciará entre ambos caminos, creando dos ficheros distintos.
 
 Además, este programa permite sustituir las trazas perdidas, rellenando en función del resto de trazas los huecos temporales que existan. De esta manera, se consigue una reconstrucción del audio completa en cada punto. 
 
@@ -265,7 +265,7 @@ Para solucionarlo se debe implementar una nueva topología que ya no tenga este 
 Para identificar en cuales tipos de dispositivos habría que cambiar la topología aplicada, se ha observado el identificador del \gls{ACDB} asociado cuando se graba un audio. Las condiciones evaluadas han sido:
 
 \begin{itemize}
-	\item{Al grabar un audio con la aplicación de mensajería Whatsapp: el identificador asociado es el número cuatro. Por tanto, en la lista de tipos de dispositivos existente en el \gls{ADSP}, se busca el que tenga asociado el identificador número cuatro. En él, habrá que cambiar la topología asociada al tipo de aplicación por defecto de transmisión, por la nueva topología creada.}
+	\item{Al grabar un audio con la aplicación de mensajería Whatsapp: el identificador asociado es el número cuatro. Por tanto, en la lista de tipos de dispositivos existente en el \gls{ADSP}, se busca el que tenga asociado el identificador número cuatro. En él, habrá que cambiar la topología asociada al tipo de aplicación por defecto de transmisión por la nueva topología creada.}
 	\item{Al realizar una grabación mono con la aplicación Grabadora del sistema: el identificador asociado también es el número cuatro. Por tanto, el cambio anteriormente descrito es suficiente.}
 	\item{Al realizar una grabación estéreo con la aplicación Grabadora del sistema: el identificador asociado es el número treinta y cuatro. De igual manera, se busca en la lista de dispositivos el que tenga asociado ese número. Se sustituye la topología asociada al tipo de aplicación por defecto de transmisión por una nueva topología. Esta topología ha de ser diferente, pues es grabación estéreo en lugar de mono, que es la que se había aplicado en los dos casos anteriores.}
 	\item{Al realizar una grabación con cascos con cable que tengan micrófono incorporado: el identificador asociado es el número ocho. La topología que se pondrá será la misma que en los dos primeros casos, pues se trata de grabación mono.}
