@@ -32,33 +32,9 @@ El fabricante del \gls{SoC} de los dispositivos con los que se ha trabajado, Qua
 
 \begin{itemize}
 	\item{\gls{QPST}: proporciona un servidor automático entre un lenguaje, u otro programa, y un puerto del ordenador, al que conectamos el dispositivo móvil. Nos permite analizar y configurar el dispositivo en tiempo real. Es compatible con el resto de software de Qualcomm.}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.6\textwidth]{qpst.png}
-		\caption{Página inicial de QPST.}
-		\label{fig:qpst}
-	\end{figure}
-	\item{\gls{QACT}: proporciona una interfaz gráfica que nos permite visualizar y modificar la calibración de las diferentes topologías, los distintos caminos que puede seguir el audio, que existen en el \gls{ADSP}. Tiene dos modos de uso, un modo sin conexión, en el que los cambios se guardan en ficheros de configuración que posteriormente hay que cargar en el teléfono, y un modo en tiempo real, en el cual podemos ver y calibrar la topología que se está aplicando en cada momento. Para que sea posible utilizar el modo en tiempo real es necesario que el dispositivo esté conectado por medio del \gls{QPST}.}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\textwidth]{qact.png}
-		\caption{Página inicial de QACT.}
-		\label{fig:qact}
-	\end{figure}	
-	\item{\gls{QXDM}: aunque su uso en el apartado del audio está muy limitado, permite obtener flujos de datos y trazas informativas en diferentes puntos del camino que sigue el audio a bajo nivel. Estos conjuntos de datos se deberán procesar posteriormente, pues el formato con el que te proporciona la información es propietario de Qualcomm.}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\textwidth]{qxdm.png}
-		\caption{Página inicial de QXDM.}
-		\label{fig:qxdm}
-	\end{figure}		
-	\item{\gls{QCAT}: como se ha comentado en el programa anterior, el formato obtenido únicamente es interpretable por parte de Qualcomm, que nos proporciona este software con el objetivo de poder obtener ficheros de audio analizables y reproducibles a través de los datos obtenidos con \gls{QXDM}. Además, es un programa de análisis estadístico, proporcionando información del número de trazas obtenidas en cada punto, el tiempo entre trazas, etc.}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\textwidth]{qcat.png}
-		\caption{Página inicial de QCAT.}
-		\label{fig:qcat}
-	\end{figure}	
+	\item{\gls{QACT}: proporciona una interfaz gráfica que nos permite visualizar y modificar la calibración de las diferentes topologías, los distintos caminos que puede seguir el audio, que existen en el \gls{ADSP}. Tiene dos modos de uso, un modo sin conexión, en el que los cambios se guardan en ficheros de configuración que posteriormente hay que cargar en el teléfono, y un modo en tiempo real, en el cual podemos ver y calibrar la topología que se está aplicando en cada momento. Para que sea posible utilizar el modo en tiempo real es necesario que el dispositivo esté conectado por medio del \gls{QPST}.}	
+	\item{\gls{QXDM}: aunque su uso en el apartado del audio está muy limitado, permite obtener flujos de datos y trazas informativas en diferentes puntos del camino que sigue el audio a bajo nivel. Estos conjuntos de datos se deberán procesar posteriormente, pues el formato con el que te proporciona la información es propietario de Qualcomm.}	
+	\item{\gls{QCAT}: como se ha comentado en el programa anterior, el formato obtenido únicamente es interpretable por parte de Qualcomm, que nos proporciona este software con el objetivo de poder obtener ficheros de audio analizables y reproducibles a través de los datos obtenidos con \gls{QXDM}. Además, es un programa de análisis estadístico, proporcionando información del número de trazas obtenidas en cada punto, el tiempo entre trazas, etc.}	
 	\item{Adobe Audition: es el programa utilizado por parte del departamento de audio de la empresa BQ, para el análisis de los distintos ficheros de audio. Es propiedad de Adobe. En el caso de este proyecto, se ha utilizado para analizar los ficheros de audio obtenido mediante el programa \gls{QCAT}. Destacar que se trata de un programa con un gran número de herramientas, sobre todo dedicadas a la edición de audio profesional. Sin embargo, durante la realización de este proyecto se ha usado con un enfoque más analítico.}
 	\begin{figure}[H]
 		\centering
