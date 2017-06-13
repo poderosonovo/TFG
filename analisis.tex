@@ -87,7 +87,7 @@ Profundizando algo más sobre la estructura actual del audio en Android, se pued
 
 \begin{itemize}
 	\item{\textit{Framework} a nivel de aplicación: es el código desarrollado por el programador de aplicaciones en alto nivel. Utiliza las \gls{API} para interactuar con el hardware de audio.}	
-	\item{\glspl{JNI}: esta capa se encarga de traducir las peticiones por parte de la aplicación, programada en Java, a peticiones al código nativo de Android, escrito en C y C++.}
+	\item{\gls{JNI}: esta capa se encarga de traducir las peticiones por parte de la aplicación, programada en Java, a peticiones al código nativo de Android, escrito en C y C++.}
 \end{itemize}
 
 \begin{itemize}
@@ -95,7 +95,7 @@ Profundizando algo más sobre la estructura actual del audio en Android, se pued
 \end{itemize}
 
 \begin{itemize}
-	\item{\glspl{HAL}: define una interfaz estándar que el \textit{framework} nativo utiliza para comunicarse y configurar el hardware. En esta capa se implementan las rutas necesarias para cumplir la política de rutado y se configuran los módulos en función de cómo se ha interpretado el audio en capas superiores. Siendo más específicos, es aquí dónde se decide por cual topología del \gls{ADSP} y por cuales elementos hardware, relacionados con el audio, pasa el flujo de datos.}
+	\item{\gls{HAL}: define una interfaz estándar que el \textit{framework} nativo utiliza para comunicarse y configurar el hardware. En esta capa se implementan las rutas necesarias para cumplir la política de rutado y se configuran los módulos en función de cómo se ha interpretado el audio en capas superiores. Siendo más específicos, es aquí dónde se decide por cual topología del \gls{ADSP} y por cuales elementos hardware, relacionados con el audio, pasa el flujo de datos.}
 	\item{Kernel de Linux: en esta capa se encuentran los controladores de audio necesarios para el uso del hardware de cada dispositivo. En Android, el controlador de audio utilizado, al igual que en Linux, es la \gls{ALSA}. Otras posibles opciones son utilizar el \gls{OSS} o un controlador propio.}
 \end{itemize}
 
